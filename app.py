@@ -14,7 +14,7 @@ IMG_ACC = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ac.
 
 # Configure page settings
 st.set_page_config(
-    page_title="Đề Cử Khen Thưởng - Employee Award 2026",
+    page_title="Employee Award 2026",
     page_icon="🏆",
     layout="centered"
 )
@@ -99,11 +99,11 @@ if BG_IMAGE_URL:
 # --- MULTI-LANGUAGE DICTIONARY ---
 TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
-        "title": "🏆 Cổng Đề Cử Khen Thưởng",
+        "title": "Cổng Đề Cử Khen Thưởng",
         "subtitle": "Vui lòng điền đầy đủ thông tin đề cử cá nhân xuất sắc theo các tiêu chí bên dưới.",
         "welcome_heading": "Chào Mừng Đến Với Cổng Đề Cử",
         "welcome_desc": "Chương trình vinh danh các cá nhân xuất sắc đã có những đóng góp nổi bật. Hãy cùng gửi đề cử của bạn!",
-        "start_btn": "🚀 Bắt Đầu Đề Cử",
+        "start_btn": "Bắt Đầu Đề Cử",
 
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
@@ -112,25 +112,25 @@ TRANSLATIONS = {
         "dept_label": "Phòng ban / Bộ phận *",
         "dept_placeholder": "Kinh doanh / CNTT",
 
-        "collab_title": "🤝 1. Hợp Tác (Collaboration)",
+        "collab_title": "1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Làm việc nhóm hiệu quả, sẵn sàng hỗ trợ đồng nghiệp và phối hợp tốt giữa các phòng ban.",
         "collab_slider": "Điểm Hợp Tác",
         "collab_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Hợp Tác *",
         "collab_ph": "Nêu rõ tình huống hoặc dự án phối hợp thành công...",
 
-        "innov_title": "💡 2. Đổi Mới Sáng Tạo (Innovation)",
+        "innov_title": "2. Đổi Mới Sáng Tạo (Innovation)",
         "innov_desc": "Mô tả: Đưa ra ý tưởng mới, cải tiến quy trình làm việc giúp nâng cao năng suất hoặc tiết kiệm chi phí.",
         "innov_slider": "Điểm Đổi Mới",
         "innov_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Đổi Mới *",
         "innov_ph": "Mô tả ý tưởng hoặc cải tiến đã được áp dụng...",
 
-        "culture_title": "🌟 3. Văn Hóa & Giá Trị (Culture & Value)",
+        "culture_title": "3. Văn Hóa & Giá Trị (Culture & Value)",
         "culture_desc": "Mô tả: Thể hiện rõ các giá trị cốt lõi của công ty, lan tỏa năng lượng tích cực và xây dựng môi trường làm việc tốt.",
         "culture_slider": "Điểm Văn Hóa & Giá Trị",
         "culture_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Văn Hóa & Giá Trị *",
         "culture_ph": "Nêu ví dụ về hành động thể hiện giá trị văn hóa...",
 
-        "acc_title": "🎯 4. Trách Nhiệm (Accountability)",
+        "acc_title": "4. Trách Nhiệm (Accountability)",
         "acc_desc": "Mô tả: Làm chủ công việc, cam kết hoàn thành mục tiêu đúng hạn và chịu trách nhiệm về kết quả.",
         "acc_slider": "Điểm Trách Nhiệm",
         "acc_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Trách Nhiệm *",
@@ -138,11 +138,11 @@ TRANSLATIONS = {
 
         "next_btn": "Tiếp theo ➔",
         "prev_btn": "⬅️ Quay lại",
-        "submit_btn": "🚀 Hoàn Tất & Gửi Đề Cử",
+        "submit_btn": "Hoàn Tất & Gửi Đề Cử",
         "err_fields": "⚠️ Vui lòng điền đầy đủ Tên người được đề cử và Phòng ban!",
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
-        "thank_you_title": "🎉 Cảm Ơn Bạn Đã Đề Cử!",
+        "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
         "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công. Đóng góp của bạn giúp tôn vinh những cá nhân xuất sắc!",
         "submit_another": "➕ Đề Cử Thêm Cá Nhân Khác",
 
@@ -154,11 +154,11 @@ TRANSLATIONS = {
         "err_pass": "Mật khẩu không chính xác!"
     },
     "English": {
-        "title": "🏆 Employee Award Nomination Portal",
+        "title": "Employee Award Nomination Portal",
         "subtitle": "Please fill in the nomination details for outstanding individuals based on the criteria below.",
         "welcome_heading": "Welcome to the Award Nomination Portal",
         "welcome_desc": "This program honors outstanding individuals with exceptional contributions. Start submitting your nominations now!",
-        "start_btn": "🚀 Start Nomination",
+        "start_btn": "Start Nomination",
 
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
@@ -167,25 +167,25 @@ TRANSLATIONS = {
         "dept_label": "Department *",
         "dept_placeholder": "Sales / IT",
 
-        "collab_title": "🤝 1. Collaboration",
+        "collab_title": "1. Collaboration",
         "collab_desc": "Description: Effective teamwork, willingness to support colleagues, and good cross-departmental coordination.",
         "collab_slider": "Collaboration Score",
         "collab_evidence": "Evidence / Specific example for Collaboration *",
         "collab_ph": "Describe the successful collaboration scenario or project...",
 
-        "innov_title": "💡 2. Innovation",
+        "innov_title": "2. Innovation",
         "innov_desc": "Description: Proposing new ideas, improving workflows to increase productivity or save costs.",
         "innov_slider": "Innovation Score",
         "innov_evidence": "Evidence / Specific example for Innovation *",
         "innov_ph": "Describe the idea or workflow improvement implemented...",
 
-        "culture_title": "🌟 3. Culture & Value",
+        "culture_title": "3. Culture & Value",
         "culture_desc": "Description: Clearly demonstrating core company values, spreading positive energy, and building a great work environment.",
         "culture_slider": "Culture & Value Score",
         "culture_evidence": "Evidence / Specific example for Culture & Value *",
         "culture_ph": "Provide examples of actions reflecting cultural values...",
 
-        "acc_title": "🎯 4. Accountability",
+        "acc_title": "4. Accountability",
         "acc_desc": "Description: Taking ownership of work, committing to meeting goals on time, and taking responsibility for outcomes.",
         "acc_slider": "Accountability Score",
         "acc_evidence": "Evidence / Specific example for Accountability *",
@@ -193,11 +193,11 @@ TRANSLATIONS = {
 
         "next_btn": "Next ➔",
         "prev_btn": "⬅️ Back",
-        "submit_btn": "🚀 Submit Nomination",
+        "submit_btn": "Submit Nomination",
         "err_fields": "⚠️ Please fill in the Nominee Name and Department!",
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
-        "thank_you_title": "🎉 Thank You for Your Nomination!",
+        "thank_you_title": "Thank You for Your Nomination!",
         "thank_you_msg": "Your nomination has been recorded successfully. Your contribution helps recognize outstanding individuals and teams!",
         "submit_another": "➕ Submit Another Nomination",
 
@@ -209,11 +209,11 @@ TRANSLATIONS = {
         "err_pass": "Incorrect password!"
     },
     "Deutsch (German)": {
-        "title": "🏆 Mitarbeiter-Nominierungsportal",
+        "title": "Mitarbeiter-Nominierungsportal",
         "subtitle": "Bitte füllen Sie die Nominierungsdetails für herausragende Einzelpersonen basierend auf den folgenden Kriterien aus.",
         "welcome_heading": "Willkommen beim Nominierungsportal",
         "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen. Reichen Sie jetzt Ihre Nominierung ein!",
-        "start_btn": "🚀 Nominierung Starten",
+        "start_btn": "Nominierung Starten",
 
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
@@ -222,25 +222,25 @@ TRANSLATIONS = {
         "dept_label": "Abteilung *",
         "dept_placeholder": "Vertrieb / IT",
 
-        "collab_title": "🤝 1. Zusammenarbeit (Collaboration)",
+        "collab_title": "1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Effektive Teamarbeit, Bereitschaft zur Unterstützung von Kollegen und gute abteilungsübergreifende Koordination.",
         "collab_slider": "Zusammenarbeit Bewertung",
         "collab_evidence": "Nachweis / Konkretes Beispiel für Zusammenarbeit *",
         "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
 
-        "innov_title": "💡 2. Innovation",
+        "innov_title": "2. Innovation",
         "innov_desc": "Beschreibung: Vorschlagen neuer Ideen, Verbesserung von Arbeitsabläufen zur Steigerung der Produktivität oder Kosteneinsparung.",
         "innov_slider": "Innovation Bewertung",
         "innov_evidence": "Nachweis / Konkretes Beispiel für Innovation *",
         "innov_ph": "Beschreiben Sie die umgesetzte Idee oder Prozessverbesserung...",
 
-        "culture_title": "🌟 3. Kultur & Werte (Culture & Value)",
+        "culture_title": "3. Kultur & Werte (Culture & Value)",
         "culture_desc": "Beschreibung: Deutliche Demonstration der Unternehmenswerte, Verbreitung positiver Energie und Aufbau eines großartigen Arbeitsumfelds.",
         "culture_slider": "Kultur & Werte Bewertung",
         "culture_evidence": "Nachweis / Konkretes Beispiel für Kultur & Werte *",
         "culture_ph": "Geben Sie Beispiele für Handlungen an, die kulturelle Werte widerspiegeln...",
 
-        "acc_title": "🎯 4. Verantwortlichkeit (Accountability)",
+        "acc_title": "4. Verantwortlichkeit (Accountability)",
         "acc_desc": "Beschreibung: Übernahme der Verantwortung für die Arbeit, Verpflichtung zur termingerechten Erreichung von Zielen und Verantwortung für Ergebnisse.",
         "acc_slider": "Verantwortlichkeit Bewertung",
         "acc_evidence": "Nachweis / Konkretes Beispiel für Verantwortlichkeit *",
@@ -248,11 +248,11 @@ TRANSLATIONS = {
 
         "next_btn": "Weiter ➔",
         "prev_btn": "⬅️ Zurück",
-        "submit_btn": "🚀 Nominierung Absenden",
+        "submit_btn": "Nominierung Absenden",
         "err_fields": "⚠️ Bitte füllen Sie den Namen des Nominierten und die Abteilung aus!",
         "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
-        "thank_you_title": "🎉 Vielen Dank für Ihre Nominierung!",
+        "thank_you_title": "Vielen Dank für Ihre Nominierung!",
         "thank_you_msg": "Ihre Nominierung wurde erfolgreich erfasst. Ihr Beitrag hilft dabei, herausragende Einzelpersonen und Teams zu würdigen!",
         "submit_another": "➕ Weitere Nominierung einreichen",
 
