@@ -5,7 +5,7 @@ from datetime import datetime
 
 # --- CONFIGURABLE MEDIA ASSETS ---
 # Replace these URLs/paths with your custom image links or local file paths
-BG_IMAGE_URL = ""  # e.g., "https://images.unsplash.com/photo-..." or "background.jpg"
+BG_IMAGE_URL = "bg.png"  # e.g., "https://images.unsplash.com/photo-..." or "background.jpg"
 IMG_COLLAB = "https://via.placeholder.com/600x150?text=Collaboration"
 IMG_INNOV = "https://via.placeholder.com/600x150?text=Innovation"
 IMG_CULTURE = "https://via.placeholder.com/600x150?text=Culture+and+Values"
@@ -27,6 +27,7 @@ if BG_IMAGE_URL:
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed; /* <-- This keeps the wallpaper fixed while scrolling */
         }}
         .main .block-container {{
             background-color: rgba(255, 255, 255, 0.92);
