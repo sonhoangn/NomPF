@@ -26,7 +26,7 @@ if "step" not in st.session_state:
 # Form data storage in session state
 default_keys = {
     "nominee_name": "",
-    "department": "",
+    "department": "Bodyshop",
     "score_collab": 5,
     "evidence_collab": "",
     "score_innov": 5,
@@ -72,9 +72,10 @@ if BG_IMAGE_URL:
             margin-bottom: 1.5rem;
         }}
 
-        /* Input text fields styling */
+        /* Input text fields & select boxes styling */
         .stTextInput > div > div > input, 
-        .stTextArea > div > div > textarea {{
+        .stTextArea > div > div > textarea,
+        div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
             background-color: rgba(30, 30, 30, 0.6) !important;
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
@@ -129,7 +130,6 @@ TRANSLATIONS = {
         "nominee_label": "Tên người được đề cử *",
         "nominee_placeholder": "Nguyễn Văn A",
         "dept_label": "Phòng ban / Bộ phận *",
-        "dept_placeholder": "Kinh doanh / CNTT",
 
         "collab_title": "1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Làm việc nhóm hiệu quả, sẵn sàng hỗ trợ đồng nghiệp và phối hợp tốt giữa các phòng ban.",
@@ -158,7 +158,7 @@ TRANSLATIONS = {
         "next_btn": "Tiếp theo ➔",
         "prev_btn": "⬅️ Quay lại",
         "submit_btn": "Hoàn Tất & Gửi Đề Cử",
-        "err_fields": "⚠️ Vui lòng điền đầy đủ Tên người được đề cử và Phòng ban!",
+        "err_fields": "⚠️ Vui lòng điền đầy đủ Tên người được đề cử!",
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
@@ -184,7 +184,6 @@ TRANSLATIONS = {
         "nominee_label": "Nominee Name *",
         "nominee_placeholder": "John Doe",
         "dept_label": "Department *",
-        "dept_placeholder": "Sales / IT",
 
         "collab_title": "1. Collaboration",
         "collab_desc": "Description: Effective teamwork, willingness to support colleagues, and good cross-departmental coordination.",
@@ -213,7 +212,7 @@ TRANSLATIONS = {
         "next_btn": "Next ➔",
         "prev_btn": "⬅️ Back",
         "submit_btn": "Submit Nomination",
-        "err_fields": "⚠️ Please fill in the Nominee Name and Department!",
+        "err_fields": "⚠️ Please fill in the Nominee Name!",
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
@@ -239,7 +238,6 @@ TRANSLATIONS = {
         "nominee_label": "Name des Nominierten *",
         "nominee_placeholder": "Max Mustermann",
         "dept_label": "Abteilung *",
-        "dept_placeholder": "Vertrieb / IT",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Effektive Teamarbeit, Bereitschaft zur Unterstützung von Kollegen und gute abteilungsübergreifende Koordination.",
@@ -268,7 +266,7 @@ TRANSLATIONS = {
         "next_btn": "Weiter ➔",
         "prev_btn": "⬅️ Zurück",
         "submit_btn": "Nominierung Absenden",
-        "err_fields": "⚠️ Bitte füllen Sie den Namen des Nominierten und die Abteilung aus!",
+        "err_fields": "⚠️ Bitte füllen Sie den Namen des Nominierten aus!",
         "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "Vielen Dank für Ihre Nominierung!",
@@ -384,8 +382,15 @@ elif st.session_state["step"] == 1:
         st.subheader(t["sec1"])
         nominee_name = st.text_input(t["nominee_label"], value=st.session_state["nominee_name"],
                                      placeholder=t["nominee_placeholder"])
-        department = st.text_input(t["dept_label"], value=st.session_state["department"],
-                                   placeholder=t["dept_placeholder"])
+
+        # Department Dropdown Selection
+        dept_options = ["Bodyshop", "Quality", "Paintshop", "Logistics", "EDC", "Others"]
+        try:
+            default_dept_index = dept_options.index(st.session_state["department"])
+        except ValueError:
+            default_dept_index = 0
+
+        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index)
 
         st.write("")
         col_back, col_next = st.columns([1, 1])
@@ -393,7 +398,7 @@ elif st.session_state["step"] == 1:
             next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
 
     if next_clicked:
-        if not nominee_name.strip() or not department.strip():
+        if not nominee_name.strip():
             st.error(t["err_fields"])
         else:
             st.session_state["nominee_name"] = nominee_name
