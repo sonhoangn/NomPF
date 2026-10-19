@@ -59,6 +59,29 @@ if BG_IMAGE_URL:
             padding: 2.5rem;
         }}
 
+        /* --- GOLDEN GLOW TITLE STYLING --- */
+        .golden-title-card {{
+            background: rgba(42, 35, 15, 0.85);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.25);
+            text-align: center;
+        }}
+
+        .golden-glow-text {{
+            color: #FDE047 !important;
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.8), 
+                         0 0 20px rgba(217, 119, 6, 0.6), 
+                         0 0 30px rgba(180, 83, 9, 0.4);
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }}
+
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
@@ -317,20 +340,10 @@ def init_data_file():
 
 init_data_file()
 
-# Header Section with Solid Glass Card Style
+# Header Section with Golden Glow Title Effect
 st.markdown(f"""
-    <div style="
-        background: rgba(42, 35, 15, 0.75);
-        -webkit-backdrop-filter: blur(16px);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 16px;
-        padding: 1.5rem 2rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        text-align: center;
-    ">
-        <h1 style="color: rgba(255, 255, 255, 1.0); margin-bottom: 0.5rem; font-size: 2.2rem;">{t['title']}</h1>
+    <div class="golden-title-card">
+        <h1 class="golden-glow-text">{t['title']}</h1>
         <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin: 0;">{t['subtitle']}</p>
     </div>
 """, unsafe_allow_html=True)
@@ -384,7 +397,8 @@ elif st.session_state["step"] == 1:
                                      placeholder=t["nominee_placeholder"])
 
         # Department Dropdown Selection
-        dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC", "Production - Paintshop", "Production - Assembly", "Production - EoL/Finish",
+        dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
+                        "Production - Paintshop", "Production - Assembly", "Production - EoL/Finish",
                         "Logistics", "Quality Management", "Others"]
         try:
             default_dept_index = dept_options.index(st.session_state["department"])
