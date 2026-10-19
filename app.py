@@ -59,14 +59,19 @@ if BG_IMAGE_URL:
             padding: 2.5rem;
         }}
 
-        /* --- CONTROL CONTAINER BACKGROUND & BLUR HERE --- */
-        div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(20, 20, 20, 0.88) !important; /* Increase alpha here (0.88) to block background bleeding */
+        /* Target Streamlit's native bordered container and its inner block */
+        div[data-testid="stVerticalBlockBorderWrapper"],
+        div[data-testid="stVerticalBlockBorderWrapper"] > div {{
+            background: rgba(15, 23, 42, 0.92) !important; /* Solid dark slate with 92% opacity */
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
+        }}
+        
+        div[data-testid="stVerticalBlockBorderWrapper"] {{
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+            padding: 1rem !important;
         }}
 
         /* Target text input background box */
