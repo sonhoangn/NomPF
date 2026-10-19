@@ -55,31 +55,24 @@ if BG_IMAGE_URL:
 
         /* Remove default background from main page padding container */
         .main .block-container {{
-            background: rgba(30, 30, 30, 0.35) !important;
-            backdrop-filter: blur(16px);
+            background: transparent !important;
             padding: 2.5rem;
         }}
 
-        /* Unified Glassmorphism Card Style for containers */
-        [data-testid="stVerticalBlock"] > div:has(div.element-container) {{
-            /* Target wrapper blocks if needed */
-        }}
-
-        .glass-container {{
-            background: rgba(30, 30, 30, 0.35) !important;
+        /* Target Streamlit's native border container to apply high-opacity glassmorphism */
+        div[data-testid="stVerticalBlockBorderWrapper"] {{
+            background: rgba(20, 20, 20, 0.85) !important; /* Increased alpha to 0.85 for solid contrast */
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
             border-radius: 16px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2) !important;
-            padding: 2rem !important;
-            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
         }}
 
-        /* Input text fields styling inside glass container */
+        /* Input text fields styling inside containers */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
-            background-color: rgba(255, 255, 255, 0.25) !important;
+            background-color: rgba(255, 255, 255, 0.08) !important;
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -95,7 +88,7 @@ if BG_IMAGE_URL:
             color: rgba(255, 255, 255, 0.95) !important;
         }}
         .stCaption, p {{
-            color: rgba(255, 255, 255, 0.8) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
