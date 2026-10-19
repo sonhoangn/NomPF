@@ -5,6 +5,8 @@ from datetime import datetime
 
 # --- CONFIGURABLE MEDIA ASSETS ---
 BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
+IMG_WELCOME = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
+IMG_THANKYOU = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ty.png"
 IMG_COLLAB = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cl.png"
 IMG_INNOV = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/in.png"
 IMG_CULTURE = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cv.png"
@@ -76,6 +78,11 @@ if BG_IMAGE_URL:
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }}
+
+        /* Custom styling to make the progress bar highly visible */
+        .stProgress > div > div > div > div {{
+            background-color: #4ADE80 !important;
         }}
 
         /* Text readability fixes */
@@ -221,7 +228,7 @@ TRANSLATIONS = {
         "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
 
         "innov_title": "💡 2. Innovation",
-        "innov_desc": "Beschreibung: Vorschlagen neuer Ideen, Verbesserung von Arbeitsabläufen zur Steigerung der Produktivität oder Kosteneinsparung.",
+        "innov_desc": "Beschreibung: Vorschlagen neuer Ideen, Verbesserung von Arbeitsabläufen zur Steigerung der Produktivität hoặc Kosteneinsparung.",
         "innov_slider": "Innovation Bewertung",
         "innov_evidence": "Nachweis / Konkretes Beispiel für Innovation *",
         "innov_ph": "Beschreiben Sie die umgesetzte Idee oder Prozessverbesserung...",
@@ -263,10 +270,6 @@ t = TRANSLATIONS[selected_lang_key]
 
 # Data File Setup
 DATA_FILE = "danh_sach_de_cu.csv"
-
-# File path to save data
-DATA_FILE = "danh_sach_de_cu.csv"
-
 
 def init_data_file():
     expected_columns = [
@@ -314,9 +317,15 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-
-# Helper function for navigation buttons
+# Helper function for navigation buttons & progress bar
 def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
+    # Calculate and display progress bar (Steps 1 to 5 map to 20% -> 100%)
+    current_step = st.session_state["step"]
+    progress_val = min(max(current_step / 5.0, 0.0), 1.0)
+    st.progress(progress_val)
+    st.caption(t["step_indicator"].format(current_step))
+    st.write("") # spacing
+
     col_back, col_next = st.columns([1, 1])
     with col_back:
         if show_back:
@@ -327,14 +336,15 @@ def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
         label = next_label if next_label else (t["submit_btn"] if is_submit else t["next_btn"])
         return st.button(label, key=f"next_{st.session_state['step']}", type="primary")
 
-
 # ==========================================
 # SCREEN 0: WELCOME SCREEN
 # ==========================================
 if st.session_state["step"] == 0:
+    st.markdown('<div class="glass-card" style="text-align: center; padding: 2.5rem 2rem;">', unsafe_allow_html=True)
+    if IMG_WELCOME:
+        st.image(IMG_WELCOME, use_container_width=True)
     st.markdown(f"""
-        <div class="glass-card" style="text-align: center; padding: 3rem 2rem;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
+            <h2 style="font-size: 1.8rem; margin-top: 1rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
             <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">{t['welcome_desc']}</p>
         </div>
     """, unsafe_allow_html=True)
@@ -347,7 +357,6 @@ if st.session_state["step"] == 0:
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
-    st.caption(t["step_indicator"].format(1))
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.subheader(t["sec1"])
 
@@ -369,7 +378,6 @@ elif st.session_state["step"] == 1:
 # SCREEN 2: COLLABORATION
 # ==========================================
 elif st.session_state["step"] == 2:
-    st.caption(t["step_indicator"].format(2))
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_COLLAB, use_container_width=True)
     st.markdown(f"### {t['collab_title']}")
@@ -393,7 +401,6 @@ elif st.session_state["step"] == 2:
 # SCREEN 3: INNOVATION
 # ==========================================
 elif st.session_state["step"] == 3:
-    st.caption(t["step_indicator"].format(3))
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_INNOV, use_container_width=True)
     st.markdown(f"### {t['innov_title']}")
@@ -417,7 +424,6 @@ elif st.session_state["step"] == 3:
 # SCREEN 4: CULTURE & VALUE
 # ==========================================
 elif st.session_state["step"] == 4:
-    st.caption(t["step_indicator"].format(4))
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_CULTURE, use_container_width=True)
     st.markdown(f"### {t['culture_title']}")
@@ -441,7 +447,6 @@ elif st.session_state["step"] == 4:
 # SCREEN 5: ACCOUNTABILITY & FINAL SUBMIT
 # ==========================================
 elif st.session_state["step"] == 5:
-    st.caption(t["step_indicator"].format(5))
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_ACC, use_container_width=True)
     st.markdown(f"### {t['acc_title']}")
@@ -492,9 +497,11 @@ elif st.session_state["step"] == 5:
 # SCREEN 6: THANK YOU SCREEN
 # ==========================================
 elif st.session_state["step"] == 6:
+    st.markdown('<div class="glass-card" style="text-align: center; padding: 3rem 2rem;">', unsafe_allow_html=True)
+    if IMG_THANKYOU:
+        st.image(IMG_THANKYOU, use_container_width=True)
     st.markdown(f"""
-        <div class="glass-card" style="text-align: center; padding: 3rem 2rem;">
-            <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
+            <h2 style="color: #4ADE80; font-size: 2rem; margin-top: 1rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
             <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">{t['thank_you_msg']}</p>
         </div>
     """, unsafe_allow_html=True)
