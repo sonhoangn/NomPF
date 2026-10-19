@@ -88,10 +88,10 @@ if BG_IMAGE_URL:
 
         /* Text readability fixes */
         label, .stSubheader, h1, h2, h3 {{
-            color: rgba(255, 255, 255, 0.6) !important;
+            color: rgba(255, 255, 255, 1) !important;
         }}
         .stCaption, p {{
-            color: rgba(255, 255, 255, 0.5) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
