@@ -7,10 +7,10 @@ from datetime import datetime
 # Using a representative dark Mercedes-Benz background URL for the example.
 # Replace this with your custom image link or local file path.
 BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
-IMG_COLLAB = "https://via.placeholder.com/600x150?text=Collaboration"
-IMG_INNOV = "https://via.placeholder.com/600x150?text=Innovation"
-IMG_CULTURE = "https://via.placeholder.com/600x150?text=Culture+and+Values"
-IMG_ACC = "https://via.placeholder.com/600x150?text=Accountability"
+IMG_COLLAB = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cl.png"
+IMG_INNOV = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/in.png"
+IMG_CULTURE = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cv.png"
+IMG_ACC = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ac.png"
 
 # Configure page settings
 st.set_page_config(
