@@ -78,7 +78,7 @@ if BG_IMAGE_URL:
         /* Input text fields styling inside glass container */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
-            background-color: rgba(255, 255, 255, 0.08) !important;
+            background-color: rgba(255, 255, 255, 0.25) !important;
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
