@@ -92,14 +92,14 @@ if BG_IMAGE_URL:
 TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
         "title": "🏆 Cổng Đề Cử Khen Thưởng",
-        "subtitle": "Vui lòng điền đầy đủ thông tin đề cử cá nhân/tập thể xuất sắc theo các tiêu chí bên dưới.",
+        "subtitle": "Vui lòng điền đầy đủ thông tin đề cử cá nhân xuất sắc theo các tiêu chí bên dưới.",
         "welcome_heading": "Chào Mừng Đến Với Cổng Đề Cử",
-        "welcome_desc": "Chương trình vinh danh các cá nhân và tập thể xuất sắc đã có những đóng góp nổi bật. Hãy cùng gửi đề cử của bạn!",
+        "welcome_desc": "Chương trình vinh danh các cá nhân xuất sắc đã có những đóng góp nổi bật. Hãy cùng gửi đề cử của bạn!",
         "start_btn": "🚀 Bắt Đầu Đề Cử",
 
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
-        "nominee_label": "Tên người/tập thể được đề cử *",
+        "nominee_label": "Tên người được đề cử *",
         "nominee_placeholder": "Nguyễn Văn A",
         "dept_label": "Phòng ban / Bộ phận *",
         "dept_placeholder": "Kinh doanh / CNTT",
@@ -135,8 +135,8 @@ TRANSLATIONS = {
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "🎉 Cảm Ơn Bạn Đã Đề Cử!",
-        "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công. Đóng góp của bạn giúp tôn vinh những cá nhân và tập thể xuất sắc!",
-        "submit_another": "➕ Đề Cử Thêm Cá Nhân / Tập Thể Khác",
+        "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công. Đóng góp của bạn giúp tôn vinh những cá nhân xuất sắc!",
+        "submit_another": "➕ Đề Cử Thêm Cá Nhân Khác",
 
         "admin_sec": "🔒 Quản Trị Viên (Xem & Tải Dữ Liệu)",
         "admin_pass_label": "Nhập mật khẩu quản trị",
@@ -147,14 +147,14 @@ TRANSLATIONS = {
     },
     "English": {
         "title": "🏆 Employee Award Nomination Portal",
-        "subtitle": "Please fill in the nomination details for outstanding individuals or teams based on the criteria below.",
+        "subtitle": "Please fill in the nomination details for outstanding individuals based on the criteria below.",
         "welcome_heading": "Welcome to the Award Nomination Portal",
-        "welcome_desc": "This program honors outstanding individuals and teams with exceptional contributions. Start submitting your nominations now!",
+        "welcome_desc": "This program honors outstanding individuals with exceptional contributions. Start submitting your nominations now!",
         "start_btn": "🚀 Start Nomination",
 
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
-        "nominee_label": "Nominee Name / Team Name *",
+        "nominee_label": "Nominee Name *",
         "nominee_placeholder": "John Doe",
         "dept_label": "Department *",
         "dept_placeholder": "Sales / IT",
@@ -202,14 +202,14 @@ TRANSLATIONS = {
     },
     "Deutsch (German)": {
         "title": "🏆 Mitarbeiter-Nominierungsportal",
-        "subtitle": "Bitte füllen Sie die Nominierungsdetails für herausragende Einzelpersonen oder Teams basierend auf den folgenden Kriterien aus.",
+        "subtitle": "Bitte füllen Sie die Nominierungsdetails für herausragende Einzelpersonen basierend auf den folgenden Kriterien aus.",
         "welcome_heading": "Willkommen beim Nominierungsportal",
-        "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen und Teams mit außergewöhnlichen Beiträgen. Reichen Sie jetzt Ihre Nominierung ein!",
+        "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen. Reichen Sie jetzt Ihre Nominierung ein!",
         "start_btn": "🚀 Nominierung Starten",
 
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
-        "nominee_label": "Name des Nominierten / Teamname *",
+        "nominee_label": "Name des Nominierten *",
         "nominee_placeholder": "Max Mustermann",
         "dept_label": "Abteilung *",
         "dept_placeholder": "Vertrieb / IT",
