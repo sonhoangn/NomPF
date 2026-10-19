@@ -303,7 +303,7 @@ init_data_file()
 # Header Section with Solid Glass Card Style
 st.markdown(f"""
     <div style="
-        background: rgba(15, 23, 42, 0.95);
+        background: rgba(42, 35, 15, 0.75);
         -webkit-backdrop-filter: blur(16px);
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.15);
