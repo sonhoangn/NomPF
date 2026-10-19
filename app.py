@@ -55,7 +55,8 @@ if BG_IMAGE_URL:
 
         /* Remove default background from main page padding container */
         .main .block-container {{
-            background: transparent !important;
+            background: rgba(30, 30, 30, 0.35) !important;
+            backdrop-filter: blur(16px);
             padding: 2.5rem;
         }}
 
