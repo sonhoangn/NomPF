@@ -40,7 +40,7 @@ for key, default_val in default_keys.items():
     if key not in st.session_state:
         st.session_state[key] = default_val
 
-# --- GLASSMORPHISM & BACKGROUND STYLING ---
+# --- GLASSMORPHISM & SOLID BACKGROUND STYLING ---
 if BG_IMAGE_URL:
     st.markdown(f"""
         <style>
@@ -59,58 +59,26 @@ if BG_IMAGE_URL:
             padding: 2.5rem;
         }}
 
-        /* --- SOLID GLASS CARD CONTAINER --- */
-        .custom-glass-card {{
-            background: rgba(15, 23, 42, 0.90) !important; /* Solid dark background with 90% opacity to prevent background bleed */
+        /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
+        div[data-testid="stForm"], 
+        div[data-testid="stVerticalBlockBorderWrapper"] {{
+            background: rgba(15, 23, 42, 0.95) !important; /* 95% solid dark slate to completely block wallpaper bleed */
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             border-radius: 16px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
             padding: 2rem !important;
             margin-bottom: 1.5rem;
         }}
 
-        /* Target text input background box */
-        .stTextInput input, .stTextArea textarea {{
-            background-color: rgba(30, 30, 30, 0.5) !important;
-            color: white !important;
-        }}
-
-        /* Target selectbox selection container */
-        div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
-            background-color: rgba(30, 30, 30, 0.5) !important;
-        }}
-
-        /* Target metric container background */
-        div[data-testid="stMetric"] {{
-            background: rgba(30, 30, 30, 0.4) !important;
-            padding: 1rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }}
-
-        /* Target expander header and content box */
-        div[data-testid="stExpander"] {{
-            background: rgba(20, 20, 20, 0.8) !important;
-            border-radius: 10px !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        }}
-
-        /* Target secondary/standard buttons */
-        button[data-testid="baseButton-secondary"] {{
-            background-color: rgba(255, 255, 255, 0.1) !important;
-            color: white !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        }}
-
-        /* Input text fields styling inside container */
+        /* Input text fields styling */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
-            background-color: rgba(255, 255, 255, 0.08) !important;
+            background-color: rgba(30, 30, 30, 0.8) !important;
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }}
 
         /* Custom styling to make the progress bar highly visible */
@@ -304,6 +272,7 @@ t = TRANSLATIONS[selected_lang_key]
 # Data File Setup
 DATA_FILE = "danh_sach_de_cu.csv"
 
+
 def init_data_file():
     expected_columns = [
         "Thời Gian",
@@ -328,19 +297,20 @@ def init_data_file():
         df = pd.DataFrame(columns=expected_columns)
         df.to_csv(DATA_FILE, index=False, encoding='utf-8-sig')
 
+
 init_data_file()
 
-# Header Section with Glassmorphism Card
+# Header Section with Solid Glass Card Style
 st.markdown(f"""
     <div style="
-        background: rgba(15, 23, 42, 0.90);
+        background: rgba(15, 23, 42, 0.95);
         -webkit-backdrop-filter: blur(16px);
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 16px;
         padding: 1.5rem 2rem;
         margin-bottom: 2rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         text-align: center;
     ">
         <h1 style="color: rgba(255, 255, 255, 1.0); margin-bottom: 0.5rem; font-size: 2.2rem;">{t['title']}</h1>
@@ -348,7 +318,8 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-# Helper function for navigation buttons & progress bar using custom glass cards
+
+# Helper function for navigation buttons & progress bar using standard form containers
 def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
     current_step = st.session_state["step"]
     progress_val = min(max(current_step / 5.0, 0.0), 1.0)
@@ -366,36 +337,43 @@ def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
         label = next_label if next_label else (t["submit_btn"] if is_submit else t["next_btn"])
         return st.button(label, key=f"next_{st.session_state['step']}", type="primary")
 
+
 # ==========================================
 # SCREEN 0: WELCOME SCREEN
 # ==========================================
 if st.session_state["step"] == 0:
-    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
-    if IMG_WELCOME:
-        st.image(IMG_WELCOME, use_container_width=True)
-    st.markdown(f"""
-        <div style="text-align: center; padding: 1rem 0;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['welcome_desc']}</p>
-        </div>
-    """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.form(key="welcome_form"):
+        if IMG_WELCOME:
+            st.image(IMG_WELCOME, use_container_width=True)
+        st.markdown(f"""
+            <div style="text-align: center; padding: 1rem 0;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['welcome_desc']}</p>
+            </div>
+        """, unsafe_allow_html=True)
 
-    if st.button(t["start_btn"], use_container_width=True, type="primary"):
-        st.session_state["step"] = 1
-        st.rerun()
+        start_clicked = st.form_submit_button(t["start_btn"], use_container_width=True)
+        if start_clicked:
+            st.session_state["step"] = 1
+            st.rerun()
 
 # ==========================================
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
-    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
-    st.subheader(t["sec1"])
-    nominee_name = st.text_input(t["nominee_label"], value=st.session_state["nominee_name"], placeholder=t["nominee_placeholder"])
-    department = st.text_input(t["dept_label"], value=st.session_state["department"], placeholder=t["dept_placeholder"])
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.form(key="step1_form"):
+        st.subheader(t["sec1"])
+        nominee_name = st.text_input(t["nominee_label"], value=st.session_state["nominee_name"],
+                                     placeholder=t["nominee_placeholder"])
+        department = st.text_input(t["dept_label"], value=st.session_state["department"],
+                                   placeholder=t["dept_placeholder"])
 
-    if render_nav_buttons(show_back=False):
+        st.write("")
+        col_back, col_next = st.columns([1, 1])
+        with col_next:
+            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+
+    if next_clicked:
         if not nominee_name.strip() or not department.strip():
             st.error(t["err_fields"])
         else:
@@ -408,16 +386,26 @@ elif st.session_state["step"] == 1:
 # SCREEN 2: COLLABORATION
 # ==========================================
 elif st.session_state["step"] == 2:
-    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
-    if IMG_COLLAB:
-        st.image(IMG_COLLAB, use_container_width=True)
-    st.markdown(f"### {t['collab_title']}")
-    st.caption(t["collab_desc"])
-    score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
-    evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"], placeholder=t["collab_ph"])
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.form(key="step2_form"):
+        if IMG_COLLAB:
+            st.image(IMG_COLLAB, use_container_width=True)
+        st.markdown(f"### {t['collab_title']}")
+        st.caption(t["collab_desc"])
+        score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
+        evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"],
+                                       placeholder=t["collab_ph"])
 
-    if render_nav_buttons():
+        st.write("")
+        col_back, col_next = st.columns([1, 1])
+        with col_back:
+            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+        with col_next:
+            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+
+    if prev_clicked:
+        st.session_state["step"] = 1
+        st.rerun()
+    elif next_clicked:
         if not evidence_collab.strip():
             st.error(t["err_evidence"])
         else:
@@ -430,16 +418,26 @@ elif st.session_state["step"] == 2:
 # SCREEN 3: INNOVATION
 # ==========================================
 elif st.session_state["step"] == 3:
-    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
-    if IMG_INNOV:
-        st.image(IMG_INNOV, use_container_width=True)
-    st.markdown(f"### {t['innov_title']}")
-    st.caption(t["innov_desc"])
-    score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
-    evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"], placeholder=t["innov_ph"])
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.form(key="step3_form"):
+        if IMG_INNOV:
+            st.image(IMG_INNOV, use_container_width=True)
+        st.markdown(f"### {t['innov_title']}")
+        st.caption(t["innov_desc"])
+        score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
+        evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"],
+                                      placeholder=t["innov_ph"])
 
-    if render_nav_buttons():
+        st.write("")
+        col_back, col_next = st.columns([1, 1])
+        with col_back:
+            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+        with col_next:
+            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+
+    if prev_clicked:
+        st.session_state["step"] = 2
+        st.rerun()
+    elif next_clicked:
         if not evidence_innov.strip():
             st.error(t["err_evidence"])
         else:
@@ -452,16 +450,27 @@ elif st.session_state["step"] == 3:
 # SCREEN 4: CULTURE & VALUE
 # ==========================================
 elif st.session_state["step"] == 4:
-    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
-    if IMG_CULTURE:
-        st.image(IMG_CULTURE, use_container_width=True)
-    st.markdown(f"### {t['culture_title']}")
-    st.caption(t["culture_desc"])
-    score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5, value=st.session_state["score_culture"])
-    evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"], placeholder=t["culture_ph"])
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.form(key="step4_form"):
+        if IMG_CULTURE:
+            st.image(IMG_CULTURE, use_container_width=True)
+        st.markdown(f"### {t['culture_title']}")
+        st.caption(t["culture_desc"])
+        score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5,
+                                  value=st.session_state["score_culture"])
+        evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"],
+                                        placeholder=t["culture_ph"])
 
-    if render_nav_buttons():
+        st.write("")
+        col_back, col_next = st.columns([1, 1])
+        with col_back:
+            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+        with col_next:
+            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+
+    if prev_clicked:
+        st.session_state["step"] = 3
+        st.rerun()
+    elif next_clicked:
         if not evidence_culture.strip():
             st.error(t["err_evidence"])
         else:
@@ -474,16 +483,25 @@ elif st.session_state["step"] == 4:
 # SCREEN 5: ACCOUNTABILITY & FINAL SUBMIT
 # ==========================================
 elif st.session_state["step"] == 5:
-    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
-    if IMG_ACC:
-        st.image(IMG_ACC, use_container_width=True)
-    st.markdown(f"### {t['acc_title']}")
-    st.caption(t["acc_desc"])
-    score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
-    evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.form(key="step5_form"):
+        if IMG_ACC:
+            st.image(IMG_ACC, use_container_width=True)
+        st.markdown(f"### {t['acc_title']}")
+        st.caption(t["acc_desc"])
+        score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
+        evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
 
-    if render_nav_buttons(is_submit=True):
+        st.write("")
+        col_back, col_next = st.columns([1, 1])
+        with col_back:
+            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+        with col_next:
+            submit_clicked = st.form_submit_button(t["submit_btn"], use_container_width=True)
+
+    if prev_clicked:
+        st.session_state["step"] = 4
+        st.rerun()
+    elif submit_clicked:
         if not evidence_acc.strip():
             st.error(t["err_evidence"])
         else:
@@ -491,11 +509,11 @@ elif st.session_state["step"] == 5:
             st.session_state["evidence_acc"] = evidence_acc
 
             avg_score = round((
-                st.session_state["score_collab"] +
-                st.session_state["score_innov"] +
-                st.session_state["score_culture"] +
-                st.session_state["score_acc"]
-            ) / 4.0, 2)
+                                      st.session_state["score_collab"] +
+                                      st.session_state["score_innov"] +
+                                      st.session_state["score_culture"] +
+                                      st.session_state["score_acc"]
+                              ) / 4.0, 2)
 
             new_entry = {
                 "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -522,22 +540,22 @@ elif st.session_state["step"] == 5:
 # SCREEN 6: THANK YOU SCREEN
 # ==========================================
 elif st.session_state["step"] == 6:
-    st.markdown('<div class="custom-glass-card" style="text-align: center;">', unsafe_allow_html=True)
-    if IMG_THANKYOU:
-        st.image(IMG_THANKYOU, use_container_width=True)
-    st.markdown(f"""
-        <div style="padding: 1rem 0;">
-            <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
-            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
-        </div>
-    """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.form(key="thankyou_form"):
+        if IMG_THANKYOU:
+            st.image(IMG_THANKYOU, use_container_width=True)
+        st.markdown(f"""
+            <div style="text-align: center; padding: 1rem 0;">
+                <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
+            </div>
+        """, unsafe_allow_html=True)
 
-    if st.button(t["submit_another"], use_container_width=True, type="primary"):
-        for key, default_val in default_keys.items():
-            st.session_state[key] = default_val
-        st.session_state["step"] = 0
-        st.rerun()
+        another_clicked = st.form_submit_button(t["submit_another"], use_container_width=True)
+        if another_clicked:
+            for key, default_val in default_keys.items():
+                st.session_state[key] = default_val
+            st.session_state["step"] = 0
+            st.rerun()
 
 # ==========================================
 # ANCHORED ADMINISTRATOR LOGIN PANEL
