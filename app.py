@@ -59,19 +59,16 @@ if BG_IMAGE_URL:
             padding: 2.5rem;
         }}
 
-        /* Target Streamlit's native bordered container and its inner block */
-        div[data-testid="stVerticalBlockBorderWrapper"],
-        div[data-testid="stVerticalBlockBorderWrapper"] > div {{
-            background: rgba(15, 23, 42, 0.92) !important; /* Solid dark slate with 92% opacity */
+        /* --- SOLID GLASS CARD CONTAINER --- */
+        .custom-glass-card {{
+            background: rgba(15, 23, 42, 0.90) !important; /* Solid dark background with 90% opacity to prevent background bleed */
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
-        }}
-        
-        div[data-testid="stVerticalBlockBorderWrapper"] {{
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
-            padding: 1rem !important;
+            padding: 2rem !important;
+            margin-bottom: 1.5rem;
         }}
 
         /* Target text input background box */
@@ -95,9 +92,9 @@ if BG_IMAGE_URL:
 
         /* Target expander header and content box */
         div[data-testid="stExpander"] {{
-            background: rgba(20, 20, 20, 0.6) !important;
+            background: rgba(20, 20, 20, 0.8) !important;
             border-radius: 10px !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
         }}
 
         /* Target secondary/standard buttons */
@@ -126,7 +123,7 @@ if BG_IMAGE_URL:
             color: rgba(255, 255, 255, 0.95) !important;
         }}
         .stCaption, p {{
-            color: rgba(255, 255, 255, 0.8) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
@@ -245,7 +242,7 @@ TRANSLATIONS = {
     },
     "Deutsch (German)": {
         "title": "🏆 Mitarbeiter-Nominierungsportal",
-        "subtitle": "Bitte füllen Sie die Nominierungsdetails cho herausragende Einzelpersonen basierend auf den folgenden Kriterien aus.",
+        "subtitle": "Bitte füllen Sie die Nominierungsdetails für herausragende Einzelpersonen basierend auf den folgenden Kriterien aus.",
         "welcome_heading": "Willkommen beim Nominierungsportal",
         "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen. Reichen Sie jetzt Ihre Nominierung ein!",
         "start_btn": "🚀 Nominierung Starten",
@@ -261,31 +258,31 @@ TRANSLATIONS = {
         "collab_desc": "Beschreibung: Effektive Teamarbeit, Bereitschaft zur Unterstützung von Kollegen und gute abteilungsübergreifende Koordination.",
         "collab_slider": "Zusammenarbeit Bewertung",
         "collab_evidence": "Nachweis / Konkretes Beispiel für Zusammenarbeit *",
-        "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario hoặc Projekt...",
+        "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
 
         "innov_title": "💡 2. Innovation",
-        "innov_desc": "Beschreibung: Vorschlagen neuer Ideen, Verbesserung von Arbeitsabläufen zur Steigerung der Produktivität hoặc Kosteneinsparung.",
+        "innov_desc": "Beschreibung: Vorschlagen neuer Ideen, Verbesserung von Arbeitsabläufen zur Steigerung der Produktivität oder Kosteneinsparung.",
         "innov_slider": "Innovation Bewertung",
         "innov_evidence": "Nachweis / Konkretes Beispiel für Innovation *",
-        "innov_ph": "Beschreiben Sie die umgesetzte Idee hoặc Prozessverbesserung...",
+        "innov_ph": "Beschreiben Sie die umgesetzte Idee oder Prozessverbesserung...",
 
         "culture_title": "🌟 3. Kultur & Werte (Culture & Value)",
-        "culture_desc": "Beschreibung: Deutliche Demonstration der Unternehmenswerte, Verbreitung positiver Energie và Aufbau eines großartigen Arbeitsumfelds.",
+        "culture_desc": "Beschreibung: Deutliche Demonstration der Unternehmenswerte, Verbreitung positiver Energie und Aufbau eines großartigen Arbeitsumfelds.",
         "culture_slider": "Kultur & Werte Bewertung",
         "culture_evidence": "Nachweis / Konkretes Beispiel für Kultur & Werte *",
         "culture_ph": "Geben Sie Beispiele für Handlungen an, die kulturelle Werte widerspiegeln...",
 
         "acc_title": "🎯 4. Verantwortlichkeit (Accountability)",
-        "acc_desc": "Beschreibung: Übernahme der Verantwortung cho die Arbeit, Verpflichtung zur termingerechten Erreichung von Zielen và Verantwortung cho Ergebnisse.",
+        "acc_desc": "Beschreibung: Übernahme der Verantwortung für die Arbeit, Verpflichtung zur termingerechten Erreichung von Zielen und Verantwortung für Ergebnisse.",
         "acc_slider": "Verantwortlichkeit Bewertung",
         "acc_evidence": "Nachweis / Konkretes Beispiel für Verantwortlichkeit *",
-        "acc_ph": "Geben Sie Beispiele cho starkes Verantwortungsbewusstsein bei der Arbeit an...",
+        "acc_ph": "Geben Sie Beispiele für starkes Verantwortungsbewusstsein bei der Arbeit an...",
 
         "next_btn": "Weiter ➔",
         "prev_btn": "⬅️ Zurück",
         "submit_btn": "🚀 Nominierung Absenden",
         "err_fields": "⚠️ Bitte füllen Sie den Namen des Nominierten und die Abteilung aus!",
-        "err_evidence": "⚠️ Bitte geben Sie cho dieses Kriterium Nachweise an!",
+        "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "🎉 Vielen Dank für Ihre Nominierung!",
         "thank_you_msg": "Ihre Nominierung wurde erfolgreich erfasst. Ihr Beitrag hilft dabei, herausragende Einzelpersonen und Teams zu würdigen!",
@@ -336,22 +333,22 @@ init_data_file()
 # Header Section with Glassmorphism Card
 st.markdown(f"""
     <div style="
-        background: rgba(30, 30, 30, 0.35);
+        background: rgba(15, 23, 42, 0.90);
         -webkit-backdrop-filter: blur(16px);
         backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 16px;
         padding: 1.5rem 2rem;
         margin-bottom: 2rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         text-align: center;
     ">
         <h1 style="color: rgba(255, 255, 255, 1.0); margin-bottom: 0.5rem; font-size: 2.2rem;">{t['title']}</h1>
-        <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.05rem; margin: 0;">{t['subtitle']}</p>
+        <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; margin: 0;">{t['subtitle']}</p>
     </div>
 """, unsafe_allow_html=True)
 
-# Helper function for navigation buttons & progress bar using Streamlit containers
+# Helper function for navigation buttons & progress bar using custom glass cards
 def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
     current_step = st.session_state["step"]
     progress_val = min(max(current_step / 5.0, 0.0), 1.0)
@@ -373,28 +370,30 @@ def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
 # SCREEN 0: WELCOME SCREEN
 # ==========================================
 if st.session_state["step"] == 0:
-    with st.container(border=True):
-        if IMG_WELCOME:
-            st.image(IMG_WELCOME, use_container_width=True)
-        st.markdown(f"""
-            <div class="glass-card" style="text-align: center; padding: 1rem 0;">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['welcome_desc']}</p>
-            </div>
-        """, unsafe_allow_html=True)
+    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
+    if IMG_WELCOME:
+        st.image(IMG_WELCOME, use_container_width=True)
+    st.markdown(f"""
+        <div style="text-align: center; padding: 1rem 0;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['welcome_desc']}</p>
+        </div>
+    """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-        if st.button(t["start_btn"], use_container_width=True, type="primary"):
-            st.session_state["step"] = 1
-            st.rerun()
+    if st.button(t["start_btn"], use_container_width=True, type="primary"):
+        st.session_state["step"] = 1
+        st.rerun()
 
 # ==========================================
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
-    with st.container(border=True):
-        st.subheader(t["sec1"])
-        nominee_name = st.text_input(t["nominee_label"], value=st.session_state["nominee_name"], placeholder=t["nominee_placeholder"])
-        department = st.text_input(t["dept_label"], value=st.session_state["department"], placeholder=t["dept_placeholder"])
+    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
+    st.subheader(t["sec1"])
+    nominee_name = st.text_input(t["nominee_label"], value=st.session_state["nominee_name"], placeholder=t["nominee_placeholder"])
+    department = st.text_input(t["dept_label"], value=st.session_state["department"], placeholder=t["dept_placeholder"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if render_nav_buttons(show_back=False):
         if not nominee_name.strip() or not department.strip():
@@ -409,13 +408,14 @@ elif st.session_state["step"] == 1:
 # SCREEN 2: COLLABORATION
 # ==========================================
 elif st.session_state["step"] == 2:
-    with st.container(border=True):
-        if IMG_COLLAB:
-            st.image(IMG_COLLAB, use_container_width=True)
-        st.markdown(f"### {t['collab_title']}")
-        st.caption(t["collab_desc"])
-        score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
-        evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"], placeholder=t["collab_ph"])
+    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
+    if IMG_COLLAB:
+        st.image(IMG_COLLAB, use_container_width=True)
+    st.markdown(f"### {t['collab_title']}")
+    st.caption(t["collab_desc"])
+    score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
+    evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"], placeholder=t["collab_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if render_nav_buttons():
         if not evidence_collab.strip():
@@ -430,13 +430,14 @@ elif st.session_state["step"] == 2:
 # SCREEN 3: INNOVATION
 # ==========================================
 elif st.session_state["step"] == 3:
-    with st.container(border=True):
-        if IMG_INNOV:
-            st.image(IMG_INNOV, use_container_width=True)
-        st.markdown(f"### {t['innov_title']}")
-        st.caption(t["innov_desc"])
-        score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
-        evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"], placeholder=t["innov_ph"])
+    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
+    if IMG_INNOV:
+        st.image(IMG_INNOV, use_container_width=True)
+    st.markdown(f"### {t['innov_title']}")
+    st.caption(t["innov_desc"])
+    score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
+    evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"], placeholder=t["innov_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if render_nav_buttons():
         if not evidence_innov.strip():
@@ -451,13 +452,14 @@ elif st.session_state["step"] == 3:
 # SCREEN 4: CULTURE & VALUE
 # ==========================================
 elif st.session_state["step"] == 4:
-    with st.container(border=True):
-        if IMG_CULTURE:
-            st.image(IMG_CULTURE, use_container_width=True)
-        st.markdown(f"### {t['culture_title']}")
-        st.caption(t["culture_desc"])
-        score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5, value=st.session_state["score_culture"])
-        evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"], placeholder=t["culture_ph"])
+    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
+    if IMG_CULTURE:
+        st.image(IMG_CULTURE, use_container_width=True)
+    st.markdown(f"### {t['culture_title']}")
+    st.caption(t["culture_desc"])
+    score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5, value=st.session_state["score_culture"])
+    evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"], placeholder=t["culture_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if render_nav_buttons():
         if not evidence_culture.strip():
@@ -472,13 +474,14 @@ elif st.session_state["step"] == 4:
 # SCREEN 5: ACCOUNTABILITY & FINAL SUBMIT
 # ==========================================
 elif st.session_state["step"] == 5:
-    with st.container(border=True):
-        if IMG_ACC:
-            st.image(IMG_ACC, use_container_width=True)
-        st.markdown(f"### {t['acc_title']}")
-        st.caption(t["acc_desc"])
-        score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
-        evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
+    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
+    if IMG_ACC:
+        st.image(IMG_ACC, use_container_width=True)
+    st.markdown(f"### {t['acc_title']}")
+    st.caption(t["acc_desc"])
+    score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
+    evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if render_nav_buttons(is_submit=True):
         if not evidence_acc.strip():
@@ -519,21 +522,22 @@ elif st.session_state["step"] == 5:
 # SCREEN 6: THANK YOU SCREEN
 # ==========================================
 elif st.session_state["step"] == 6:
-    with st.container(border=True):
-        if IMG_THANKYOU:
-            st.image(IMG_THANKYOU, use_container_width=True)
-        st.markdown(f"""
-            <div class="glass-card" style="text-align: center; padding: 1rem 0;">
-                <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
-            </div>
-        """, unsafe_allow_html=True)
+    st.markdown('<div class="custom-glass-card" style="text-align: center;">', unsafe_allow_html=True)
+    if IMG_THANKYOU:
+        st.image(IMG_THANKYOU, use_container_width=True)
+    st.markdown(f"""
+        <div style="padding: 1rem 0;">
+            <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
+        </div>
+    """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-        if st.button(t["submit_another"], use_container_width=True, type="primary"):
-            for key, default_val in default_keys.items():
-                st.session_state[key] = default_val
-            st.session_state["step"] = 0
-            st.rerun()
+    if st.button(t["submit_another"], use_container_width=True, type="primary"):
+        for key, default_val in default_keys.items():
+            st.session_state[key] = default_val
+        st.session_state["step"] = 0
+        st.rerun()
 
 # ==========================================
 # ANCHORED ADMINISTRATOR LOGIN PANEL
