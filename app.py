@@ -4,7 +4,7 @@ import streamlit as st
 from datetime import datetime
 
 # --- CONFIGURABLE MEDIA ASSETS ---
-BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
+BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg1.png"
 IMG_WELCOME = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
 IMG_THANKYOU = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ty.png"
 IMG_COLLAB = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cl.png"
@@ -26,7 +26,7 @@ if "step" not in st.session_state:
 # Form data storage in session state
 default_keys = {
     "nominee_name": "",
-    "department": "Bodyshop",
+    "department": "Others",
     "score_collab": 5,
     "evidence_collab": "",
     "score_innov": 5,
@@ -384,7 +384,8 @@ elif st.session_state["step"] == 1:
                                      placeholder=t["nominee_placeholder"])
 
         # Department Dropdown Selection
-        dept_options = ["Bodyshop", "Quality", "Paintshop", "Logistics", "EDC", "Others"]
+        dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC", "Production - Paintshop", "Production - Assembly", "Production - EoL/Finish",
+                        "Logistics", "Quality Management", "Others"]
         try:
             default_dept_index = dept_options.index(st.session_state["department"])
         except ValueError:
