@@ -58,18 +58,28 @@ if BG_IMAGE_URL:
             background: transparent !important;
             padding: 2.5rem;
         }}
-        
+
+        /* --- CONTROL CONTAINER BACKGROUND & BLUR HERE --- */
+        div[data-testid="stVerticalBlockBorderWrapper"] {{
+            background: rgba(20, 20, 20, 0.88) !important; /* Increase alpha here (0.88) to block background bleeding */
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+        }}
+
         /* Target text input background box */
         .stTextInput input, .stTextArea textarea {{
-            background-color: rgba(30, 30, 30, 0.5) !important; /* 50% transparent dark */
+            background-color: rgba(30, 30, 30, 0.5) !important;
             color: white !important;
         }}
-        
+
         /* Target selectbox selection container */
         div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
             background-color: rgba(30, 30, 30, 0.5) !important;
         }}
-        
+
         /* Target metric container background */
         div[data-testid="stMetric"] {{
             background: rgba(30, 30, 30, 0.4) !important;
@@ -77,40 +87,33 @@ if BG_IMAGE_URL:
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }}
-        
+
         /* Target expander header and content box */
         div[data-testid="stExpander"] {{
             background: rgba(20, 20, 20, 0.6) !important;
             border-radius: 10px !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }}
-              
+
         /* Target secondary/standard buttons */
         button[data-testid="baseButton-secondary"] {{
             background-color: rgba(255, 255, 255, 0.1) !important;
             color: white !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }}
-                
-        /* Unified Glassmorphism Card Style */
-        .glass-card {{
-            background: rgba(30, 30, 30, 0.25) !important;
-            -webkit-backdrop-filter: blur(16px);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05) !important;
-            border-radius: 16px !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
-            padding: 2rem !important;
-            margin-bottom: 1.5rem;
-        }}
 
-        /* Input text fields styling inside glass container */
+        /* Input text fields styling inside container */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
             background-color: rgba(255, 255, 255, 0.08) !important;
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }}
+
+        /* Custom styling to make the progress bar highly visible */
+        .stProgress > div > div > div > div {{
+            background-color: #4ADE80 !important;
         }}
 
         /* Text readability fixes */
