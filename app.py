@@ -62,7 +62,7 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(42, 35, 15, 0.75) !important;
+            background: rgba(50, 50, 50, 0.75) !important;
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -76,7 +76,7 @@ if BG_IMAGE_URL:
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea,
         div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
-            background-color: rgba(30, 30, 30, 0.6) !important;
+            background-color: rgba(50, 50, 50, 0.6) !important;
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
