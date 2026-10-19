@@ -4,8 +4,6 @@ import streamlit as st
 from datetime import datetime
 
 # --- CONFIGURABLE MEDIA ASSETS ---
-# Using a representative dark Mercedes-Benz background URL for the example.
-# Replace this with your custom image link or local file path.
 BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
 IMG_COLLAB = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cl.png"
 IMG_INNOV = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/in.png"
@@ -227,6 +225,7 @@ def init_data_file():
             "Thời Gian",
             "Tên Người Được Đề Cử",
             "Phòng Ban",
+            "Điểm Trung Bình",
             "Điểm Hợp Tác", "Minh Chứng Hợp Tác",
             "Điểm Đổi Mới", "Minh Chứng Đổi Mới",
             "Điểm Văn Hóa & Giá Trị", "Minh Chứng Văn Hóa & Giá Trị",
@@ -237,10 +236,9 @@ def init_data_file():
 
 init_data_file()
 
-# Header Section with Glassmorphism Card (also darkened and reduced alpha)
+# Header Section with Glassmorphism Card
 st.markdown(f"""
     <div style="
-        /* Darker, reduced alpha background */
         background: rgba(30, 30, 30, 0.25);
         -webkit-backdrop-filter: blur(16px);
         backdrop-filter: blur(16px);
@@ -318,11 +316,15 @@ if submit_button:
     elif not evidence_collab.strip() or not evidence_innov.strip() or not evidence_culture.strip() or not evidence_acc.strip():
         st.error(t["err_evidence"])
     else:
+        # Calculate Average Score
+        avg_score = round((score_collab + score_innov + score_culture + score_acc) / 4.0, 2)
+
         # Prepare new data record
         new_entry = {
             "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "Tên Người Được Đề Cử": nominee_name,
             "Phòng Ban": department,
+            "Điểm Trung Bình": avg_score,
             "Điểm Hợp Tác": score_collab,
             "Minh Chứng Hợp Tác": evidence_collab,
             "Điểm Đổi Mới": score_innov,
