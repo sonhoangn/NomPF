@@ -58,7 +58,40 @@ if BG_IMAGE_URL:
             background: transparent !important;
             padding: 2.5rem;
         }}
-
+        
+        /* Target text input background box */
+        .stTextInput input, .stTextArea textarea {{
+            background-color: rgba(30, 30, 30, 0.5) !important; /* 50% transparent dark */
+            color: white !important;
+        }}
+        
+        /* Target selectbox selection container */
+        div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
+            background-color: rgba(30, 30, 30, 0.5) !important;
+        }}
+        
+        /* Target metric container background */
+        div[data-testid="stMetric"] {{
+            background: rgba(30, 30, 30, 0.4) !important;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }}
+        
+        /* Target expander header and content box */
+        div[data-testid="stExpander"] {{
+            background: rgba(20, 20, 20, 0.6) !important;
+            border-radius: 10px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }}
+              
+        /* Target secondary/standard buttons */
+        button[data-testid="baseButton-secondary"] {{
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }}
+                
         /* Unified Glassmorphism Card Style */
         .glass-card {{
             background: rgba(30, 30, 30, 0.25) !important;
