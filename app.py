@@ -19,7 +19,6 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- APPLY CSS WITH GLASSMORPHISM AND DARK TINT ---
 if BG_IMAGE_URL:
     st.markdown(f"""
         <style>
@@ -32,48 +31,39 @@ if BG_IMAGE_URL:
             background-attachment: fixed;
         }}
 
-        /* Apply glassmorphism effect and dark tint to the main form container */
-        /* Targets the standard Streamlit content container */
+        /* Remove default background from main page padding container */
         .main .block-container {{
-            /* 1. Dark, low alpha background: Dark grey with 25% opacity */
-            background: rgba(30, 30, 30, 0.25);
-
-            /* 2. Glass blur effect: Increased slightly for visibility at low alpha */
-            -webkit-backdrop-filter: blur(16px);
-            backdrop-filter: blur(16px);
-
-            /* 3. Subtly defined edge */
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-
-            /* 4. Reduced shadow for a flatter "integrated" look */
-            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
-
+            background: transparent !important;
             padding: 2.5rem;
         }}
 
-        /* Adjust input boxes to be less prominent against the new dark container */
-        /* We can remove the previous solid grey style to make them feel more integrated */
+        /* Streamlit Form Container - MATCHES TITLE BLOCK GLASS EFFECT */
+        div[data-testid="stForm"] {{
+            background: rgba(30, 30, 30, 0.25) !important;
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+            padding: 2rem !important;
+        }}
+
+        /* Input text fields styling inside the glass form */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
-            background-color: rgba(255, 255, 255, 0.05) !important; /* Extremely subtle */
-            color: rgba(255, 255, 255, 0.9) !important; /* Bright text */
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
         }}
 
-        /* Improve contrast of standard Streamlit labels on a dark container */
-        .stForm label {{
-            color: rgba(255, 255, 255, 0.9) !important;
-        }}
-        /* Improve contrast of subheaders and captions */
-        .stSubheader {{
-            color: rgba(255, 255, 255, 1.0) !important;
+        /* Text readability fixes */
+        .stForm label, .stSubheader {{
+            color: rgba(255, 255, 255, 0.95) !important;
         }}
         .stCaption {{
-            color: rgba(255, 255, 255, 0.7) !important;
+            color: rgba(255, 255, 255, 0.75) !important;
         }}
-
         </style>
         """, unsafe_allow_html=True)
 
