@@ -62,7 +62,7 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(15, 23, 42, 0.5) !important; /* 95% solid dark slate to completely block wallpaper bleed */
+            background: rgba(42, 35, 15, 0.5) !important; /* 95% solid dark slate to completely block wallpaper bleed */
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
