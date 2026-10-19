@@ -62,7 +62,7 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(15, 23, 42, 0.95) !important; /* 95% solid dark slate to completely block wallpaper bleed */
+            background: rgba(15, 23, 42, 0.5) !important; /* 95% solid dark slate to completely block wallpaper bleed */
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -75,7 +75,7 @@ if BG_IMAGE_URL:
         /* Input text fields styling */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
-            background-color: rgba(30, 30, 30, 0.8) !important;
+            background-color: rgba(30, 30, 30, 0.6) !important;
             color: rgba(255, 255, 255, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -88,10 +88,10 @@ if BG_IMAGE_URL:
 
         /* Text readability fixes */
         label, .stSubheader, h1, h2, h3 {{
-            color: rgba(255, 255, 255, 0.95) !important;
+            color: rgba(255, 255, 255, 0.6) !important;
         }}
         .stCaption, p {{
-            color: rgba(255, 255, 255, 0.85) !important;
+            color: rgba(255, 255, 255, 0.5) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
