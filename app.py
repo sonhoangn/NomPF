@@ -4,7 +4,8 @@ import streamlit as st
 from datetime import datetime
 
 # --- CONFIGURABLE MEDIA ASSETS ---
-# Replace these URLs/paths with your custom image links or local file paths
+# Using a representative dark Mercedes-Benz background URL for the example.
+# Replace this with your custom image link or local file path.
 BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
 IMG_COLLAB = "https://via.placeholder.com/600x150?text=Collaboration"
 IMG_INNOV = "https://via.placeholder.com/600x150?text=Innovation"
@@ -18,7 +19,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Apply Background Image & Glassmorphism CSS
+# --- APPLY CSS WITH GLASSMORPHISM AND DARK TINT ---
 if BG_IMAGE_URL:
     st.markdown(f"""
         <style>
@@ -31,24 +32,48 @@ if BG_IMAGE_URL:
             background-attachment: fixed;
         }}
 
-        /* Glassmorphism Main Container */
+        /* Apply glassmorphism effect and dark tint to the main form container */
+        /* Targets the standard Streamlit content container */
         .main .block-container {{
-            background: rgba(255, 255, 255, 0.75);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            /* 1. Dark, low alpha background: Dark grey with 25% opacity */
+            background: rgba(30, 30, 30, 0.25);
+
+            /* 2. Glass blur effect: Increased slightly for visibility at low alpha */
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+
+            /* 3. Subtly defined edge */
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+
+            /* 4. Reduced shadow for a flatter "integrated" look */
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+
             padding: 2.5rem;
         }}
 
-        /* Translucent styling for input boxes */
+        /* Adjust input boxes to be less prominent against the new dark container */
+        /* We can remove the previous solid grey style to make them feel more integrated */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
-            background-color: rgba(255, 255, 255, 0.6) !important;
+            background-color: rgba(255, 255, 255, 0.05) !important; /* Extremely subtle */
+            color: rgba(255, 255, 255, 0.9) !important; /* Bright text */
             border-radius: 8px !important;
-            border: 1px solid rgba(200, 200, 200, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }}
+
+        /* Improve contrast of standard Streamlit labels on a dark container */
+        .stForm label {{
+            color: rgba(255, 255, 255, 0.9) !important;
+        }}
+        /* Improve contrast of subheaders and captions */
+        .stSubheader {{
+            color: rgba(255, 255, 255, 1.0) !important;
+        }}
+        .stCaption {{
+            color: rgba(255, 255, 255, 0.7) !important;
+        }}
+
         </style>
         """, unsafe_allow_html=True)
 
@@ -222,21 +247,22 @@ def init_data_file():
 
 init_data_file()
 
-# Header Section with Glassmorphism Card
+# Header Section with Glassmorphism Card (also darkened and reduced alpha)
 st.markdown(f"""
     <div style="
-        background: rgba(255, 255, 255, 0.65);
+        /* Darker, reduced alpha background */
+        background: rgba(30, 30, 30, 0.25);
         -webkit-backdrop-filter: blur(16px);
         backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 16px;
         padding: 1.5rem 2rem;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         text-align: center;
     ">
-        <h1 style="color: #1E293B; margin-bottom: 0.5rem; font-size: 2.2rem;">{t['title']}</h1>
-        <p style="color: #475569; font-size: 1.05rem; margin: 0;">{t['subtitle']}</p>
+        <h1 style="color: rgba(255, 255, 255, 1.0); margin-bottom: 0.5rem; font-size: 2.2rem;">{t['title']}</h1>
+        <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.05rem; margin: 0;">{t['subtitle']}</p>
     </div>
 """, unsafe_allow_html=True)
 
