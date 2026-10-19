@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Configure page settings
 st.set_page_config(
-    page_title="Hệ Thống Đề Cử Khen Thưởng",
+    page_title="Đề Cử Khen Thưởng - Employee Award 2026",
     page_icon="🏆",
     layout="centered"
 )
