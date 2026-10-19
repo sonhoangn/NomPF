@@ -264,21 +264,35 @@ t = TRANSLATIONS[selected_lang_key]
 # Data File Setup
 DATA_FILE = "danh_sach_de_cu.csv"
 
+# File path to save data
+DATA_FILE = "danh_sach_de_cu.csv"
+
 
 def init_data_file():
-    if not os.path.exists(DATA_FILE):
-        df = pd.DataFrame(columns=[
-            "Thời Gian",
-            "Tên Người Được Đề Cử",
-            "Phòng Ban",
-            "Điểm Trung Bình",
-            "Điểm Hợp Tác", "Minh Chứng Hợp Tác",
-            "Điểm Đổi Mới", "Minh Chứng Đổi Mới",
-            "Điểm Văn Hóa & Giá Trị", "Minh Chứng Văn Hóa & Giá Trị",
-            "Điểm Trách Nhiệm", "Minh Chứng Trách Nhiệm"
-        ])
-        df.to_csv(DATA_FILE, index=False, encoding='utf-8-sig')
+    expected_columns = [
+        "Thời Gian",
+        "Tên Người Được Đề Cử",
+        "Phòng Ban",
+        "Điểm Trung Bình",
+        "Điểm Hợp Tác", "Minh Chứng Hợp Tác",
+        "Điểm Đổi Mới", "Minh Chứng Đổi Mới",
+        "Điểm Văn Hóa & Giá Trị", "Minh Chứng Văn Hóa & Giá Trị",
+        "Điểm Trách Nhiệm", "Minh Chứng Trách Nhiệm"
+    ]
 
+    # If file exists, check if headers match. If not, remove the old corrupt file.
+    if os.path.exists(DATA_FILE):
+        try:
+            df_existing = pd.read_csv(DATA_FILE, nrows=0)
+            if list(df_existing.columns) != expected_columns:
+                os.remove(DATA_FILE)  # Remove old mismatched CSV
+        except Exception:
+            os.remove(DATA_FILE)  # Remove if file is corrupted
+
+    # Recreate file if it doesn't exist
+    if not os.path.exists(DATA_FILE):
+        df = pd.DataFrame(columns=expected_columns)
+        df.to_csv(DATA_FILE, index=False, encoding='utf-8-sig')
 
 init_data_file()
 
@@ -502,17 +516,22 @@ with st.expander(t["admin_sec"]):
     if admin_password == "MO-LQN":
         st.success(t["admin_success"])
         if os.path.exists(DATA_FILE):
-            df_data = pd.read_csv(DATA_FILE)
-            st.write(f"**{t['total_nominations']}** {len(df_data)}")
-            st.dataframe(df_data)
+            try:
+                # Read CSV while skipping malformed legacy rows
+                df_data = pd.read_csv(DATA_FILE, on_bad_lines='skip')
+                st.write(f"**{t['total_nominations']}** {len(df_data)}")
+                st.dataframe(df_data)
 
-            # Export CSV Button
-            csv_data = df_data.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
-            st.download_button(
-                label=t["download_btn"],
-                data=csv_data,
-                file_name=f"danh_sach_de_cu_{datetime.now().strftime('%Y%m%d')}.csv",
-                mime="text/csv"
-            )
+                # Export CSV Button
+                csv_data = df_data.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
+                st.download_button(
+                    label=t["download_btn"],
+                    data=csv_data,
+                    file_name=f"danh_sach_de_cu_{datetime.now().strftime('%Y%m%d')}.csv",
+                    mime="text/csv"
+                )
+            except Exception as e:
+                st.error(f"⚠️ Lỗi đọc file dữ liệu: {e}")
+                st.info("💡 Bạn có thể xóa file `danh_sach_de_cu.csv` để ứng dụng khởi tạo lại bảng dữ liệu mới.")
     elif admin_password != "":
         st.error(t["err_pass"])
