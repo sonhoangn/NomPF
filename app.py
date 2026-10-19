@@ -2,10 +2,17 @@ import os
 import pandas as pd
 import streamlit as st
 from datetime import datetime
+import base64
+
+# Function to encode local PNG image to base64
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode("utf-8")
 
 # --- CONFIGURABLE MEDIA ASSETS ---
 # Replace these URLs/paths with your custom image links or local file paths
 BG_IMAGE_URL = "bg.png"  # e.g., "https://images.unsplash.com/photo-..." or "background.jpg"
+BG_IMAGE_PATH = "bg.png"
 IMG_COLLAB = "https://via.placeholder.com/600x150?text=Collaboration"
 IMG_INNOV = "https://via.placeholder.com/600x150?text=Innovation"
 IMG_CULTURE = "https://via.placeholder.com/600x150?text=Culture+and+Values"
@@ -17,6 +24,26 @@ st.set_page_config(
     page_icon="🏆",
     layout="centered"
 )
+
+if os.path.exists(BG_IMAGE_PATH):
+    img_base64 = get_base64_image(BG_IMAGE_PATH)
+    st.markdown(f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/png;base64,{img_base64}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        .main .block-container {{
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }}
+        </style>
+        """, unsafe_allow_html=True)
 
 # Apply Background Image CSS if provided
 if BG_IMAGE_URL:
