@@ -17,6 +17,28 @@ st.set_page_config(
     layout="centered"
 )
 
+# --- SESSION STATE INITIALIZATION ---
+if "step" not in st.session_state:
+    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You
+
+# Form data storage in session state
+default_keys = {
+    "nominee_name": "",
+    "department": "",
+    "score_collab": 5,
+    "evidence_collab": "",
+    "score_innov": 5,
+    "evidence_innov": "",
+    "score_culture": 5,
+    "evidence_culture": "",
+    "score_acc": 5,
+    "evidence_acc": ""
+}
+for key, default_val in default_keys.items():
+    if key not in st.session_state:
+        st.session_state[key] = default_val
+
+# --- GLASSMORPHISM & BACKGROUND STYLING ---
 if BG_IMAGE_URL:
     st.markdown(f"""
         <style>
@@ -35,8 +57,8 @@ if BG_IMAGE_URL:
             padding: 2.5rem;
         }}
 
-        /* Streamlit Form Container - MATCHES TITLE BLOCK GLASS EFFECT */
-        div[data-testid="stForm"] {{
+        /* Unified Glassmorphism Card Style */
+        .glass-card {{
             background: rgba(30, 30, 30, 0.25) !important;
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
@@ -44,9 +66,10 @@ if BG_IMAGE_URL:
             border-radius: 16px !important;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
             padding: 2rem !important;
+            margin-bottom: 1.5rem;
         }}
 
-        /* Input text fields styling inside the glass form */
+        /* Input text fields styling inside glass container */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
             background-color: rgba(255, 255, 255, 0.08) !important;
@@ -56,11 +79,11 @@ if BG_IMAGE_URL:
         }}
 
         /* Text readability fixes */
-        .stForm label, .stSubheader {{
+        label, .stSubheader, h1, h2, h3 {{
             color: rgba(255, 255, 255, 0.95) !important;
         }}
-        .stCaption {{
-            color: rgba(255, 255, 255, 0.75) !important;
+        .stCaption, p {{
+            color: rgba(255, 255, 255, 0.8) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
@@ -68,15 +91,18 @@ if BG_IMAGE_URL:
 # --- MULTI-LANGUAGE DICTIONARY ---
 TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
-        "sidebar_lang": "🌐 Ngôn ngữ / Language",
         "title": "🏆 Cổng Đề Cử Khen Thưởng",
         "subtitle": "Vui lòng điền đầy đủ thông tin đề cử cá nhân/tập thể xuất sắc theo các tiêu chí bên dưới.",
-        "sec1": "1. Thông tin chung",
+        "welcome_heading": "Chào Mừng Đến Với Cổng Đề Cử",
+        "welcome_desc": "Chương trình vinh danh các cá nhân và tập thể xuất sắc đã có những đóng góp nổi bật. Hãy cùng gửi đề cử của bạn!",
+        "start_btn": "🚀 Bắt Đầu Đề Cử",
+
+        "step_indicator": "Bước {} / 5",
+        "sec1": "1. Thông tin người được đề cử",
         "nominee_label": "Tên người/tập thể được đề cử *",
         "nominee_placeholder": "Nguyễn Văn A",
         "dept_label": "Phòng ban / Bộ phận *",
         "dept_placeholder": "Kinh doanh / CNTT",
-        "sec2": "2. Đánh giá theo tiêu chí (Thang điểm 0 - 5)",
 
         "collab_title": "🤝 1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Làm việc nhóm hiệu quả, sẵn sàng hỗ trợ đồng nghiệp và phối hợp tốt giữa các phòng ban.",
@@ -102,10 +128,15 @@ TRANSLATIONS = {
         "acc_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Trách Nhiệm *",
         "acc_ph": "Nêu ví dụ về tinh thần trách nhiệm trong công việc...",
 
-        "submit_btn": "🚀 Gửi Đề Cử",
+        "next_btn": "Tiếp theo ➔",
+        "prev_btn": "⬅️ Quay lại",
+        "submit_btn": "🚀 Hoàn Tất & Gửi Đề Cử",
         "err_fields": "⚠️ Vui lòng điền đầy đủ Tên người được đề cử và Phòng ban!",
-        "err_evidence": "⚠️ Vui lòng điền minh chứng cho tất cả 4 tiêu chí đánh giá!",
-        "success_msg": "✅ Gửi đề cử thành công! Cảm ơn bạn đã đóng góp.",
+        "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
+
+        "thank_you_title": "🎉 Cảm Ơn Bạn Đã Đề Cử!",
+        "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công. Đóng góp của bạn giúp tôn vinh những cá nhân và tập thể xuất sắc!",
+        "submit_another": "➕ Đề Cử Thêm Cá Nhân / Tập Thể Khác",
 
         "admin_sec": "🔒 Quản Trị Viên (Xem & Tải Dữ Liệu)",
         "admin_pass_label": "Nhập mật khẩu quản trị",
@@ -115,15 +146,18 @@ TRANSLATIONS = {
         "err_pass": "Mật khẩu không chính xác!"
     },
     "English": {
-        "sidebar_lang": "🌐 Language",
         "title": "🏆 Employee Award Nomination Portal",
         "subtitle": "Please fill in the nomination details for outstanding individuals or teams based on the criteria below.",
-        "sec1": "1. General Information",
+        "welcome_heading": "Welcome to the Award Nomination Portal",
+        "welcome_desc": "This program honors outstanding individuals and teams with exceptional contributions. Start submitting your nominations now!",
+        "start_btn": "🚀 Start Nomination",
+
+        "step_indicator": "Step {} of 5",
+        "sec1": "1. Nominee Information",
         "nominee_label": "Nominee Name / Team Name *",
         "nominee_placeholder": "John Doe",
         "dept_label": "Department *",
         "dept_placeholder": "Sales / IT",
-        "sec2": "2. Criteria Evaluation (Score 0 - 5)",
 
         "collab_title": "🤝 1. Collaboration",
         "collab_desc": "Description: Effective teamwork, willingness to support colleagues, and good cross-departmental coordination.",
@@ -149,10 +183,15 @@ TRANSLATIONS = {
         "acc_evidence": "Evidence / Specific example for Accountability *",
         "acc_ph": "Provide examples of strong responsibility in work...",
 
+        "next_btn": "Next ➔",
+        "prev_btn": "⬅️ Back",
         "submit_btn": "🚀 Submit Nomination",
         "err_fields": "⚠️ Please fill in the Nominee Name and Department!",
-        "err_evidence": "⚠️ Please provide evidence for all 4 criteria!",
-        "success_msg": "✅ Nomination submitted successfully! Thank you for your contribution.",
+        "err_evidence": "⚠️ Please provide evidence for this criterion!",
+
+        "thank_you_title": "🎉 Thank You for Your Nomination!",
+        "thank_you_msg": "Your nomination has been recorded successfully. Your contribution helps recognize outstanding individuals and teams!",
+        "submit_another": "➕ Submit Another Nomination",
 
         "admin_sec": "🔒 Administrator (View & Download Data)",
         "admin_pass_label": "Enter admin password",
@@ -162,15 +201,18 @@ TRANSLATIONS = {
         "err_pass": "Incorrect password!"
     },
     "Deutsch (German)": {
-        "sidebar_lang": "🌐 Sprache / Language",
         "title": "🏆 Mitarbeiter-Nominierungsportal",
         "subtitle": "Bitte füllen Sie die Nominierungsdetails für herausragende Einzelpersonen oder Teams basierend auf den folgenden Kriterien aus.",
-        "sec1": "1. Allgemeine Informationen",
+        "welcome_heading": "Willkommen beim Nominierungsportal",
+        "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen und Teams mit außergewöhnlichen Beiträgen. Reichen Sie jetzt Ihre Nominierung ein!",
+        "start_btn": "🚀 Nominierung Starten",
+
+        "step_indicator": "Schritt {} von 5",
+        "sec1": "1. Informationen zum Nominierten",
         "nominee_label": "Name des Nominierten / Teamname *",
         "nominee_placeholder": "Max Mustermann",
         "dept_label": "Abteilung *",
         "dept_placeholder": "Vertrieb / IT",
-        "sec2": "2. Kriterienbewertung (Skala 0 - 5)",
 
         "collab_title": "🤝 1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Effektive Teamarbeit, Bereitschaft zur Unterstützung von Kollegen und gute abteilungsübergreifende Koordination.",
@@ -196,10 +238,15 @@ TRANSLATIONS = {
         "acc_evidence": "Nachweis / Konkretes Beispiel für Verantwortlichkeit *",
         "acc_ph": "Geben Sie Beispiele für starkes Verantwortungsbewusstsein bei der Arbeit an...",
 
-        "submit_btn": "🚀 Nominierung absenden",
+        "next_btn": "Weiter ➔",
+        "prev_btn": "⬅️ Zurück",
+        "submit_btn": "🚀 Nominierung Absenden",
         "err_fields": "⚠️ Bitte füllen Sie den Namen des Nominierten und die Abteilung aus!",
-        "err_evidence": "⚠️ Bitte geben Sie für alle 4 Kriterien Nachweise an!",
-        "success_msg": "✅ Nominierung erfolgreich eingereicht! Vielen Dank für Ihren Beitrag.",
+        "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
+
+        "thank_you_title": "🎉 Vielen Dank für Ihre Nominierung!",
+        "thank_you_msg": "Ihre Nominierung wurde erfolgreich erfasst. Ihr Beitrag hilft dabei, herausragende Einzelpersonen und Teams zu würdigen!",
+        "submit_another": "➕ Weitere Nominierung einreichen",
 
         "admin_sec": "🔒 Administrator (Daten anzeigen & herunterladen)",
         "admin_pass_label": "Admin-Passwort eingeben",
@@ -214,11 +261,10 @@ TRANSLATIONS = {
 selected_lang_key = st.sidebar.selectbox("🌐 Language / Ngôn ngữ / Sprache", list(TRANSLATIONS.keys()))
 t = TRANSLATIONS[selected_lang_key]
 
-# File path to save data
+# Data File Setup
 DATA_FILE = "danh_sach_de_cu.csv"
 
 
-# Function to initialize the CSV file if it doesn't exist
 def init_data_file():
     if not os.path.exists(DATA_FILE):
         df = pd.DataFrame(columns=[
@@ -254,97 +300,204 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-# Form Definition
-with st.form(key="nomination_form", clear_on_submit=True):
+
+# Helper function for navigation buttons
+def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
+    col_back, col_next = st.columns([1, 1])
+    with col_back:
+        if show_back:
+            if st.button(t["prev_btn"], key=f"prev_{st.session_state['step']}"):
+                st.session_state["step"] -= 1
+                st.rerun()
+    with col_next:
+        label = next_label if next_label else (t["submit_btn"] if is_submit else t["next_btn"])
+        return st.button(label, key=f"next_{st.session_state['step']}", type="primary")
+
+
+# ==========================================
+# SCREEN 0: WELCOME SCREEN
+# ==========================================
+if st.session_state["step"] == 0:
+    st.markdown(f"""
+        <div class="glass-card" style="text-align: center; padding: 3rem 2rem;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">{t['welcome_desc']}</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    if st.button(t["start_btn"], use_container_width=True, type="primary"):
+        st.session_state["step"] = 1
+        st.rerun()
+
+# ==========================================
+# SCREEN 1: NOMINEE DETAILS
+# ==========================================
+elif st.session_state["step"] == 1:
+    st.caption(t["step_indicator"].format(1))
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.subheader(t["sec1"])
 
-    col1, col2 = st.columns(2)
+    nominee_name = st.text_input(t["nominee_label"], value=st.session_state["nominee_name"],
+                                 placeholder=t["nominee_placeholder"])
+    department = st.text_input(t["dept_label"], value=st.session_state["department"], placeholder=t["dept_placeholder"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    with col1:
-        nominee_name = st.text_input(t["nominee_label"], placeholder=t["nominee_placeholder"])
+    if render_nav_buttons(show_back=False):
+        if not nominee_name.strip() or not department.strip():
+            st.error(t["err_fields"])
+        else:
+            st.session_state["nominee_name"] = nominee_name
+            st.session_state["department"] = department
+            st.session_state["step"] = 2
+            st.rerun()
 
-    with col2:
-        department = st.text_input(t["dept_label"], placeholder=t["dept_placeholder"])
-
-    st.divider()
-    st.subheader(t["sec2"])
-
-    # 1. Collaboration (Hợp tác)
+# ==========================================
+# SCREEN 2: COLLABORATION
+# ==========================================
+elif st.session_state["step"] == 2:
+    st.caption(t["step_indicator"].format(2))
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_COLLAB, use_container_width=True)
     st.markdown(f"### {t['collab_title']}")
     st.caption(t["collab_desc"])
-    score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=5, key="collab_score")
-    evidence_collab = st.text_area(t["collab_evidence"], placeholder=t["collab_ph"])
 
-    st.markdown("---")
+    score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
+    evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"],
+                                   placeholder=t["collab_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # 2. Innovation (Đổi mới sáng tạo)
+    if render_nav_buttons():
+        if not evidence_collab.strip():
+            st.error(t["err_evidence"])
+        else:
+            st.session_state["score_collab"] = score_collab
+            st.session_state["evidence_collab"] = evidence_collab
+            st.session_state["step"] = 3
+            st.rerun()
+
+# ==========================================
+# SCREEN 3: INNOVATION
+# ==========================================
+elif st.session_state["step"] == 3:
+    st.caption(t["step_indicator"].format(3))
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_INNOV, use_container_width=True)
     st.markdown(f"### {t['innov_title']}")
     st.caption(t["innov_desc"])
-    score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=5, key="innov_score")
-    evidence_innov = st.text_area(t["innov_evidence"], placeholder=t["innov_ph"])
 
-    st.markdown("---")
+    score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
+    evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"],
+                                  placeholder=t["innov_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # 3. Culture & Value (Văn hóa & Giá trị)
+    if render_nav_buttons():
+        if not evidence_innov.strip():
+            st.error(t["err_evidence"])
+        else:
+            st.session_state["score_innov"] = score_innov
+            st.session_state["evidence_innov"] = evidence_innov
+            st.session_state["step"] = 4
+            st.rerun()
+
+# ==========================================
+# SCREEN 4: CULTURE & VALUE
+# ==========================================
+elif st.session_state["step"] == 4:
+    st.caption(t["step_indicator"].format(4))
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_CULTURE, use_container_width=True)
     st.markdown(f"### {t['culture_title']}")
     st.caption(t["culture_desc"])
-    score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5, value=5, key="culture_score")
-    evidence_culture = st.text_area(t["culture_evidence"], placeholder=t["culture_ph"])
 
-    st.markdown("---")
+    score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5, value=st.session_state["score_culture"])
+    evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"],
+                                    placeholder=t["culture_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # 4. Accountability (Trách nhiệm)
+    if render_nav_buttons():
+        if not evidence_culture.strip():
+            st.error(t["err_evidence"])
+        else:
+            st.session_state["score_culture"] = score_culture
+            st.session_state["evidence_culture"] = evidence_culture
+            st.session_state["step"] = 5
+            st.rerun()
+
+# ==========================================
+# SCREEN 5: ACCOUNTABILITY & FINAL SUBMIT
+# ==========================================
+elif st.session_state["step"] == 5:
+    st.caption(t["step_indicator"].format(5))
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.image(IMG_ACC, use_container_width=True)
     st.markdown(f"### {t['acc_title']}")
     st.caption(t["acc_desc"])
-    score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=5, key="acc_score")
-    evidence_acc = st.text_area(t["acc_evidence"], placeholder=t["acc_ph"])
 
-    st.markdown("---")
+    score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
+    evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # Form Submit Button
-    submit_button = st.form_submit_button(label=t["submit_btn"])
+    if render_nav_buttons(is_submit=True):
+        if not evidence_acc.strip():
+            st.error(t["err_evidence"])
+        else:
+            st.session_state["score_acc"] = score_acc
+            st.session_state["evidence_acc"] = evidence_acc
 
-# Form handling logic
-if submit_button:
-    # Validation
-    if not nominee_name.strip() or not department.strip():
-        st.error(t["err_fields"])
-    elif not evidence_collab.strip() or not evidence_innov.strip() or not evidence_culture.strip() or not evidence_acc.strip():
-        st.error(t["err_evidence"])
-    else:
-        # Calculate Average Score
-        avg_score = round((score_collab + score_innov + score_culture + score_acc) / 4.0, 2)
+            # Calculate Average
+            avg_score = round((
+                                      st.session_state["score_collab"] +
+                                      st.session_state["score_innov"] +
+                                      st.session_state["score_culture"] +
+                                      st.session_state["score_acc"]
+                              ) / 4.0, 2)
 
-        # Prepare new data record
-        new_entry = {
-            "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "Tên Người Được Đề Cử": nominee_name,
-            "Phòng Ban": department,
-            "Điểm Trung Bình": avg_score,
-            "Điểm Hợp Tác": score_collab,
-            "Minh Chứng Hợp Tác": evidence_collab,
-            "Điểm Đổi Mới": score_innov,
-            "Minh Chứng Đổi Mới": evidence_innov,
-            "Điểm Văn Hóa & Giá Trị": score_culture,
-            "Minh Chứng Văn Hóa & Giá Trị": evidence_culture,
-            "Điểm Trách Nhiệm": score_acc,
-            "Minh Chứng Trách Nhiệm": evidence_acc
-        }
+            # Save Data Record
+            new_entry = {
+                "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "Tên Người Được Đề Cử": st.session_state["nominee_name"],
+                "Phòng Ban": st.session_state["department"],
+                "Điểm Trung Bình": avg_score,
+                "Điểm Hợp Tác": st.session_state["score_collab"],
+                "Minh Chứng Hợp Tác": st.session_state["evidence_collab"],
+                "Điểm Đổi Mới": st.session_state["score_innov"],
+                "Minh Chứng Đổi Mới": st.session_state["evidence_innov"],
+                "Điểm Văn Hóa & Giá Trị": st.session_state["score_culture"],
+                "Minh Chứng Văn Hóa & Giá Trị": st.session_state["evidence_culture"],
+                "Điểm Trách Nhiệm": st.session_state["score_acc"],
+                "Minh Chứng Trách Nhiệm": st.session_state["evidence_acc"]
+            }
 
-        # Append to CSV file
-        df_new = pd.DataFrame([new_entry])
-        df_new.to_csv(DATA_FILE, mode='a', header=False, index=False, encoding='utf-8-sig')
+            df_new = pd.DataFrame([new_entry])
+            df_new.to_csv(DATA_FILE, mode='a', header=False, index=False, encoding='utf-8-sig')
 
-        st.success(t["success_msg"])
+            st.session_state["step"] = 6
+            st.rerun()
 
-# Admin Section for Viewing and Exporting Data
+# ==========================================
+# SCREEN 6: THANK YOU SCREEN
+# ==========================================
+elif st.session_state["step"] == 6:
+    st.markdown(f"""
+        <div class="glass-card" style="text-align: center; padding: 3rem 2rem;">
+            <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">{t['thank_you_msg']}</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    if st.button(t["submit_another"], use_container_width=True, type="primary"):
+        # Reset state for new entry
+        for key, default_val in default_keys.items():
+            st.session_state[key] = default_val
+        st.session_state["step"] = 0
+        st.rerun()
+
+# ==========================================
+# ANCHORED ADMINISTRATOR LOGIN PANEL
+# ==========================================
 st.divider()
 with st.expander(t["admin_sec"]):
-    admin_password = st.text_input(t["admin_pass_label"], type="password")
+    admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
 
     if admin_password == "MO-LQN":
         st.success(t["admin_success"])
