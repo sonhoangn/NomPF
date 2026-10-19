@@ -59,17 +59,19 @@ if BG_IMAGE_URL:
             padding: 2.5rem;
         }}
 
-        /* Target Streamlit's native border container to apply high-opacity glassmorphism */
-        div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(20, 20, 20, 0.85) !important; /* Increased alpha to 0.85 for solid contrast */
+        /* Unified Glassmorphism Card Style */
+        .glass-card {{
+            background: rgba(30, 30, 30, 0.25) !important;
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
             border-radius: 16px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+            padding: 2rem !important;
+            margin-bottom: 1.5rem;
         }}
 
-        /* Input text fields styling inside containers */
+        /* Input text fields styling inside glass container */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea {{
             background-color: rgba(255, 255, 255, 0.08) !important;
@@ -78,17 +80,12 @@ if BG_IMAGE_URL:
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
         }}
 
-        /* Custom styling to make the progress bar highly visible */
-        .stProgress > div > div > div > div {{
-            background-color: #4ADE80 !important;
-        }}
-
         /* Text readability fixes */
         label, .stSubheader, h1, h2, h3 {{
             color: rgba(255, 255, 255, 0.95) !important;
         }}
         .stCaption, p {{
-            color: rgba(255, 255, 255, 0.85) !important;
+            color: rgba(255, 255, 255, 0.8) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
@@ -339,7 +336,7 @@ if st.session_state["step"] == 0:
         if IMG_WELCOME:
             st.image(IMG_WELCOME, use_container_width=True)
         st.markdown(f"""
-            <div style="text-align: center; padding: 1rem 0;">
+            <div class="glass-card" style="text-align: center; padding: 1rem 0;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
                 <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['welcome_desc']}</p>
             </div>
@@ -485,7 +482,7 @@ elif st.session_state["step"] == 6:
         if IMG_THANKYOU:
             st.image(IMG_THANKYOU, use_container_width=True)
         st.markdown(f"""
-            <div style="text-align: center; padding: 1rem 0;">
+            <div class="glass-card" style="text-align: center; padding: 1rem 0;">
                 <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
                 <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
             </div>
