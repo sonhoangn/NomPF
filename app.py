@@ -40,6 +40,42 @@ for key, default_val in default_keys.items():
     if key not in st.session_state:
         st.session_state[key] = default_val
 
+
+# Helper function to generate dynamic glow style based on slider value
+def get_slider_glow_style(score):
+    if score >= 4:
+        # Golden Glow
+        return """
+        <style>
+        div[data-testid="stSlider"] div[data-baseweb="slider"] div[role="slider"] {
+            background-color: #FDE047 !important;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.9), 0 0 20px rgba(217, 119, 6, 0.7) !important;
+            border-color: #F59E0B !important;
+        }
+        .stSlider > div > div > div > div {{
+            background: linear-gradient(90deg, #F59E0B, #FDE047) !important;
+        }}
+        </style>
+        """
+    elif score == 1:
+        # Red Glow
+        return """
+        <style>
+        div[data-testid="stSlider"] div[data-baseweb="slider"] div[role="slider"] {
+            background-color: #F87171 !important;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.9), 0 0 20px rgba(220, 38, 38, 0.7) !important;
+            border-color: #EF4444 !important;
+        }
+        .stSlider > div > div > div > div {{
+            background: linear-gradient(90deg, #DC2626, #F87171) !important;
+        }}
+        </style>
+        """
+    else:
+        # Neutral state for intermediate scores (2, 3, 0)
+        return ""
+
+
 # --- GLASSMORPHISM & SOLID BACKGROUND STYLING ---
 if BG_IMAGE_URL:
     st.markdown(f"""
@@ -251,7 +287,7 @@ TRANSLATIONS = {
     },
     "Deutsch (German)": {
         "title": "Mitarbeiter-Nominierungsportal",
-        "subtitle": "Bitte füllen Sie die Nominierungsdetails für herausragende Einzelpersonen basierend auf den folgenden Kriterien aus.",
+        "subtitle": "Bitte füllen Sie die Nominierungsdetails für herausragende Einzelpersonen basierend auf den einzelnen Kriterien aus.",
         "welcome_heading": "Willkommen beim Nominierungsportal",
         "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen. Reichen Sie jetzt Ihre Nominierung ein!",
         "start_btn": "Nominierung Starten",
@@ -263,27 +299,27 @@ TRANSLATIONS = {
         "dept_label": "Abteilung *",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
-        "collab_desc": "Beschreibung: Effektive Teamarbeit, Bereitschaft zur Unterstützung von Kollegen und gute abteilungsübergreifende Koordination.",
-        "collab_slider": "Zusammenarbeit Bewertung",
-        "collab_evidence": "Nachweis / Konkretes Beispiel für Zusammenarbeit *",
+        "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
+        "collab_slider": "Bewertung der Zusammenarbeit",
+        "collab_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Zusammenarbeit *",
         "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
 
         "innov_title": "2. Innovation",
-        "innov_desc": "Beschreibung: Vorschlagen neuer Ideen, Verbesserung von Arbeitsabläufen zur Steigerung der Produktivität oder Kosteneinsparung.",
-        "innov_slider": "Innovation Bewertung",
-        "innov_evidence": "Nachweis / Konkretes Beispiel für Innovation *",
+        "innov_desc": "Beschreibung: Fähigkeit, wertvolle Ideen einzubringen, eingefahrene Wege zu hinterfragen und Probleme kreativ zu lösen.",
+        "innov_slider": "Bewertung für Innovation",
+        "innov_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Innovation *",
         "innov_ph": "Beschreiben Sie die umgesetzte Idee oder Prozessverbesserung...",
 
         "culture_title": "3. Kultur & Werte (Culture & Value)",
-        "culture_desc": "Beschreibung: Deutliche Demonstration der Unternehmenswerte, Verbreitung positiver Energie und Aufbau eines großartigen Arbeitsumfelds.",
-        "culture_slider": "Kultur & Werte Bewertung",
-        "culture_evidence": "Nachweis / Konkretes Beispiel für Kultur & Werte *",
+        "culture_desc": "Beschreibung: Demonstration der Unternehmenswerte durch Integrität, Respekt und die Einhaltung ethischer Standards.",
+        "culture_slider": "Bewertung für Kultur & Werte",
+        "culture_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Kultur & Werte *",
         "culture_ph": "Geben Sie Beispiele für Handlungen an, die kulturelle Werte widerspiegeln...",
 
         "acc_title": "4. Verantwortlichkeit (Accountability)",
-        "acc_desc": "Beschreibung: Übernahme der Verantwortung für die Arbeit, Verpflichtung zur termingerechten Erreichung von Zielen und Verantwortung für Ergebnisse.",
-        "acc_slider": "Verantwortlichkeit Bewertung",
-        "acc_evidence": "Nachweis / Konkretes Beispiel für Verantwortlichkeit *",
+        "acc_desc": "Beschreibung: Erfüllung von Verpflichtungen, Einhaltung der Zeitdisziplin, sorgfältige Vorbereitung der Arbeit und Umsetzung des richtigen Prozesses; gleichzeitig ständige Verbesserung, um gemeinsam etwas zu bewegen.",
+        "acc_slider": "Bewertung der Verantwortlichkeit",
+        "acc_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Verantwortlichkeit *",
         "acc_ph": "Geben Sie Beispiele für starkes Verantwortungsbewusstsein bei der Arbeit an...",
 
         "next_btn": "Weiter ➔",
@@ -431,6 +467,10 @@ elif st.session_state["step"] == 2:
         st.markdown(f"### {t['collab_title']}")
         st.caption(t["collab_desc"])
         score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
+
+        # Apply conditional slider glow
+        st.markdown(get_slider_glow_style(score_collab), unsafe_allow_html=True)
+
         evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"],
                                        placeholder=t["collab_ph"])
 
@@ -463,6 +503,10 @@ elif st.session_state["step"] == 3:
         st.markdown(f"### {t['innov_title']}")
         st.caption(t["innov_desc"])
         score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
+
+        # Apply conditional slider glow
+        st.markdown(get_slider_glow_style(score_innov), unsafe_allow_html=True)
+
         evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"],
                                       placeholder=t["innov_ph"])
 
@@ -496,6 +540,10 @@ elif st.session_state["step"] == 4:
         st.caption(t["culture_desc"])
         score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5,
                                   value=st.session_state["score_culture"])
+
+        # Apply conditional slider glow
+        st.markdown(get_slider_glow_style(score_culture), unsafe_allow_html=True)
+
         evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"],
                                         placeholder=t["culture_ph"])
 
@@ -528,6 +576,10 @@ elif st.session_state["step"] == 5:
         st.markdown(f"### {t['acc_title']}")
         st.caption(t["acc_desc"])
         score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
+
+        # Apply conditional slider glow
+        st.markdown(get_slider_glow_style(score_acc), unsafe_allow_html=True)
+
         evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
 
         st.write("")
