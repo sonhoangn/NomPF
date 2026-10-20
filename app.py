@@ -443,8 +443,8 @@ if st.session_state["step"] == 0:
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
-    # We use a standard container instead of st.form so real-time input triggers instant filtering
-    with st.container():
+    # Use container with border=True to generate stVerticalBlockBorderWrapper CSS target
+    with st.container(border=True):
         st.subheader(t["sec1"])
 
         # 1. Real-time text input filter
