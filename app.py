@@ -122,12 +122,12 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(50, 50, 50, 0.6) !important;
+            background: rgba(42, 35, 15, 0.6) !important;
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border: 1px solid rgba(245, 158, 11, 0.15) !important;
             border-radius: 16px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
+            box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
             padding: 2rem !important;
             margin-bottom: 1.5rem;
         }}
@@ -136,10 +136,10 @@ if BG_IMAGE_URL:
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea,
         div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
-            background-color: rgba(50, 50, 50, 0.6) !important;
-            color: rgba(255, 255, 255, 0.95) !important;
+            background-color: rgba(42, 35, 15, 0.6) !important;
+            color: rgba(245, 158, 11, 0.95) !important;
             border-radius: 8px !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border: 1px solid rgba(245, 158, 11, 0.2) !important;
         }}
 
         /* --- UNIFIED BUTTON STYLING (THEME INDEPENDENT) --- */
