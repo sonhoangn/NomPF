@@ -2,9 +2,11 @@ import os
 import pandas as pd
 import streamlit as st
 from datetime import datetime
+from PIL import Image
 
 # --- CONFIGURABLE MEDIA ASSETS ---
 LOGO_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/alg.gif"
+P_ICON = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/icon.png"
 BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg5.png"
 IMG_WELCOME = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
 IMG_THANKYOU = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ty.png"
@@ -16,7 +18,7 @@ IMG_ACC = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ac1
 # Configure page settings
 st.set_page_config(
     page_title="Employee Award 2026",
-    page_icon="🏆",
+    page_icon=P_ICON,
     layout="centered"
 )
 
@@ -192,7 +194,7 @@ TRANSLATIONS = {
 
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
-        "nominee_label": "Nhập tên thủ công *",
+        "nominee_label": "Nhập tên *",
         "nominee_placeholder": "Nhập họ tên đầy đủ...",
         "dept_label": "Phòng ban / Bộ phận *",
         "dropdown_label": "📋 Chọn từ danh sách có sẵn (hoặc để trống để nhập tên mới):",
