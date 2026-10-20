@@ -178,7 +178,7 @@ if BG_IMAGE_URL:
 # --- MULTI-LANGUAGE DICTIONARY ---
 TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
-        "title": "Cổng Đề Cử Khen Thưởng",
+        "title": "Cổng Đề Cử Ngôi Sao Tạo Động Lưc",
         "welcome_heading": "Chào Mừng Đến Với Cổng Đề Cử",
         "welcome_desc": "Chương trình vinh danh các cá nhân xuất sắc đã có những đóng góp nổi bật. Hãy cùng gửi đề cử của bạn!",
         "start_btn": "Bắt Đầu Đề Cử",
@@ -231,7 +231,7 @@ TRANSLATIONS = {
         "err_pass": "Mật khẩu không chính xác!"
     },
     "English": {
-        "title": "Employee Award Nomination Portal",
+        "title": "Synergy Star Nomination Portal",
         "welcome_heading": "Welcome to the Award Nomination Portal",
         "welcome_desc": "This program honors outstanding individuals with exceptional contributions. Start submitting your nominations now!",
         "start_btn": "Start Nomination",
