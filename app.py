@@ -454,66 +454,67 @@ if st.session_state["step"] == 0:
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
-    # Use custom HTML glass card container to guarantee background rendering without layout breakage
-    st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
+    with st.form(key="details_form"):
+        # Use custom HTML glass card container to guarantee background rendering without layout breakage
+        # st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
 
-    st.subheader(t["sec1"])
+        st.subheader(t["sec1"])
 
-    # 1. Real-time text input filter
-    typed_name = st.text_input(
-        t["nominee_label"],
-        value=st.session_state["nominee_name"],
-        placeholder=t["nominee_placeholder"],
-        key="input_nominee_filter"
-    )
+        # 1. Real-time text input filter
+        typed_name = st.text_input(
+            t["nominee_label"],
+            value=st.session_state["nominee_name"],
+            placeholder=t["nominee_placeholder"],
+            key="input_nominee_filter"
+        )
 
-    # 2. Filter library based on real-time keystrokes
-    query = typed_name.strip().lower()
-    if query:
-        filtered_matches = [name for name in NOMINEE_LIBRARY if query in name.lower()]
-    else:
-        filtered_matches = NOMINEE_LIBRARY
-
-    # 3. Real-time scrollable drop-down selection box populated with matching entries
-    selected_suggestion = st.selectbox(
-        t["dropdown_label"],
-        options=[""] + filtered_matches,
-        index=0,
-        key="select_nominee_dropdown"
-    )
-
-    # Determine final active nominee name (Dropdown selection takes precedence if picked, otherwise typed text)
-    if selected_suggestion:
-        st.session_state["nominee_name"] = selected_suggestion
-    else:
-        st.session_state["nominee_name"] = typed_name
-
-    # Department Dropdown Selection
-    dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
-                    "Production - Paintshop", "Production - Assembly", "Production - EoL/Finish",
-                    "Logistics", "Quality Management", "Others"]
-    try:
-        default_dept_index = dept_options.index(st.session_state["department"])
-    except ValueError:
-        default_dept_index = 0
-
-    department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index,
-                              key="select_department")
-    st.session_state["department"] = department
-
-    st.write("")
-    col_back, col_next = st.columns([1, 1])
-    with col_next:
-        next_clicked = st.button(t["next_btn"], key="step1_next_btn", type="primary")
-
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    if next_clicked:
-        if not st.session_state["nominee_name"].strip():
-            st.error(t["err_fields"])
+        # 2. Filter library based on real-time keystrokes
+        query = typed_name.strip().lower()
+        if query:
+            filtered_matches = [name for name in NOMINEE_LIBRARY if query in name.lower()]
         else:
-            st.session_state["step"] = 2
-            st.rerun()
+            filtered_matches = NOMINEE_LIBRARY
+
+        # 3. Real-time scrollable drop-down selection box populated with matching entries
+        selected_suggestion = st.selectbox(
+            t["dropdown_label"],
+            options=[""] + filtered_matches,
+            index=0,
+            key="select_nominee_dropdown"
+        )
+
+        # Determine final active nominee name (Dropdown selection takes precedence if picked, otherwise typed text)
+        if selected_suggestion:
+            st.session_state["nominee_name"] = selected_suggestion
+        else:
+            st.session_state["nominee_name"] = typed_name
+
+        # Department Dropdown Selection
+        dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
+                        "Production - Paintshop", "Production - Assembly", "Production - EoL/Finish",
+                        "Logistics", "Quality Management", "Others"]
+        try:
+            default_dept_index = dept_options.index(st.session_state["department"])
+        except ValueError:
+            default_dept_index = 0
+
+        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index,
+                                  key="select_department")
+        st.session_state["department"] = department
+
+        st.write("")
+        col_back, col_next = st.columns([1, 1])
+        with col_next:
+            next_clicked = st.button(t["next_btn"], key="step1_next_btn", type="primary")
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        if next_clicked:
+            if not st.session_state["nominee_name"].strip():
+                st.error(t["err_fields"])
+            else:
+                st.session_state["step"] = 2
+                st.rerun()
 
 # ==========================================
 # SCREEN 2: COLLABORATION
