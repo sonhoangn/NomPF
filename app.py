@@ -378,7 +378,7 @@ init_data_file()
 st.markdown(f"""
     <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
         <img src="{LOGO_URL}" alt="Logo" style="
-            max-height: 100px; 
+            max-height: 200px; 
             width: auto; 
             display: block; 
             background: transparent !important; 
