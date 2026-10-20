@@ -128,9 +128,9 @@ if BG_IMAGE_URL:
 
         /* --- MAKE ALL FORMS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"] {{
-            background-color: rgba(42, 35, 15, 0.85) !important;
-            -webkit-backdrop-filter: blur(12px) !important;
-            backdrop-filter: blur(12px) !important;
+            background-color: rgba(42, 35, 15, 0.6) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            backdrop-filter: blur(10px) !important;
             border: 1px solid rgba(245, 158, 11, 0.3) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
