@@ -661,7 +661,7 @@ elif st.session_state["step"] == 6:
 st.divider()
 with st.expander(t["admin_sec"]):
     admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
-
+    AD_PASS = st.secrets.get("AD_PASS")
     if admin_password == AD_PASS:
         st.success(t["admin_success"])
         if os.path.exists(DATA_FILE):
