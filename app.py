@@ -124,18 +124,6 @@ if BG_IMAGE_URL:
             font-weight: 650;
         }}
 
-        /* --- CUSTOM GLASS CARD CONTAINER CLASS --- */
-        .custom-glass-card {{
-            background-color: rgba(42, 35, 15, 0.85) !important;
-            -webkit-backdrop-filter: blur(12px) !important;
-            backdrop-filter: blur(12px) !important;
-            border: 1px solid rgba(245, 158, 11, 0.3) !important;
-            border-radius: 16px !important;
-            box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
-            padding: 2rem !important;
-            margin-bottom: 1.5rem !important;
-        }}
-
         /* --- MAKE ALL FORMS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"] {{
             background-color: rgba(42, 35, 15, 0.85) !important;
@@ -204,10 +192,11 @@ TRANSLATIONS = {
 
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
-        "nominee_label": "Tên người được đề cử *",
-        "nominee_placeholder": "Nhập tên hoặc chọn từ danh sách gợi ý...",
+        "nominee_label": "Hoặc nhập tên mới thủ công *",
+        "nominee_placeholder": "Nhập họ tên đầy đủ...",
         "dept_label": "Phòng ban / Bộ phận *",
-        "dropdown_label": "📋 Danh sách gợi ý trùng khớp (có thể chọn trực tiếp):",
+        "dropdown_label": "📋 Chọn từ danh sách có sẵn (hoặc để trống để nhập tên mới):",
+        "dropdown_placeholder": "-- Chọn từ danh sách có sẵn / Select from list --",
 
         "collab_title": "1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
@@ -236,7 +225,7 @@ TRANSLATIONS = {
         "next_btn": "Tiếp theo ➔",
         "prev_btn": "⬅️ Quay lại",
         "submit_btn": "Hoàn Tất & Gửi Đề Cử",
-        "err_fields": "⚠️ Vui lòng điền đầy đủ Tên người được đề cử!",
+        "err_fields": "⚠️ Vui lòng chọn từ danh sách hoặc nhập tên người được đề cử!",
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
@@ -258,10 +247,11 @@ TRANSLATIONS = {
 
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
-        "nominee_label": "Nominee Name *",
-        "nominee_placeholder": "Type a name or pick from matching suggestions...",
+        "nominee_label": "Or type custom name manually *",
+        "nominee_placeholder": "Type full name...",
         "dept_label": "Department *",
-        "dropdown_label": "📋 Matching suggestions dropdown (scroll to select):",
+        "dropdown_label": "📋 Choose from existing list (or leave default to type custom name):",
+        "dropdown_placeholder": "-- Select from existing list --",
 
         "collab_title": "1. Collaboration",
         "collab_desc": "Description: Demonstrate a teamwork spirit that goes beyond the defined scope of work; coordinate effectively with others through knowledge sharing, teammate support, proactive feedback, and constructive conflict resolution.",
@@ -290,7 +280,7 @@ TRANSLATIONS = {
         "next_btn": "Next ➔",
         "prev_btn": "⬅️ Back",
         "submit_btn": "Submit Nomination",
-        "err_fields": "⚠️ Please fill in the Nominee Name!",
+        "err_fields": "⚠️ Please select from the list or type the nominee name!",
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
@@ -312,10 +302,11 @@ TRANSLATIONS = {
 
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
-        "nominee_label": "Name des Nominierten *",
-        "nominee_placeholder": "Namen eingeben oder aus Dropdown auswählen...",
+        "nominee_label": "Oder eigenen Namen manuell eingeben *",
+        "nominee_placeholder": "Vollständigen Namen eingeben...",
         "dept_label": "Abteilung *",
-        "dropdown_label": "📋 Passende Namensvorschläge (zum Auswählen scrollen):",
+        "dropdown_label": "📋 Aus bestehender Liste wählen (oder Standard lassen für manuellen Namen):",
+        "dropdown_placeholder": "-- Aus Liste auswählen --",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
@@ -344,7 +335,7 @@ TRANSLATIONS = {
         "next_btn": "Weiter ➔",
         "prev_btn": "⬅️ Zurück",
         "submit_btn": "Nominierung Absenden",
-        "err_fields": "⚠️ Bitte füllen Sie den Namen des Nominierten aus!",
+        "err_fields": "⚠️ Bitte wählen Sie aus der Liste oder geben Sie den Namen ein!",
         "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "Vielen Dank für Ihre Nominierung!",
@@ -412,25 +403,6 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-# Helper function for navigation buttons & progress bar using standard form containers
-def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
-    current_step = st.session_state["step"]
-    progress_val = min(max(current_step / 5.0, 0.0), 1.0)
-    st.progress(progress_val)
-    st.caption(t["step_indicator"].format(current_step))
-    st.write("")
-
-    col_back, col_next = st.columns([1, 1])
-    with col_back:
-        if show_back:
-            if st.button(t["prev_btn"], key=f"prev_{st.session_state['step']}"):
-                st.session_state["step"] -= 1
-                st.rerun()
-    with col_next:
-        label = next_label if next_label else (t["submit_btn"] if is_submit else t["next_btn"])
-        return st.button(label, key=f"next_{st.session_state['step']}", type="primary")
-
-
 # ==========================================
 # SCREEN 0: WELCOME SCREEN
 # ==========================================
@@ -451,43 +423,25 @@ if st.session_state["step"] == 0:
             st.rerun()
 
 # ==========================================
-# SCREEN 1: NOMINEE DETAILS
+# SCREEN 1: NOMINEE DETAILS (NOW IN AN ST.FORM)
 # ==========================================
 elif st.session_state["step"] == 1:
-    with st.form(key="details_form"):
-        # Use custom HTML glass card container to guarantee background rendering without layout breakage
-        # st.markdown('<div class="custom-glass-card">', unsafe_allow_html=True)
-
+    with st.form(key="step1_form"):
         st.subheader(t["sec1"])
 
-        # 1. Real-time text input filter
-        typed_name = st.text_input(
-            t["nominee_label"],
-            value=st.session_state["nominee_name"],
-            placeholder=t["nominee_placeholder"],
-            key="input_nominee_filter"
-        )
-
-        # 2. Filter library based on real-time keystrokes
-        query = typed_name.strip().lower()
-        if query:
-            filtered_matches = [name for name in NOMINEE_LIBRARY if query in name.lower()]
-        else:
-            filtered_matches = NOMINEE_LIBRARY
-
-        # 3. Real-time scrollable drop-down selection box populated with matching entries
-        selected_suggestion = st.selectbox(
+        # 1. Choose from existing list dropdown
+        selected_from_list = st.selectbox(
             t["dropdown_label"],
-            options=[""] + filtered_matches,
-            index=0,
-            key="select_nominee_dropdown"
+            options=[t["dropdown_placeholder"]] + NOMINEE_LIBRARY,
+            index=0
         )
 
-        # Determine final active nominee name (Dropdown selection takes precedence if picked, otherwise typed text)
-        if selected_suggestion:
-            st.session_state["nominee_name"] = selected_suggestion
-        else:
-            st.session_state["nominee_name"] = typed_name
+        # 2. Or key in custom name manually
+        typed_custom_name = st.text_input(
+            t["nominee_label"],
+            value=st.session_state["nominee_name"] if selected_from_list == t["dropdown_placeholder"] else "",
+            placeholder=t["nominee_placeholder"]
+        )
 
         # Department Dropdown Selection
         dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
@@ -498,21 +452,22 @@ elif st.session_state["step"] == 1:
         except ValueError:
             default_dept_index = 0
 
-        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index,
-                                  key="select_department")
-        st.session_state["department"] = department
+        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index)
 
         st.write("")
         col_back, col_next = st.columns([1, 1])
         with col_next:
-            next_clicked = st.button(t["next_btn"], key="step1_next_btn", type="primary")
-
-        st.markdown('</div>', unsafe_allow_html=True)
+            next_clicked = st.form_submit_button(t["next_btn"], type="primary")
 
     if next_clicked:
-        if not st.session_state["nominee_name"].strip():
+        # Resolve nominee name: dropdown selection takes precedence if picked, otherwise typed text
+        final_nominee_name = selected_from_list if selected_from_list != t["dropdown_placeholder"] else typed_custom_name.strip()
+
+        if not final_nominee_name:
             st.error(t["err_fields"])
         else:
+            st.session_state["nominee_name"] = final_nominee_name
+            st.session_state["department"] = department
             st.session_state["step"] = 2
             st.rerun()
 
