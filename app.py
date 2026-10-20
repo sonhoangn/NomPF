@@ -194,9 +194,9 @@ TRANSLATIONS = {
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
         "nominee_label": "Tên người được đề cử *",
-        "nominee_placeholder": "Nhập hoặc chọn tên người được đề cử...",
+        "nominee_placeholder": "Nhập tên hoặc chọn từ danh sách gợi ý...",
         "dept_label": "Phòng ban / Bộ phận *",
-        "suggestions_label": "💡 Gợi ý tên phù hợp từ danh sách:",
+        "dropdown_label": "📋 Danh sách gợi ý trùng khớp (có thể chọn trực tiếp):",
 
         "collab_title": "1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
@@ -248,9 +248,9 @@ TRANSLATIONS = {
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
         "nominee_label": "Nominee Name *",
-        "nominee_placeholder": "Type or select nominee name...",
+        "nominee_placeholder": "Type a name or pick from matching suggestions...",
         "dept_label": "Department *",
-        "suggestions_label": "💡 Matching suggestions from library:",
+        "dropdown_label": "📋 Matching suggestions dropdown (scroll to select):",
 
         "collab_title": "1. Collaboration",
         "collab_desc": "Description: Demonstrate a teamwork spirit that goes beyond the defined scope of work; coordinate effectively with others through knowledge sharing, teammate support, proactive feedback, and constructive conflict resolution.",
@@ -302,9 +302,9 @@ TRANSLATIONS = {
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
         "nominee_label": "Name des Nominierten *",
-        "nominee_placeholder": "Namen eingeben oder auswählen...",
+        "nominee_placeholder": "Namen eingeben oder aus Dropdown auswählen...",
         "dept_label": "Abteilung *",
-        "suggestions_label": "💡 Namensvorschläge aus der Bibliothek:",
+        "dropdown_label": "📋 Passende Namensvorschläge (zum Auswählen scrollen):",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
@@ -443,21 +443,38 @@ if st.session_state["step"] == 0:
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
-    with st.form(key="step1_form"):
+    # We use a standard container instead of st.form so real-time input triggers instant filtering
+    with st.container():
         st.subheader(t["sec1"])
 
-        # Interactive Search / Text Input for Nominee Name
-        nominee_name = st.text_input(
+        # 1. Real-time text input filter
+        typed_name = st.text_input(
             t["nominee_label"],
             value=st.session_state["nominee_name"],
-            placeholder=t["nominee_placeholder"]
+            placeholder=t["nominee_placeholder"],
+            key="input_nominee_filter"
         )
 
-        # Dynamic matching suggestion logic based on user text input query string
-        if nominee_name.strip():
-            matches = [name for name in NOMINEE_LIBRARY if nominee_name.lower() in name.lower()]
-            if matches:
-                st.caption(f"{t['suggestions_label']} " + ", ".join([f"`{m}`" for m in matches[:5]]))
+        # 2. Filter library based on real-time keystrokes
+        query = typed_name.strip().lower()
+        if query:
+            filtered_matches = [name for name in NOMINEE_LIBRARY if query in name.lower()]
+        else:
+            filtered_matches = NOMINEE_LIBRARY
+
+        # 3. Real-time scrollable drop-down selection box populated with matching entries
+        selected_suggestion = st.selectbox(
+            t["dropdown_label"],
+            options=[""] + filtered_matches,
+            index=0,
+            key="select_nominee_dropdown"
+        )
+
+        # Determine final active nominee name (Dropdown selection takes precedence if picked, otherwise typed text)
+        if selected_suggestion:
+            st.session_state["nominee_name"] = selected_suggestion
+        else:
+            st.session_state["nominee_name"] = typed_name
 
         # Department Dropdown Selection
         dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
@@ -468,19 +485,18 @@ elif st.session_state["step"] == 1:
         except ValueError:
             default_dept_index = 0
 
-        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index)
+        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index, key="select_department")
+        st.session_state["department"] = department
 
         st.write("")
         col_back, col_next = st.columns([1, 1])
         with col_next:
-            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+            next_clicked = st.button(t["next_btn"], key="step1_next_btn", type="primary")
 
     if next_clicked:
-        if not nominee_name.strip():
+        if not st.session_state["nominee_name"].strip():
             st.error(t["err_fields"])
         else:
-            st.session_state["nominee_name"] = nominee_name
-            st.session_state["department"] = department
             st.session_state["step"] = 2
             st.rerun()
 
