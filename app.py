@@ -376,7 +376,7 @@ init_data_file()
 # Header Section with Golden Glow Title Effect
 st.markdown(f"""
     <div class="golden-title-card">
-        <h1 class="golden-glow-text" style="text-wrap: balance; max-width: 450px; text-align: center; margin: 0 auto;">{t['title']}</h1>
+        <h1 class="golden-glow-text" style="max-width: 450px; text-align: center; margin: 0 auto;">{t['title']}</h1>
     </div>
 """, unsafe_allow_html=True)
 
