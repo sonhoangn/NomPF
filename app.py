@@ -189,7 +189,7 @@ TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
         "title": "Cổng Đề Cử \nNgôi Sao Tạo Động Lực",
         "welcome_heading": "Chào Mừng Đến Với Cổng Đề Cử",
-        "welcome_desc": "Chương trình vinh danh các cá nhân xuất sắc đã có những đóng góp nổi bật. Hãy cùng gửi đề cử của bạn!",
+        "welcome_desc": "Chương trình vinh danh các cá nhân xuất sắc đã có những đóng góp nổi bật.\nHãy cùng gửi đề cử của bạn!",
         "start_btn": "Bắt Đầu Đề Cử",
 
         "step_indicator": "Bước {} / 5",
@@ -244,7 +244,7 @@ TRANSLATIONS = {
     "English": {
         "title": "Synergy Star \nNomination Portal",
         "welcome_heading": "Welcome to the Award Nomination Portal",
-        "welcome_desc": "This program honors outstanding individuals with exceptional contributions. Start submitting your nominations now!",
+        "welcome_desc": "This program honors outstanding individuals with exceptional contributions.\nStart submitting your nominations now!",
         "start_btn": "Start Nomination",
 
         "step_indicator": "Step {} of 5",
@@ -299,7 +299,7 @@ TRANSLATIONS = {
     "Deutsch (German)": {
         "title": "Mitarbeiter-Nominierungsportal",
         "welcome_heading": "Willkommen beim Nominierungsportal",
-        "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen. Reichen Sie jetzt Ihre Nominierung ein!",
+        "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen.\nReichen Sie jetzt Ihre Nominierung ein!",
         "start_btn": "Nominierung Starten",
 
         "step_indicator": "Schritt {} von 5",
@@ -415,7 +415,7 @@ if st.session_state["step"] == 0:
         st.markdown(f"""
             <div style="text-align: center; padding: 1rem 0;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['welcome_desc']}</p>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line;">{t['welcome_desc']}</p>
             </div>
         """, unsafe_allow_html=True)
 
