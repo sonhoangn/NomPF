@@ -662,7 +662,7 @@ st.divider()
 with st.expander(t["admin_sec"]):
     admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
 
-    if admin_password == "MO-LQN":
+    if admin_password == AD_PASS:
         st.success(t["admin_success"])
         if os.path.exists(DATA_FILE):
             try:
