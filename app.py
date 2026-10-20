@@ -146,9 +146,9 @@ if BG_IMAGE_URL:
         div[data-testid="stForm"] button, 
         button[data-testid="baseButton-secondary"],
         button[data-testid="baseButton-primary"] {{
-            background-color: rgba(30, 30, 30, 0.75) !important;
-            color: #FFFFFF !important;
-            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            background-color: rgba(28, 24, 15, 0.75) !important;
+            color: #db9f16 !important;
+            border: 1px solid rgba(219, 159, 22, 0.25) !important;
             border-radius: 8px !important;
         }}
 
@@ -156,9 +156,9 @@ if BG_IMAGE_URL:
         div[data-testid="stForm"] button:hover, 
         button[data-testid="baseButton-secondary"]:hover,
         button[data-testid="baseButton-primary"]:hover {{
-            background-color: rgba(50, 50, 50, 0.75) !important;
-            border-color: rgba(255, 255, 255, 0.5) !important;
-            color: #FFFFFF !important;
+            background-color: rgba(28, 24, 15, 0.75) !important;
+            border-color: rgba(219, 159, 22, 0.5) !important;
+            color: #db9f16 !important;
         }}
 
         /* Custom styling to make the progress bar highly visible */
@@ -168,10 +168,10 @@ if BG_IMAGE_URL:
 
         /* Text readability fixes */
         label, .stSubheader, h1, h2, h3 {{
-            color: rgba(255, 255, 255, 1) !important;
+            color: rgba(247, 198, 87, 1) !important;
         }}
         .stCaption, p {{
-            color: rgba(255, 255, 255, 0.85) !important;
+            color: rgba(201, 178, 125, 0.85) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
