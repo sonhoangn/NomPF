@@ -17,7 +17,7 @@ IMG_ACC = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ac1
 
 # Configure page settings
 st.set_page_config(
-    page_title="Employee Award 2026",
+    page_title="Synergy Star 2026",
     page_icon=P_ICON,
     layout="centered"
 )
