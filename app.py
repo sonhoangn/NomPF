@@ -115,7 +115,7 @@ if BG_IMAGE_URL:
                          0 0 20px rgba(217, 119, 6, 0.6), 
                          0 0 30px rgba(180, 83, 9, 0.4);
             margin-bottom: 0.5rem;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
         }}
 
@@ -148,7 +148,7 @@ if BG_IMAGE_URL:
         button[data-testid="baseButton-primary"] {{
             background-color: rgba(28, 24, 15, 0.75) !important;
             color: #db9f16 !important;
-            border: 1px solid rgba(219, 159, 22, 0.25) !important;
+            border: 1px solid rgba(219, 159, 22, 0.15) !important;
             border-radius: 8px !important;
             box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.15) !important;
         }}
@@ -158,7 +158,7 @@ if BG_IMAGE_URL:
         button[data-testid="baseButton-secondary"]:hover,
         button[data-testid="baseButton-primary"]:hover {{
             background-color: rgba(28, 24, 15, 0.75) !important;
-            border-color: rgba(219, 159, 22, 0.5) !important;
+            border-color: rgba(219, 159, 22, 0.2) !important;
             box-shadow: 0 4px 16px 0 rgba(245, 158, 11, 0.30) !important;
             color: #db9f16 !important;
         }}
