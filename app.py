@@ -4,6 +4,7 @@ import streamlit as st
 from datetime import datetime
 
 # --- CONFIGURABLE MEDIA ASSETS ---
+LOGO_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/alg.png"
 BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg2.png"
 IMG_WELCOME = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
 IMG_THANKYOU = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ty.png"
@@ -375,11 +376,19 @@ init_data_file()
 
 # Header Section with Golden Glow Title Effect
 st.markdown(f"""
+    <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
+        <img src="{LOGO_URL}" alt="Logo" style="
+            max-height: 100px; 
+            width: auto; 
+            display: block; 
+            background: transparent !important; 
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.9)) drop-shadow(0 0 22px rgba(217, 119, 6, 0.7));
+        " />
+    </div>
     <div class="golden-title-card">
         <h1 class="golden-glow-text" style="text-wrap: balance; max-width: 450px; text-align: center; margin: 0 auto; white-space: pre-line;">{t['title']}</h1>
     </div>
 """, unsafe_allow_html=True)
-
 
 # Helper function for navigation buttons & progress bar using standard form containers
 def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
