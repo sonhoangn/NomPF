@@ -5,7 +5,7 @@ from datetime import datetime
 
 # --- CONFIGURABLE MEDIA ASSETS ---
 LOGO_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/alg.gif"
-BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg4.png"
+BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg5.png"
 IMG_WELCOME = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
 IMG_THANKYOU = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ty.png"
 IMG_COLLAB = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cl1.png"
