@@ -388,7 +388,7 @@ st.markdown(f"""
         " />
     </div>
     <div class="golden-title-card">
-        <h1 class="golden-glow-text" style="max-width: 450px; margin: 0 auto">{t['title']}</h1>
+        <h1 class="golden-glow-text" style="max-width: 450px; margin: 0 auto; white-space: pre-line;">{t['title']}</h1>
     </div>
 """, unsafe_allow_html=True)
 
