@@ -127,14 +127,19 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(42, 35, 15, 0.6) !important;
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(245, 158, 11, 0.2) !important;
+            background: rgba(42, 35, 15, 0.85) !important; /* Increased opacity from 0.6 to 0.85 */
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 158, 11, 0.3) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
             padding: 2rem !important;
             margin-bottom: 1.5rem;
+        }}
+        
+        /* Ensure inner content blocks inside the bordered container inherit transparency cleanly */
+        div[data-testid="stVerticalBlockBorderWrapper"] > div {{
+            background: transparent !important;
         }}
 
         /* Input text fields & select boxes styling */
