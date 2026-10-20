@@ -150,6 +150,7 @@ if BG_IMAGE_URL:
             color: #db9f16 !important;
             border: 1px solid rgba(219, 159, 22, 0.25) !important;
             border-radius: 8px !important;
+            box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.15) !important;
         }}
 
         /* Hover effect for buttons */
@@ -158,6 +159,7 @@ if BG_IMAGE_URL:
         button[data-testid="baseButton-primary"]:hover {{
             background-color: rgba(28, 24, 15, 0.75) !important;
             border-color: rgba(219, 159, 22, 0.5) !important;
+            box-shadow: 0 4px 16px 0 rgba(245, 158, 11, 0.30) !important;
             color: #db9f16 !important;
         }}
 
