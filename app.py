@@ -106,8 +106,8 @@ if BG_IMAGE_URL:
         /* --- GOLDEN GLOW TITLE STYLING --- */
         .golden-title-card {{
             background: rgba(42, 35, 15, 0.6);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(245, 158, 11, 0.2) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
@@ -129,8 +129,8 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"] {{
             background-color: rgba(42, 35, 15, 0.6) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(5px) !important;
+            backdrop-filter: blur(5px) !important;
             border: 1px solid rgba(245, 158, 11, 0.3) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
