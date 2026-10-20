@@ -98,7 +98,7 @@ if BG_IMAGE_URL:
 
         /* --- GOLDEN GLOW TITLE STYLING --- */
         .golden-title-card {{
-            background: rgba(42, 35, 15, 0.85);
+            background: rgba(42, 35, 15, 0.6);
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(245, 158, 11, 0.4);
@@ -122,7 +122,7 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(50, 50, 50, 0.75) !important;
+            background: rgba(50, 50, 50, 0.6) !important;
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -146,7 +146,7 @@ if BG_IMAGE_URL:
         div[data-testid="stForm"] button, 
         button[data-testid="baseButton-secondary"],
         button[data-testid="baseButton-primary"] {{
-            background-color: rgba(30, 30, 30, 0.85) !important;
+            background-color: rgba(30, 30, 30, 0.75) !important;
             color: #FFFFFF !important;
             border: 1px solid rgba(255, 255, 255, 0.25) !important;
             border-radius: 8px !important;
@@ -156,7 +156,7 @@ if BG_IMAGE_URL:
         div[data-testid="stForm"] button:hover, 
         button[data-testid="baseButton-secondary"]:hover,
         button[data-testid="baseButton-primary"]:hover {{
-            background-color: rgba(50, 50, 50, 0.95) !important;
+            background-color: rgba(50, 50, 50, 0.75) !important;
             border-color: rgba(255, 255, 255, 0.5) !important;
             color: #FFFFFF !important;
         }}
