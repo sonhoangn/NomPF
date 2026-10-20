@@ -105,7 +105,7 @@ if BG_IMAGE_URL:
             border-radius: 16px;
             padding: 1.5rem 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.5);
             text-align: center;
         }}
 
