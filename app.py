@@ -115,8 +115,8 @@ if BG_IMAGE_URL:
                          0 0 20px rgba(217, 119, 6, 0.6), 
                          0 0 30px rgba(180, 83, 9, 0.4);
             margin-bottom: 0.5rem;
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 1.8rem !important;
+            font-weight: 650;
         }}
 
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
