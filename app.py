@@ -99,7 +99,7 @@ if BG_IMAGE_URL:
         /* --- GOLDEN GLOW TITLE STYLING --- */
         .golden-title-card {{
             background: rgba(42, 35, 15, 0.6);
-            -webkit-backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(245, 158, 11, 0.4);
             border-radius: 16px;
@@ -123,8 +123,8 @@ if BG_IMAGE_URL:
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
             background: rgba(50, 50, 50, 0.6) !important;
-            -webkit-backdrop-filter: blur(16px);
-            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
