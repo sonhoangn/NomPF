@@ -192,7 +192,7 @@ TRANSLATIONS = {
 
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
-        "nominee_label": "Hoặc nhập tên mới thủ công *",
+        "nominee_label": "Nhập tên thủ công *",
         "nominee_placeholder": "Nhập họ tên đầy đủ...",
         "dept_label": "Phòng ban / Bộ phận *",
         "dropdown_label": "📋 Chọn từ danh sách có sẵn (hoặc để trống để nhập tên mới):",
@@ -247,7 +247,7 @@ TRANSLATIONS = {
 
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
-        "nominee_label": "Or type custom name manually *",
+        "nominee_label": "Type name manually *",
         "nominee_placeholder": "Type full name...",
         "dept_label": "Department *",
         "dropdown_label": "📋 Choose from existing list (or leave default to type custom name):",
@@ -302,7 +302,7 @@ TRANSLATIONS = {
 
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
-        "nominee_label": "Oder eigenen Namen manuell eingeben *",
+        "nominee_label": "Eigenen Namen manuell eingeben *",
         "nominee_placeholder": "Vollständigen Namen eingeben...",
         "dept_label": "Abteilung *",
         "dropdown_label": "📋 Aus bestehender Liste wählen (oder Standard lassen für manuellen Namen):",
@@ -430,16 +430,17 @@ elif st.session_state["step"] == 1:
         st.subheader(t["sec1"])
 
         # 1. Choose from existing list dropdown
-        selected_from_list = st.selectbox(
-            t["dropdown_label"],
-            options=[t["dropdown_placeholder"]] + NOMINEE_LIBRARY,
-            index=0
-        )
+        # selected_from_list = st.selectbox(
+        #     t["dropdown_label"],
+        #     options=[t["dropdown_placeholder"]] + NOMINEE_LIBRARY,
+        #     index=0
+        # )
 
         # 2. Or key in custom name manually
         typed_custom_name = st.text_input(
             t["nominee_label"],
-            value=st.session_state["nominee_name"] if selected_from_list == t["dropdown_placeholder"] else "",
+            # value=st.session_state["nominee_name"] if selected_from_list == t["dropdown_placeholder"] else "",
+            value=st.session_state["nominee_name"],
             placeholder=t["nominee_placeholder"]
         )
 
@@ -461,7 +462,8 @@ elif st.session_state["step"] == 1:
 
     if next_clicked:
         # Resolve nominee name: dropdown selection takes precedence if picked, otherwise typed text
-        final_nominee_name = selected_from_list if selected_from_list != t["dropdown_placeholder"] else typed_custom_name.strip()
+        # final_nominee_name = selected_from_list if selected_from_list != t["dropdown_placeholder"] else typed_custom_name.strip()
+        final_nominee_name = typed_custom_name.strip()
 
         if not final_nominee_name:
             st.error(t["err_fields"])
