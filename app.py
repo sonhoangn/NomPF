@@ -127,19 +127,19 @@ if BG_IMAGE_URL:
         /* --- MAKE ALL FORMS & CONTAINERS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"], 
         div[data-testid="stVerticalBlockBorderWrapper"] {{
-            background: rgba(42, 35, 15, 0.85) !important; /* Increased opacity from 0.6 to 0.85 */
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
+            background-color: rgba(42, 35, 15, 0.85) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            backdrop-filter: blur(12px) !important;
             border: 1px solid rgba(245, 158, 11, 0.3) !important;
             border-radius: 16px !important;
             box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
             padding: 2rem !important;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.5rem !important;
         }}
-        
-        /* Ensure inner content blocks inside the bordered container inherit transparency cleanly */
-        div[data-testid="stVerticalBlockBorderWrapper"] > div {{
-            background: transparent !important;
+
+        /* Force all inner vertical blocks inside the bordered container to be transparent so the card background shows through */
+        div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stVerticalBlock"] {{
+            background-color: transparent !important;
         }}
 
         /* Input text fields & select boxes styling */
@@ -490,7 +490,8 @@ elif st.session_state["step"] == 1:
         except ValueError:
             default_dept_index = 0
 
-        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index, key="select_department")
+        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index,
+                                  key="select_department")
         st.session_state["department"] = department
 
         st.write("")
