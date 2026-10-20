@@ -178,7 +178,7 @@ if BG_IMAGE_URL:
 # --- MULTI-LANGUAGE DICTIONARY ---
 TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
-        "title": "Cổng Đề Cử Ngôi Sao Tạo Động Lưc",
+        "title": "Cổng Đề Cử Ngôi Sao Tạo Động Lực",
         "welcome_heading": "Chào Mừng Đến Với Cổng Đề Cử",
         "welcome_desc": "Chương trình vinh danh các cá nhân xuất sắc đã có những đóng góp nổi bật. Hãy cùng gửi đề cử của bạn!",
         "start_btn": "Bắt Đầu Đề Cử",
@@ -376,7 +376,7 @@ init_data_file()
 # Header Section with Golden Glow Title Effect
 st.markdown(f"""
     <div class="golden-title-card">
-        <h1 class="golden-glow-text">{t['title']}</h1>
+        <h1 class="golden-glow-text" style="text-wrap: balance; max-width: 400px; text-align: center;">{t['title']}</h1>
     </div>
 """, unsafe_allow_html=True)
 
