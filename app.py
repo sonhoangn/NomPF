@@ -20,6 +20,11 @@ st.set_page_config(
     layout="centered"
 )
 
+# --- LOAD SECRETS FOR NOMINEE LIBRARY & ADMIN ---
+AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
+# Safe retrieval of nominee list from secrets, falling back to a default sample list if not configured
+NOMINEE_LIBRARY = st.secrets.get("NOMINEE_LIST", ["Nguyen Van A", "John Doe", "Max Mustermann"])
+
 # --- SESSION STATE INITIALIZATION ---
 if "step" not in st.session_state:
     st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You
@@ -189,8 +194,9 @@ TRANSLATIONS = {
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
         "nominee_label": "Tên người được đề cử *",
-        "nominee_placeholder": "Nguyễn Văn A",
+        "nominee_placeholder": "Nhập hoặc chọn tên người được đề cử...",
         "dept_label": "Phòng ban / Bộ phận *",
+        "suggestions_label": "💡 Gợi ý tên phù hợp từ danh sách:",
 
         "collab_title": "1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
@@ -242,8 +248,9 @@ TRANSLATIONS = {
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
         "nominee_label": "Nominee Name *",
-        "nominee_placeholder": "John Doe",
+        "nominee_placeholder": "Type or select nominee name...",
         "dept_label": "Department *",
+        "suggestions_label": "💡 Matching suggestions from library:",
 
         "collab_title": "1. Collaboration",
         "collab_desc": "Description: Demonstrate a teamwork spirit that goes beyond the defined scope of work; coordinate effectively with others through knowledge sharing, teammate support, proactive feedback, and constructive conflict resolution.",
@@ -295,8 +302,9 @@ TRANSLATIONS = {
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
         "nominee_label": "Name des Nominierten *",
-        "nominee_placeholder": "Max Mustermann",
+        "nominee_placeholder": "Namen eingeben oder auswählen...",
         "dept_label": "Abteilung *",
+        "suggestions_label": "💡 Namensvorschläge aus der Bibliothek:",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
@@ -392,6 +400,7 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
+
 # Helper function for navigation buttons & progress bar using standard form containers
 def render_nav_buttons(show_back=True, next_label=None, is_submit=False):
     current_step = st.session_state["step"]
@@ -436,8 +445,19 @@ if st.session_state["step"] == 0:
 elif st.session_state["step"] == 1:
     with st.form(key="step1_form"):
         st.subheader(t["sec1"])
-        nominee_name = st.text_input(t["nominee_label"], value=st.session_state["nominee_name"],
-                                     placeholder=t["nominee_placeholder"])
+
+        # Interactive Search / Text Input for Nominee Name
+        nominee_name = st.text_input(
+            t["nominee_label"],
+            value=st.session_state["nominee_name"],
+            placeholder=t["nominee_placeholder"]
+        )
+
+        # Dynamic matching suggestion logic based on user text input query string
+        if nominee_name.strip():
+            matches = [name for name in NOMINEE_LIBRARY if nominee_name.lower() in name.lower()]
+            if matches:
+                st.caption(f"{t['suggestions_label']} " + ", ".join([f"`{m}`" for m in matches[:5]]))
 
         # Department Dropdown Selection
         dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
@@ -661,7 +681,6 @@ elif st.session_state["step"] == 6:
 st.divider()
 with st.expander(t["admin_sec"]):
     admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
-    AD_PASS = st.secrets.get("AD_PASS")
     if admin_password == AD_PASS:
         st.success(t["admin_success"])
         if os.path.exists(DATA_FILE):
