@@ -137,7 +137,8 @@ if BG_IMAGE_URL:
             margin-bottom: 1.5rem !important;
         }}
 
-        /* Force all inner vertical blocks inside the bordered container to be transparent so the card background shows through */
+        /* Force inner container blocks to inherit the solid styling cleanly */
+        div[data-testid="stVerticalBlockBorderWrapper"] > div,
         div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stVerticalBlock"] {{
             background-color: transparent !important;
         }}
