@@ -509,12 +509,12 @@ elif st.session_state["step"] == 1:
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-        if next_clicked:
-            if not st.session_state["nominee_name"].strip():
-                st.error(t["err_fields"])
-            else:
-                st.session_state["step"] = 2
-                st.rerun()
+    if next_clicked:
+        if not st.session_state["nominee_name"].strip():
+            st.error(t["err_fields"])
+        else:
+            st.session_state["step"] = 2
+            st.rerun()
 
 # ==========================================
 # SCREEN 2: COLLABORATION
