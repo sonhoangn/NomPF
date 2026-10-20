@@ -225,7 +225,7 @@ TRANSLATIONS = {
         "next_btn": "Tiếp theo ➔",
         "prev_btn": "⬅️ Quay lại",
         "submit_btn": "Hoàn Tất & Gửi Đề Cử",
-        "err_fields": "⚠️ Vui lòng chọn từ danh sách hoặc nhập tên người được đề cử!",
+        "err_fields": "⚠️ Vui lòng nhập tên người được đề cử!",
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
@@ -280,7 +280,7 @@ TRANSLATIONS = {
         "next_btn": "Next ➔",
         "prev_btn": "⬅️ Back",
         "submit_btn": "Submit Nomination",
-        "err_fields": "⚠️ Please select from the list or type the nominee name!",
+        "err_fields": "⚠️ Please select type the nominee name!",
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
@@ -335,7 +335,7 @@ TRANSLATIONS = {
         "next_btn": "Weiter ➔",
         "prev_btn": "⬅️ Zurück",
         "submit_btn": "Nominierung Absenden",
-        "err_fields": "⚠️ Bitte wählen Sie aus der Liste oder geben Sie den Namen ein!",
+        "err_fields": "⚠️ Bitte geben Sie den Namen ein!",
         "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "Vielen Dank für Ihre Nominierung!",
