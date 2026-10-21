@@ -89,13 +89,49 @@ if BG_IMAGE_URL:
     st.markdown(f"""
         <style>
         @import url('https://googleapis.com');
+        /* TitleCondOfcVI */
+        
+        @font-face {{
+            font-family: 'TitleCondOfcVI';
+            src: url('app/static/MBCorpoATitleCondOfcVI-Regular 2.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }}
+        
+        @font-face {{
+            font-family: 'TitleOfcVI';
+            src: url('app/static/MBCorpoATitleOfcVI-Regular 2.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }}
+        
+        @font-face {{
+            font-family: 'TextOfcVI-Bold';
+            src: url('app/static/MBCorpoSTextOfcVI-Bold 2.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }}
+        
+        @font-face {{
+            font-family: 'TextOfcVI-Light';
+            src: url('app/static/MBCorpoSTextOfcVI-Light 2.ttf') format('truetype');
+            font-weight: 100;
+            font-style: normal;
+        }}
+        
+        @font-face {{
+            font-family: 'TextOfcVI-Regular';
+            src: url('app/static/MBCorpoSTextOfcVI-Regular 2.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }}
     
         html, body, [class*="css"] {{
-            font-family: 'VT232', monospace;
+            font-family: 'TitleOfcVI', monospace;
         }}
     
         h1, h2, h3 {{
-            font-family: 'VT232', monospace;
+            font-family: 'TitleCondOfcVI', monospace;
             font-weight: normal;
         }}
         /* Anchor background wallpaper */
@@ -132,7 +168,7 @@ if BG_IMAGE_URL:
                          0 0 20px rgba(217, 119, 6, 0.6), 
                          0 0 30px rgba(180, 83, 9, 0.4);
             margin-bottom: 0.5rem;
-            font-family: 'VT232', monospace;
+            font-family: 'TitleCondOfcVI', monospace;
             font-size: 1.8rem !important;
             font-weight: 650;
         }}
@@ -157,7 +193,7 @@ if BG_IMAGE_URL:
             color: rgba(245, 158, 11, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(245, 158, 11, 0.2) !important;
-            font-family: 'VT232', monospace;
+            font-family: 'TitleOfcVI', monospace;
             font-weight: normal;
         }}
 
@@ -170,7 +206,7 @@ if BG_IMAGE_URL:
             border: 1px solid rgba(219, 159, 22, 0.15) !important;
             border-radius: 8px !important;
             box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.15) !important;
-            font-family: 'VT232', monospace;
+            font-family: 'TitleOfcVI', monospace;
             font-weight: normal;
         }}
 
@@ -182,7 +218,7 @@ if BG_IMAGE_URL:
             border-color: rgba(219, 159, 22, 0.2) !important;
             box-shadow: 0 4px 16px 0 rgba(245, 158, 11, 0.30) !important;
             color: #db9f16 !important;
-            font-family: 'VT232', monospace;
+            font-family: 'TitleOfcVI', monospace;
             font-weight: normal;
         }}
 
@@ -432,7 +468,7 @@ if st.session_state["step"] == 0:
         st.markdown(f"""
             <div style="text-align: center; padding: 1rem 0;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line;">{t['welcome_desc']}</p>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleOfcVI', monospace;">{t['welcome_desc']}</p>
             </div>
         """, unsafe_allow_html=True)
 
