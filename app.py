@@ -195,7 +195,7 @@ if BG_IMAGE_URL:
             font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
         }}
-
+        
         /* --- UNIFIED BUTTON STYLING (THEME INDEPENDENT) --- */
         div[data-testid="stForm"] button, 
         button[data-testid="baseButton-secondary"],
@@ -220,7 +220,7 @@ if BG_IMAGE_URL:
             font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
         }}
-
+        
         /* Custom styling to make the progress bar highly visible */
         .stProgress > div > div > div > div {{
             background-color: #4ADE80 !important;
@@ -231,7 +231,7 @@ if BG_IMAGE_URL:
             color: rgba(247, 198, 87, 1) !important;
         }}
         .stCaption, p {{
-            color: rgba(201, 178, 125, 0.85) !important;
+            color: rgba(247, 198, 87, 0.85) !important;
         }}
         </style>
         """, unsafe_allow_html=True)
