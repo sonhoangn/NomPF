@@ -127,11 +127,11 @@ if BG_IMAGE_URL:
         }}
     
         html, body, [class*="css"] {{
-            font-family: 'TitleOfcVI', monospace;
+            font-family: 'TitleOfcVI';
         }}
     
         h1, h2, h3 {{
-            font-family: 'TitleCondOfcVI', monospace;
+            font-family: 'TitleCondOfcVI';
             font-weight: normal;
         }}
         /* Anchor background wallpaper */
@@ -168,7 +168,7 @@ if BG_IMAGE_URL:
                          0 0 20px rgba(217, 119, 6, 0.6), 
                          0 0 30px rgba(180, 83, 9, 0.4);
             margin-bottom: 0.5rem;
-            font-family: 'TitleCondOfcVI', monospace;
+            font-family: 'TitleCondOfcVI';
             font-size: 1.8rem !important;
             font-weight: 650;
         }}
@@ -193,7 +193,7 @@ if BG_IMAGE_URL:
             color: rgba(245, 158, 11, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(245, 158, 11, 0.2) !important;
-            font-family: 'TitleOfcVI', monospace;
+            font-family: 'TitleOfcVI';
             font-weight: normal;
         }}
 
@@ -206,7 +206,7 @@ if BG_IMAGE_URL:
             border: 1px solid rgba(219, 159, 22, 0.15) !important;
             border-radius: 8px !important;
             box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.15) !important;
-            font-family: 'TitleOfcVI', monospace;
+            font-family: 'TitleOfcVI';
             font-weight: normal;
         }}
 
@@ -218,7 +218,7 @@ if BG_IMAGE_URL:
             border-color: rgba(219, 159, 22, 0.2) !important;
             box-shadow: 0 4px 16px 0 rgba(245, 158, 11, 0.30) !important;
             color: #db9f16 !important;
-            font-family: 'TitleOfcVI', monospace;
+            font-family: 'TitleOfcVI';
             font-weight: normal;
         }}
 
@@ -468,7 +468,7 @@ if st.session_state["step"] == 0:
         st.markdown(f"""
             <div style="text-align: center; padding: 1rem 0;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleOfcVI', monospace;">{t['welcome_desc']}</p>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleOfcVI'">{t['welcome_desc']}</p>
             </div>
         """, unsafe_allow_html=True)
 
