@@ -232,6 +232,8 @@ if BG_IMAGE_URL:
         }}
         .stCaption, p {{
             color: rgba(247, 198, 87, 0.85) !important;
+            font-size: 1rem !important;
+            
         }}
         </style>
         """, unsafe_allow_html=True)
