@@ -231,7 +231,7 @@ if BG_IMAGE_URL:
             color: rgba(247, 198, 87, 1) !important;
         }}
         .stCaption, p {{
-            color: rgba(247, 198, 87, 0.85) !important;
+            color: rgba(247, 198, 87, 0.95) !important;
             font-size: 1.3rem !important;
             
         }}
