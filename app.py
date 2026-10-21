@@ -50,11 +50,16 @@ for key, default_val in default_keys.items():
 
 # --- ADVANCED NAME MATCHING & NORMALIZATION ENGINE ---
 def normalize_tokens(name_str):
+    """Removes commas, extra whitespace, and splits into lowercase tokens."""
     cleaned = name_str.replace(",", " ").strip()
     return [token.lower() for token in cleaned.split() if token]
 
 
 def get_canonical_name(input_name, library_list):
+    """
+    Matches input name against the library considering comma placement and token variations.
+    Strictly preserves token sequence orders (e.g., 'Nguyen Van A' != 'Nguyen A Van').
+    """
     if not input_name:
         return input_name
 
@@ -198,6 +203,7 @@ if BG_IMAGE_URL:
             font-weight: 650;
         }}
 
+        div[data-testid="stExpander"], 
         div[data-testid="stForm"] {{
             background-color: rgba(42, 35, 15, 0.6) !important;
             -webkit-backdrop-filter: blur(5px) !important;
@@ -319,6 +325,7 @@ TRANSLATIONS = {
         "raw_table_title": "📋 Bảng Dữ Liệu Gốc Các Đề Cử:",
         "chart_votes_title": "📈 Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
         "chart_scores_title": "⭐ Top 10 Đề Cử Điểm Trung Bình Cao Nhất",
+        "chart_pie_title": "🥧 Tỷ Lệ Phân Bổ Bình Chọn (Phần Trăm Lượt Đề Cử)",
         "leaderboard_title": "🏆 Bảng Xếp Hạng (Top 10 Đề Cử Hàng Đầu)",
         "err_pass": "Mật khẩu không chính xác!"
     },
@@ -377,6 +384,7 @@ TRANSLATIONS = {
         "raw_table_title": "📋 Raw Nominations Table:",
         "chart_votes_title": "📈 Top 10 Most Voted Nominees",
         "chart_scores_title": "⭐ Top 10 Highest Average Scores",
+        "chart_pie_title": "🥧 Vote Allocation Percentage (Pie Chart)",
         "leaderboard_title": "🏆 Leaderboard (Top 10 Nominees)",
         "err_pass": "Incorrect password!"
     },
@@ -435,6 +443,7 @@ TRANSLATIONS = {
         "raw_table_title": "📋 Rohdaten-Tabelle der Nominierungen:",
         "chart_votes_title": "📈 Top 10 Nominierte nach Stimmen",
         "chart_scores_title": "⭐ Top 10 Höchste Durchschnittswerte",
+        "chart_pie_title": "🥧 Stimmverteilung (Prozentdiagramm)",
         "leaderboard_title": "🏆 Bestenliste (Top 10 Nominierte)",
         "err_pass": "Falsches Passwort!"
     }
@@ -770,6 +779,24 @@ with st.expander(t["admin_sec"]):
                     top_scores = summary_df.sort_values(by="Điểm_Trung_Bình_Tổng_Thể", ascending=False).head(10)
                     chart_scores_data = top_scores.set_index("Tên Người Được Đề Cử")["Điểm_Trung_Bình_Tổng_Thể"]
                     st.bar_chart(chart_scores_data)
+
+                    # Pie Chart: Vote Percentage Allocation (using Altair for native Streamlit pie chart rendering)
+                    st.markdown(f"### {t['chart_pie_title']}")
+                    import altair as alt
+
+                    pie_data = summary_df.copy()
+                    total_votes_sum = pie_data["Số_Lượt_Đề_Cử"].sum()
+                    pie_data["Phần_Trăm"] = (pie_data[
+                                                 "Số_Lượt_Đề_Cử"] / total_votes_sum) * 100 if total_votes_sum > 0 else 0
+
+                    pie_chart = alt.Chart(pie_data).mark_arc(innerRadius=50).encode(
+                        theta=alt.Theta(field="Số_Lượt_Đề_Cử", type="quantitative"),
+                        color=alt.Color(field="Tên Người Được Đề Cử", type="nominal",
+                                        legend=alt.Legend(title="Nominee")),
+                        tooltip=["Tên Người Được Đề Cử", "Số_Lượt_Đề_Cử",
+                                 alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
+                    ).properties(width=400, height=350)
+                    st.altair_chart(pie_chart, use_container_width=True)
 
                     # Leaderboard: Top 10 Nominees combining votes + highest average scores
                     st.markdown(f"### {t['leaderboard_title']}")
