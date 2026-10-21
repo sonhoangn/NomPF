@@ -132,6 +132,7 @@ if BG_IMAGE_URL:
                          0 0 20px rgba(217, 119, 6, 0.6), 
                          0 0 30px rgba(180, 83, 9, 0.4);
             margin-bottom: 0.5rem;
+            font-family: 'VT232', monospace;
             font-size: 1.8rem !important;
             font-weight: 650;
         }}
@@ -156,6 +157,8 @@ if BG_IMAGE_URL:
             color: rgba(245, 158, 11, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(245, 158, 11, 0.2) !important;
+            font-family: 'VT232', monospace;
+            font-weight: normal;
         }}
 
         /* --- UNIFIED BUTTON STYLING (THEME INDEPENDENT) --- */
@@ -167,6 +170,8 @@ if BG_IMAGE_URL:
             border: 1px solid rgba(219, 159, 22, 0.15) !important;
             border-radius: 8px !important;
             box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.15) !important;
+            font-family: 'VT232', monospace;
+            font-weight: normal;
         }}
 
         /* Hover effect for buttons */
@@ -177,6 +182,8 @@ if BG_IMAGE_URL:
             border-color: rgba(219, 159, 22, 0.2) !important;
             box-shadow: 0 4px 16px 0 rgba(245, 158, 11, 0.30) !important;
             color: #db9f16 !important;
+            font-family: 'VT232', monospace;
+            font-weight: normal;
         }}
 
         /* Custom styling to make the progress bar highly visible */
