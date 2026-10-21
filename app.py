@@ -468,7 +468,7 @@ if st.session_state["step"] == 0:
         st.markdown(f"""
             <div style="text-align: center; padding: 1rem 0;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleOfcVI'">{t['welcome_desc']}</p>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleOfcVI';">{t['welcome_desc']}</p>
             </div>
         """, unsafe_allow_html=True)
 
