@@ -188,7 +188,7 @@ if BG_IMAGE_URL:
 TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
         "title": "Cổng Đề Cử \nNgôi Sao Tạo Động Lực",
-        "welcome_heading": "Chào Mừng Đến Với Cổng Đề Cử",
+        "welcome_heading": "Chào Mừng Đến Cổng Đề Cử",
         "welcome_desc": "Chương trình vinh danh các cá nhân xuất sắc đã có những đóng góp nổi bật.\nHãy cùng gửi đề cử của bạn!",
         "start_btn": "Bắt Đầu Đề Cử",
 
