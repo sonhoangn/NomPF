@@ -127,11 +127,11 @@ if BG_IMAGE_URL:
         }}
     
         html, body, [class*="css"] {{
-            font-family: 'TitleOfcVI';
+            font-family: 'TitleOfcVI' !important;
         }}
     
         h1, h2, h3 {{
-            font-family: 'TitleCondOfcVI';
+            font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
         }}
         /* Anchor background wallpaper */
@@ -453,7 +453,7 @@ st.markdown(f"""
         " />
     </div>
     <div class="golden-title-card">
-        <h1 class="golden-glow-text" style="width: 100%; text-align: center; margin: 0 auto; white-space: pre-line;">{t['title']}</h1>
+        <h1 class="golden-glow-text" style="font-family: 'TitleCondOfcVI' !important; width: 100%; text-align: center; margin: 0 auto; white-space: pre-line;">{t['title']}</h1>
     </div>
 """, unsafe_allow_html=True)
 
@@ -467,7 +467,7 @@ if st.session_state["step"] == 0:
             st.image(IMG_WELCOME, use_container_width=True)
         st.markdown(f"""
             <div style="text-align: center; padding: 1rem 0;">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
+                <h2 style="font-family: 'TitleCondOfcVI' !important; font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
                 <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleOfcVI';">{t['welcome_desc']}</p>
             </div>
         """, unsafe_allow_html=True)
