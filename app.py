@@ -124,7 +124,7 @@ if BG_IMAGE_URL:
         }}
     
         html, body, [class*="css"] {{
-            font-family: 'TitleOfcVI' !important;
+            font-family: 'TitleCondOfcVI' !important;
         }}
     
         h1, h2, h3 {{
@@ -180,6 +180,8 @@ if BG_IMAGE_URL:
             box-shadow: 0 8px 32px 0 rgba(245, 158, 11, 0.5) !important;
             padding: 2rem !important;
             margin-bottom: 1.5rem !important;
+            font-family: 'TitleCondOfcVI' !important;
+            font-weight: normal;
         }}
 
         /* Input text fields & select boxes styling */
@@ -190,7 +192,7 @@ if BG_IMAGE_URL:
             color: rgba(245, 158, 11, 0.95) !important;
             border-radius: 8px !important;
             border: 1px solid rgba(245, 158, 11, 0.2) !important;
-            font-family: 'TitleOfcVI' !important;
+            font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
         }}
 
@@ -203,7 +205,7 @@ if BG_IMAGE_URL:
             border: 1px solid rgba(219, 159, 22, 0.15) !important;
             border-radius: 8px !important;
             box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.15) !important;
-            font-family: 'TitleOfcVI' !important;
+            font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
         }}
 
@@ -215,7 +217,7 @@ if BG_IMAGE_URL:
             border-color: rgba(219, 159, 22, 0.2) !important;
             box-shadow: 0 4px 16px 0 rgba(245, 158, 11, 0.30) !important;
             color: #db9f16 !important;
-            font-family: 'TitleOfcVI' !important;
+            font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
         }}
 
@@ -465,7 +467,7 @@ if st.session_state["step"] == 0:
         st.markdown(f"""
             <div style="text-align: center; padding: 1rem 0;">
                 <h2 style="font-family: 'TitleCondOfcVI' !important; font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleOfcVI';">{t['welcome_desc']}</p>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleCondOfcVI' !important;">{t['welcome_desc']}</p>
             </div>
         """, unsafe_allow_html=True)
 
