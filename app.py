@@ -194,6 +194,7 @@ if BG_IMAGE_URL:
             border: 1px solid rgba(245, 158, 11, 0.2) !important;
             font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
+            font-size: 1.2rem !important;
         }}
         
         /* --- UNIFIED BUTTON STYLING (THEME INDEPENDENT) --- */
@@ -207,6 +208,7 @@ if BG_IMAGE_URL:
             box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.15) !important;
             font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
+            font-size: 1.2rem !important;
         }}
 
         /* Hover effect for buttons */
@@ -219,6 +221,7 @@ if BG_IMAGE_URL:
             color: #db9f16 !important;
             font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
+            font-size: 1.2rem !important;
         }}
         
         /* Custom styling to make the progress bar highly visible */
