@@ -88,6 +88,16 @@ def get_slider_glow_style(score):
 if BG_IMAGE_URL:
     st.markdown(f"""
         <style>
+        @import url('https://googleapis.com');
+    
+        html, body, [class*="css"] {{
+            font-family: 'VT232', monospace;
+        }}
+    
+        h1, h2, h3 {{
+            font-family: 'VT232', monospace;
+            font-weight: normal;
+        }}
         /* Anchor background wallpaper */
         .stApp {{
             background-image: url("{BG_IMAGE_URL}");
