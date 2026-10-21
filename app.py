@@ -5,7 +5,7 @@ from datetime import datetime
 from PIL import Image
 
 # --- CONFIGURABLE MEDIA ASSETS ---
-LOGO_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/alg.gif"
+LOGO_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/icon.png"
 P_ICON = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/icon.png"
 BG_IMAGE_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.gif"
 IMG_WELCOME = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/bg.png"
