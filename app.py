@@ -3,6 +3,13 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 from PIL import Image
+import io
+
+# --- REPORTLAB PDF GENERATION IMPORTS ---
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
 
 # --- CONFIGURABLE MEDIA ASSETS ---
 LOGO_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/icon.png"
@@ -321,6 +328,7 @@ TRANSLATIONS = {
         "admin_success": "Xác thực thành công!",
         "total_nominations": "Tổng số lượt đề cử:",
         "download_btn": "📥 Tải Bảng Dữ Liệu Gốc (CSV)",
+        "download_pdf_btn": "📥 Tải Báo Cáo PDF Dashboard",
         "summary_table_title": "📊 Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
         "raw_table_title": "📋 Bảng Dữ Liệu Gốc Các Đề Cử:",
         "chart_votes_title": "📈 Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
@@ -380,6 +388,7 @@ TRANSLATIONS = {
         "admin_success": "Authentication successful!",
         "total_nominations": "Total nominations:",
         "download_btn": "📥 Download Raw Data (CSV)",
+        "download_pdf_btn": "📥 Download Dashboard PDF Report",
         "summary_table_title": "📊 Summary Table of Total Votes & Average Scores:",
         "raw_table_title": "📋 Raw Nominations Table:",
         "chart_votes_title": "📈 Top 10 Most Voted Nominees",
@@ -439,6 +448,7 @@ TRANSLATIONS = {
         "admin_success": "Authentifizierung erfolgreich!",
         "total_nominations": "Gesamtzahl der Nominierungen:",
         "download_btn": "📥 Rohdaten herunterladen (CSV)",
+        "download_pdf_btn": "📥 Dashboard PDF-Bericht herunterladen",
         "summary_table_title": "📊 Zusammenfassung der Stimmen & Durchschnittswerte:",
         "raw_table_title": "📋 Rohdaten-Tabelle der Nominierungen:",
         "chart_votes_title": "📈 Top 10 Nominierte nach Stimmen",
@@ -483,6 +493,79 @@ def init_data_file():
 
 
 init_data_file()
+
+
+# Helper function to generate PDF report
+def generate_pdf_report(summary_df, leaderboard_df, raw_df):
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=36)
+    story = []
+
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        'ReportTitle',
+        parent=styles['Heading1'],
+        fontSize=18,
+        textColor=colors.HexColor('#B45309'),
+        alignment=1,
+        spaceAfter=15
+    )
+    heading_style = ParagraphStyle(
+        'ReportHeading',
+        parent=styles['Heading2'],
+        fontSize=12,
+        textColor=colors.HexColor('#92400E'),
+        spaceBefore=12,
+        spaceAfter=6
+    )
+    normal_style = ParagraphStyle(
+        'ReportNormal',
+        parent=styles['Normal'],
+        fontSize=9,
+        textColor=colors.HexColor('#1F2937')
+    )
+
+    # Title & Metadata
+    story.append(Paragraph("Synergy Star 2026 - Admin Dashboard Report", title_style))
+    story.append(
+        Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Total Submissions: {len(raw_df)}",
+                  normal_style))
+    story.append(Spacer(1, 10))
+
+    # Helper function to convert DataFrame to ReportLab Table
+    def df_to_table(df_subset):
+        data = [list(df_subset.columns)] + df_subset.astype(str).values.tolist()
+        t = Table(data, hAlign='LEFT')
+        t.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F59E0B')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, -1), 8),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 6),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#FEF3C7')),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#D97706'))
+        ]))
+        return t
+
+    # 1. Leaderboard Section
+    story.append(Paragraph("Top 10 Leaderboard (Votes & Average Scores)", heading_style))
+    story.append(df_to_table(leaderboard_df))
+    story.append(Spacer(1, 10))
+
+    # 2. Summary Table Section
+    story.append(Paragraph("Aggregated Summary Table", heading_style))
+    story.append(df_to_table(summary_df))
+    story.append(Spacer(1, 10))
+
+    # 3. Raw Submissions Table Section
+    story.append(Paragraph("Raw Nominations Log", heading_style))
+    story.append(df_to_table(raw_df))
+
+    doc.build(story)
+    buffer.seek(0)
+    return buffer.getvalue()
+
 
 # Header Section with Golden Glow Title Effect
 st.markdown(f"""
@@ -809,13 +892,23 @@ with st.expander(t["admin_sec"]):
                 st.markdown(f"### {t['raw_table_title']}")
                 st.dataframe(df_raw, use_container_width=True)
 
-                csv_data = df_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
-                st.download_button(
-                    label=t["download_btn"],
-                    data=csv_data,
-                    file_name=f"danh_sach_de_cu_{datetime.now().strftime('%Y%m%d')}.csv",
-                    mime="text/csv"
-                )
+                col_dl1, col_dl2 = st.columns(2)
+                with col_dl1:
+                    csv_data = df_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
+                    st.download_button(
+                        label=t["download_btn"],
+                        data=csv_data,
+                        file_name=f"danh_sach_de_cu_{datetime.now().strftime('%Y%m%d')}.csv",
+                        mime="text/csv"
+                    )
+                with col_dl2:
+                    pdf_bytes = generate_pdf_report(summary_df, leaderboard_df, df_raw)
+                    st.download_button(
+                        label=t["download_pdf_btn"],
+                        data=pdf_bytes,
+                        file_name=f"synergy_star_report_{datetime.now().strftime('%Y%m%d')}.pdf",
+                        mime="application/pdf"
+                    )
             except Exception as e:
                 st.error(f"⚠️ Lỗi đọc file dữ liệu: {e}")
                 st.info("💡 Bạn có thể xóa file `danh_sach_de_cu.csv` để ứng dụng khởi tạo lại bảng dữ liệu mới.")
