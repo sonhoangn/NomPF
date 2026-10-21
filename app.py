@@ -24,7 +24,6 @@ st.set_page_config(
 
 # --- LOAD SECRETS FOR NOMINEE LIBRARY & ADMIN ---
 AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
-# Safe retrieval of nominee list from secrets, falling back to a default sample list if not configured
 NOMINEE_LIBRARY = st.secrets.get("NOMINEE_LIST", ["Nguyen Van A", "John Doe", "Max Mustermann"])
 
 # --- SESSION STATE INITIALIZATION ---
@@ -49,10 +48,44 @@ for key, default_val in default_keys.items():
         st.session_state[key] = default_val
 
 
+# --- ADVANCED NAME MATCHING & NORMALIZATION ENGINE ---
+def normalize_tokens(name_str):
+    cleaned = name_str.replace(",", " ").strip()
+    return [token.lower() for token in cleaned.split() if token]
+
+
+def get_canonical_name(input_name, library_list):
+    if not input_name:
+        return input_name
+
+    input_tokens = normalize_tokens(input_name)
+    if not input_tokens:
+        return input_name
+
+    for lib_name in library_list:
+        lib_tokens = normalize_tokens(lib_name)
+
+        # 1. Direct strict token match
+        if input_tokens == lib_tokens:
+            return lib_name
+
+        # 2. Check comma-shifted variations (e.g., "Nguyen, Van A" or "A, Nguyen Van")
+        raw_parts = [p.strip() for p in input_name.split(",")]
+        if len(raw_parts) > 1:
+            reconstructed_tokens = []
+            for part in raw_parts:
+                reconstructed_tokens.extend([t.lower() for t in part.split() if t])
+
+            if reconstructed_tokens == lib_tokens:
+                return lib_name
+
+    # If no library match is found, return the original input capitalized cleanly
+    return " ".join([t.capitalize() for t in normalize_tokens(input_name)])
+
+
 # Helper function to generate dynamic glow style based on slider value
 def get_slider_glow_style(score):
     if score >= 4:
-        # Golden Glow
         return """
         <style>
         div[data-testid="stSlider"] div[data-baseweb="slider"] div[role="slider"] {
@@ -66,7 +99,6 @@ def get_slider_glow_style(score):
         </style>
         """
     elif score == 1:
-        # Red Glow
         return """
         <style>
         div[data-testid="stSlider"] div[data-baseweb="slider"] div[role="slider"] {
@@ -80,7 +112,6 @@ def get_slider_glow_style(score):
         </style>
         """
     else:
-        # Neutral state for intermediate scores (2, 3, 0)
         return ""
 
 
@@ -94,44 +125,43 @@ if BG_IMAGE_URL:
             font-weight: normal;
             font-style: normal;
         }}
-        
+
         @font-face {{
             font-family: 'TitleOfcVI';
             src: url('app/static/MBCorpoATitleOfcVI-Regular 2.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }}
-        
+
         @font-face {{
             font-family: 'TextOfcVI-Bold';
             src: url('app/static/MBCorpoSTextOfcVI-Bold 2.ttf') format('truetype');
             font-weight: 700;
             font-style: normal;
         }}
-        
+
         @font-face {{
             font-family: 'TextOfcVI-Light';
             src: url('app/static/MBCorpoSTextOfcVI-Light 2.ttf') format('truetype');
             font-weight: 100;
             font-style: normal;
         }}
-        
+
         @font-face {{
             font-family: 'TextOfcVI-Regular';
             src: url('app/static/MBCorpoSTextOfcVI-Regular 2.ttf') format('truetype');
             font-weight: 400;
             font-style: normal;
         }}
-    
+
         html, body, [class*="css"] {{
             font-family: 'TitleCondOfcVI' !important;
         }}
-    
+
         h1, h2, h3 {{
             font-family: 'TitleCondOfcVI' !important;
             font-weight: normal;
         }}
-        /* Anchor background wallpaper */
         .stApp {{
             background-image: url("{BG_IMAGE_URL}");
             background-size: cover;
@@ -140,13 +170,11 @@ if BG_IMAGE_URL:
             background-attachment: fixed;
         }}
 
-        /* Remove default background from main page padding container */
         .main .block-container {{
             background: transparent !important;
             padding: 2.5rem;
         }}
 
-        /* --- GOLDEN GLOW TITLE STYLING --- */
         .golden-title-card {{
             background: rgba(42, 35, 15, 0.6);
             -webkit-backdrop-filter: blur(5px);
@@ -170,7 +198,6 @@ if BG_IMAGE_URL:
             font-weight: 650;
         }}
 
-        /* --- MAKE ALL FORMS COMPLETELY SOLID & OPAQUE --- */
         div[data-testid="stForm"] {{
             background-color: rgba(42, 35, 15, 0.6) !important;
             -webkit-backdrop-filter: blur(5px) !important;
@@ -184,7 +211,6 @@ if BG_IMAGE_URL:
             font-weight: normal;
         }}
 
-        /* Input text fields & select boxes styling */
         .stTextInput > div > div > input, 
         .stTextArea > div > div > textarea,
         div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
@@ -196,8 +222,7 @@ if BG_IMAGE_URL:
             font-weight: normal;
             font-size: 1.2rem !important;
         }}
-        
-        /* --- UNIFIED BUTTON STYLING (THEME INDEPENDENT) --- */
+
         div[data-testid="stForm"] button, 
         button[data-testid="baseButton-secondary"],
         button[data-testid="baseButton-primary"] {{
@@ -211,7 +236,6 @@ if BG_IMAGE_URL:
             font-size: 1.2rem !important;
         }}
 
-        /* Hover effect for buttons */
         div[data-testid="stForm"] button:hover, 
         button[data-testid="baseButton-secondary"]:hover,
         button[data-testid="baseButton-primary"]:hover {{
@@ -223,20 +247,17 @@ if BG_IMAGE_URL:
             font-weight: normal;
             font-size: 1.2rem !important;
         }}
-        
-        /* Custom styling to make the progress bar highly visible */
+
         .stProgress > div > div > div > div {{
             background-color: #4ADE80 !important;
         }}
 
-        /* Text readability fixes */
         label, .stSubheader, h1, h2, h3 {{
             color: rgba(247, 198, 87, 1) !important;
         }}
         .stCaption, p {{
             color: rgba(247, 198, 87, 0.95) !important;
             font-size: 1.2rem !important;
-            
         }}
         </style>
         """, unsafe_allow_html=True)
@@ -254,8 +275,6 @@ TRANSLATIONS = {
         "nominee_label": "Nhập tên *",
         "nominee_placeholder": "Nhập họ tên đầy đủ...",
         "dept_label": "Phòng ban / Bộ phận *",
-        "dropdown_label": "📋 Chọn từ danh sách có sẵn (hoặc để trống để nhập tên mới):",
-        "dropdown_placeholder": "-- Chọn từ danh sách có sẵn / Select from list --",
 
         "collab_title": "1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
@@ -295,7 +314,12 @@ TRANSLATIONS = {
         "admin_pass_label": "Nhập mật khẩu quản trị",
         "admin_success": "Xác thực thành công!",
         "total_nominations": "Tổng số lượt đề cử:",
-        "download_btn": "📥 Tải Bảng Dữ Liệu (CSV)",
+        "download_btn": "📥 Tải Bảng Dữ Liệu Gốc (CSV)",
+        "summary_table_title": "📊 Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
+        "raw_table_title": "📋 Bảng Dữ Liệu Gốc Các Đề Cử:",
+        "chart_votes_title": "📈 Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
+        "chart_scores_title": "⭐ Top 10 Đề Cử Điểm Trung Bình Cao Nhất",
+        "leaderboard_title": "🏆 Bảng Xếp Hạng (Top 10 Đề Cử Hàng Đầu)",
         "err_pass": "Mật khẩu không chính xác!"
     },
     "English": {
@@ -309,8 +333,6 @@ TRANSLATIONS = {
         "nominee_label": "Type name manually *",
         "nominee_placeholder": "Type full name...",
         "dept_label": "Department *",
-        "dropdown_label": "📋 Choose from existing list (or leave default to type custom name):",
-        "dropdown_placeholder": "-- Select from existing list --",
 
         "collab_title": "1. Collaboration",
         "collab_desc": "Description: Demonstrate a teamwork spirit that goes beyond the defined scope of work; coordinate effectively with others through knowledge sharing, teammate support, proactive feedback, and constructive conflict resolution.",
@@ -339,7 +361,7 @@ TRANSLATIONS = {
         "next_btn": "Next ➔",
         "prev_btn": "⬅️ Back",
         "submit_btn": "Submit Nomination",
-        "err_fields": "⚠️ Please select type the nominee name!",
+        "err_fields": "⚠️ Please type the nominee name!",
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
@@ -350,7 +372,12 @@ TRANSLATIONS = {
         "admin_pass_label": "Enter admin password",
         "admin_success": "Authentication successful!",
         "total_nominations": "Total nominations:",
-        "download_btn": "📥 Download Data (CSV)",
+        "download_btn": "📥 Download Raw Data (CSV)",
+        "summary_table_title": "📊 Summary Table of Total Votes & Average Scores:",
+        "raw_table_title": "📋 Raw Nominations Table:",
+        "chart_votes_title": "📈 Top 10 Most Voted Nominees",
+        "chart_scores_title": "⭐ Top 10 Highest Average Scores",
+        "leaderboard_title": "🏆 Leaderboard (Top 10 Nominees)",
         "err_pass": "Incorrect password!"
     },
     "Deutsch (German)": {
@@ -361,11 +388,9 @@ TRANSLATIONS = {
 
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
-        "nominee_label": "Eigenen Namen manuell eingeben *",
+        "nominee_label": "Namen manuell eingeben *",
         "nominee_placeholder": "Vollständigen Namen eingeben...",
         "dept_label": "Abteilung *",
-        "dropdown_label": "📋 Aus bestehender Liste wählen (oder Standard lassen für manuellen Namen):",
-        "dropdown_placeholder": "-- Aus Liste auswählen --",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
@@ -405,7 +430,12 @@ TRANSLATIONS = {
         "admin_pass_label": "Admin-Passwort eingeben",
         "admin_success": "Authentifizierung erfolgreich!",
         "total_nominations": "Gesamtzahl der Nominierungen:",
-        "download_btn": "📥 Daten herunterladen (CSV)",
+        "download_btn": "📥 Rohdaten herunterladen (CSV)",
+        "summary_table_title": "📊 Zusammenfassung der Stimmen & Durchschnittswerte:",
+        "raw_table_title": "📋 Rohdaten-Tabelle der Nominierungen:",
+        "chart_votes_title": "📈 Top 10 Nominierte nach Stimmen",
+        "chart_scores_title": "⭐ Top 10 Höchste Durchschnittswerte",
+        "leaderboard_title": "🏆 Bestenliste (Top 10 Nominierte)",
         "err_pass": "Falsches Passwort!"
     }
 }
@@ -461,7 +491,6 @@ st.markdown(f"""
     </div>
 """, unsafe_allow_html=True)
 
-
 # ==========================================
 # SCREEN 0: WELCOME SCREEN
 # ==========================================
@@ -482,28 +511,18 @@ if st.session_state["step"] == 0:
             st.rerun()
 
 # ==========================================
-# SCREEN 1: NOMINEE DETAILS (NOW IN AN ST.FORM)
+# SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
     with st.form(key="step1_form"):
         st.subheader(t["sec1"])
 
-        # 1. Choose from existing list dropdown
-        # selected_from_list = st.selectbox(
-        #     t["dropdown_label"],
-        #     options=[t["dropdown_placeholder"]] + NOMINEE_LIBRARY,
-        #     index=0
-        # )
-
-        # 2. Or key in custom name manually
         typed_custom_name = st.text_input(
             t["nominee_label"],
-            # value=st.session_state["nominee_name"] if selected_from_list == t["dropdown_placeholder"] else "",
             value=st.session_state["nominee_name"],
             placeholder=t["nominee_placeholder"]
         )
 
-        # Department Dropdown Selection
         dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
                         "Production - Paintshop", "Production - Assembly", "Production - EoL/Finish",
                         "Logistics", "Quality Management", "Others"]
@@ -520,14 +539,12 @@ elif st.session_state["step"] == 1:
             next_clicked = st.form_submit_button(t["next_btn"], type="primary")
 
     if next_clicked:
-        # Resolve nominee name: dropdown selection takes precedence if picked, otherwise typed text
-        # final_nominee_name = selected_from_list if selected_from_list != t["dropdown_placeholder"] else typed_custom_name.strip()
-        final_nominee_name = typed_custom_name.strip()
-
-        if not final_nominee_name:
+        raw_name = typed_custom_name.strip()
+        if not raw_name:
             st.error(t["err_fields"])
         else:
-            st.session_state["nominee_name"] = final_nominee_name
+            canonical_name = get_canonical_name(raw_name, NOMINEE_LIBRARY)
+            st.session_state["nominee_name"] = canonical_name
             st.session_state["department"] = department
             st.session_state["step"] = 2
             st.rerun()
@@ -542,10 +559,7 @@ elif st.session_state["step"] == 2:
         st.markdown(f"### {t['collab_title']}")
         st.caption(t["collab_desc"])
         score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
-
-        # Apply conditional slider glow
         st.markdown(get_slider_glow_style(score_collab), unsafe_allow_html=True)
-
         evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"],
                                        placeholder=t["collab_ph"])
 
@@ -578,10 +592,7 @@ elif st.session_state["step"] == 3:
         st.markdown(f"### {t['innov_title']}")
         st.caption(t["innov_desc"])
         score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
-
-        # Apply conditional slider glow
         st.markdown(get_slider_glow_style(score_innov), unsafe_allow_html=True)
-
         evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"],
                                       placeholder=t["innov_ph"])
 
@@ -615,10 +626,7 @@ elif st.session_state["step"] == 4:
         st.caption(t["culture_desc"])
         score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5,
                                   value=st.session_state["score_culture"])
-
-        # Apply conditional slider glow
         st.markdown(get_slider_glow_style(score_culture), unsafe_allow_html=True)
-
         evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"],
                                         placeholder=t["culture_ph"])
 
@@ -651,10 +659,7 @@ elif st.session_state["step"] == 5:
         st.markdown(f"### {t['acc_title']}")
         st.caption(t["acc_desc"])
         score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
-
-        # Apply conditional slider glow
         st.markdown(get_slider_glow_style(score_acc), unsafe_allow_html=True)
-
         evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
 
         st.write("")
@@ -733,11 +738,51 @@ with st.expander(t["admin_sec"]):
         st.success(t["admin_success"])
         if os.path.exists(DATA_FILE):
             try:
-                df_data = pd.read_csv(DATA_FILE, on_bad_lines='skip')
-                st.write(f"**{t['total_nominations']}** {len(df_data)}")
-                st.dataframe(df_data)
+                # 1. Original Raw Data Table
+                df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
+                st.write(f"**{t['total_nominations']}** {len(df_raw)}")
 
-                csv_data = df_data.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
+                if not df_raw.empty and "Tên Người Được Đề Cử" in df_raw.columns and "Điểm Trung Bình" in df_raw.columns:
+                    # 2. Aggregated Summary Calculation Table
+                    summary_df = df_raw.groupby("Tên Người Được Đề Cử").agg(
+                        Số_Lượt_Đề_Cử=("Điểm Trung Bình", "count"),
+                        Điểm_Trung_Bình_Tổng_Thể=("Điểm Trung Bình", "mean")
+                    ).reset_index()
+
+                    summary_df["Điểm_Trung_Bình_Tổng_Thể"] = summary_df["Điểm_Trung_Bình_Tổng_Thể"].round(2)
+                    summary_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"],
+                                                        ascending=False)
+
+                    st.markdown(f"### {t['summary_table_title']}")
+                    st.dataframe(summary_df, use_container_width=True)
+
+                    # --- CHARTS & LEADERBOARD ---
+                    st.markdown("---")
+
+                    # Bar Chart 1: Top 10 Most Voted Nominees
+                    st.markdown(f"### {t['chart_votes_title']}")
+                    top_votes = summary_df.sort_values(by="Số_Lượt_Đề_Cử", ascending=False).head(10)
+                    chart_votes_data = top_votes.set_index("Tên Người Được Đề Cử")["Số_Lượt_Đề_Cử"]
+                    st.bar_chart(chart_votes_data)
+
+                    # Bar Chart 2: Top 10 Highest Average Scores
+                    st.markdown(f"### {t['chart_scores_title']}")
+                    top_scores = summary_df.sort_values(by="Điểm_Trung_Bình_Tổng_Thể", ascending=False).head(10)
+                    chart_scores_data = top_scores.set_index("Tên Người Được Đề Cử")["Điểm_Trung_Bình_Tổng_Thể"]
+                    st.bar_chart(chart_scores_data)
+
+                    # Leaderboard: Top 10 Nominees combining votes + highest average scores
+                    st.markdown(f"### {t['leaderboard_title']}")
+                    leaderboard_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"],
+                                                            ascending=[False, False]).head(10).reset_index(drop=True)
+                    leaderboard_df.index += 1  # 1-based rank
+                    st.dataframe(leaderboard_df, use_container_width=True)
+
+                # Render the original raw nomination data table separately below
+                st.markdown(f"### {t['raw_table_title']}")
+                st.dataframe(df_raw, use_container_width=True)
+
+                csv_data = df_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
                 st.download_button(
                     label=t["download_btn"],
                     data=csv_data,
