@@ -105,9 +105,9 @@ def get_slider_glow_style(score):
             box-shadow: 0 0 12px rgba(245, 158, 11, 0.9), 0 0 20px rgba(217, 119, 6, 0.7) !important;
             border-color: #F59E0B !important;
         }
-        .stSlider > div > div > div > div {{
+        .stSlider > div > div > div > div {
             background: linear-gradient(90deg, #F59E0B, #FDE047) !important;
-        }}
+        }
         </style>
         """
     elif score == 1:
@@ -118,9 +118,9 @@ def get_slider_glow_style(score):
             box-shadow: 0 0 12px rgba(239, 68, 68, 0.9), 0 0 20px rgba(220, 38, 38, 0.7) !important;
             border-color: #EF4444 !important;
         }
-        .stSlider > div > div > div > div {{
+        .stSlider > div > div > div > div {
             background: linear-gradient(90deg, #DC2626, #F87171) !important;
-        }}
+        }
         </style>
         """
     else:
@@ -495,34 +495,49 @@ def init_data_file():
 init_data_file()
 
 
-# Helper function to generate PDF report
+# Helper function to generate clean ASCII/English PDF report with text wrapping
 def generate_pdf_report(summary_df, leaderboard_df, raw_df):
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=36)
+    doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=25, leftMargin=25, topMargin=30, bottomMargin=30)
     story = []
 
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle(
         'ReportTitle',
         parent=styles['Heading1'],
-        fontSize=18,
+        fontSize=16,
         textColor=colors.HexColor('#B45309'),
         alignment=1,
-        spaceAfter=15
+        spaceAfter=10
     )
     heading_style = ParagraphStyle(
         'ReportHeading',
         parent=styles['Heading2'],
-        fontSize=12,
+        fontSize=11,
         textColor=colors.HexColor('#92400E'),
-        spaceBefore=12,
-        spaceAfter=6
+        spaceBefore=10,
+        spaceAfter=4
     )
     normal_style = ParagraphStyle(
         'ReportNormal',
         parent=styles['Normal'],
-        fontSize=9,
+        fontSize=8,
         textColor=colors.HexColor('#1F2937')
+    )
+    cell_style = ParagraphStyle(
+        'ReportCell',
+        parent=styles['Normal'],
+        fontSize=7,
+        leading=9,
+        textColor=colors.HexColor('#1F2937')
+    )
+    header_cell_style = ParagraphStyle(
+        'ReportHeaderCell',
+        parent=styles['Normal'],
+        fontSize=7,
+        leading=9,
+        fontName='Helvetica-Bold',
+        textColor=colors.whitesmoke
     )
 
     # Title & Metadata
@@ -530,37 +545,67 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
     story.append(
         Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Total Submissions: {len(raw_df)}",
                   normal_style))
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
 
-    # Helper function to convert DataFrame to ReportLab Table
-    def df_to_table(df_subset):
-        data = [list(df_subset.columns)] + df_subset.astype(str).values.tolist()
-        t = Table(data, hAlign='LEFT')
+    # Helper function to format DataFrame into wrapped Paragraph tables with explicit column widths
+    def create_wrapped_table(df_subset, col_widths=None):
+        headers = list(df_subset.columns)
+        table_data = [[Paragraph(str(h), header_cell_style) for h in headers]]
+
+        for _, row in df_subset.iterrows():
+            row_cells = [Paragraph(str(val), cell_style) for val in row.values]
+            table_data.append(row_cells)
+
+        t = Table(table_data, colWidths=col_widths, hAlign='LEFT')
         t.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F59E0B')),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, -1), 8),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 6),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+            ('TOPPADDING', (0, 0), (-1, -1), 4),
             ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#FEF3C7')),
             ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#D97706'))
         ]))
         return t
 
-    # 1. Leaderboard Section
+    # 1. Leaderboard Section (English headers for PDF compatibility)
     story.append(Paragraph("Top 10 Leaderboard (Votes & Average Scores)", heading_style))
-    story.append(df_to_table(leaderboard_df))
-    story.append(Spacer(1, 10))
+    lb_pdf = leaderboard_df.rename(columns={
+        "Tên Người Được Đề Cử": "Nominee Name",
+        "Số_Lượt_Đề_Cử": "Total Votes",
+        "Điểm_Trung_Bình_Tổng_Thể": "Overall Avg Score"
+    }).copy()
+    story.append(create_wrapped_table(lb_pdf, col_widths=[250, 150, 160]))
+    story.append(Spacer(1, 8))
 
     # 2. Summary Table Section
     story.append(Paragraph("Aggregated Summary Table", heading_style))
-    story.append(df_to_table(summary_df))
-    story.append(Spacer(1, 10))
+    sum_pdf = summary_df.rename(columns={
+        "Tên Người Được Đề Cử": "Nominee Name",
+        "Số_Lượt_Đề_Cử": "Total Votes",
+        "Điểm_Trung_Bình_Tổng_Thể": "Overall Avg Score"
+    }).copy()
+    story.append(create_wrapped_table(sum_pdf, col_widths=[250, 150, 160]))
+    story.append(Spacer(1, 8))
 
     # 3. Raw Submissions Table Section
     story.append(Paragraph("Raw Nominations Log", heading_style))
-    story.append(df_to_table(raw_df))
+    raw_pdf = raw_df.rename(columns={
+        "Thời Gian": "Timestamp",
+        "Tên Người Được Đề Cử": "Nominee",
+        "Phòng Ban": "Department",
+        "Điểm Trung Bình": "Avg",
+        "Điểm Hợp Tác": "Collab",
+        "Minh Chứng Hợp Tác": "Collab Evidence",
+        "Điểm Đổi Mới": "Innov",
+        "Minh Chứng Đổi Mới": "Innov Evidence",
+        "Điểm Văn Hóa & Giá Trị": "Culture",
+        "Minh Chứng Văn Hóa & Giá Trị": "Culture Evidence",
+        "Điểm Trách Nhiệm": "Acc",
+        "Minh Chứng Trách Nhiệm": "Acc Evidence"
+    }).copy()
+    raw_widths = [55, 65, 55, 30, 35, 65, 35, 65, 35, 65, 30, 60]
+    story.append(create_wrapped_table(raw_pdf, col_widths=raw_widths))
 
     doc.build(story)
     buffer.seek(0)
@@ -863,7 +908,7 @@ with st.expander(t["admin_sec"]):
                     chart_scores_data = top_scores.set_index("Tên Người Được Đề Cử")["Điểm_Trung_Bình_Tổng_Thể"]
                     st.bar_chart(chart_scores_data)
 
-                    # Pie Chart: Vote Percentage Allocation (using Altair for native Streamlit pie chart rendering)
+                    # Pie Chart: Vote Percentage Allocation
                     st.markdown(f"### {t['chart_pie_title']}")
                     import altair as alt
 
