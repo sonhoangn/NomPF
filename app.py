@@ -95,7 +95,7 @@ def get_canonical_name(input_name, library_list):
     return " ".join([t.capitalize() for t in normalize_tokens(input_name)])
 
 
-# Helper function to generate dynamic glow style based on slider value
+# Helper function to generate safe dynamic glow style based on slider value
 def get_slider_glow_style(score):
     if score >= 4:
         return """
@@ -105,7 +105,7 @@ def get_slider_glow_style(score):
             box-shadow: 0 0 12px rgba(245, 158, 11, 0.9), 0 0 20px rgba(217, 119, 6, 0.7) !important;
             border-color: #F59E0B !important;
         }
-        .stSlider > div > div > div > div {
+        div[data-testid="stSlider"] div[data-baseweb="slider"] > div:nth-child(2) div {
             background: linear-gradient(90deg, #F59E0B, #FDE047) !important;
         }
         </style>
@@ -118,7 +118,7 @@ def get_slider_glow_style(score):
             box-shadow: 0 0 12px rgba(239, 68, 68, 0.9), 0 0 20px rgba(220, 38, 38, 0.7) !important;
             border-color: #EF4444 !important;
         }
-        .stSlider > div > div > div > div {
+        div[data-testid="stSlider"] div[data-baseweb="slider"] > div:nth-child(2) div {
             background: linear-gradient(90deg, #DC2626, #F87171) !important;
         }
         </style>
