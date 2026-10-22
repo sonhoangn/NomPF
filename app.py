@@ -280,7 +280,7 @@ TRANSLATIONS = {
     "Tiếng Việt (Vietnamese)": {
         "title": "Cổng Đề Cử\nNgôi Sao\nTạo Động Lực",
         "welcome_heading": "Chào Mừng Đến Cổng Đề Cử",
-        "welcome_desc": "Vinh danh 3 đồng nghiệp xuất sắc nhất\nnhững người kết nối các động lực liên phòng ban,\ntạo ra giá trị vượt xa các mục tiêu công việc thông thường trong toàn tổ chức.",
+        "welcome_desc": "Vinh danh 3 đồng nghiệp xuất sắc nhất,\nnhững người kết nối các động lực liên phòng ban,\ntạo ra giá trị vượt xa các mục tiêu công việc thông thường trong toàn tổ chức.",
         "start_btn": "Bắt Đầu Đề Cử",
 
         "step_indicator": "Bước {} / 5",
@@ -340,7 +340,7 @@ TRANSLATIONS = {
     "English": {
         "title": "Synergy Star \nNomination Portal",
         "welcome_heading": "Welcome to the Award Nomination Portal",
-        "welcome_desc": "Recognizing top 3 teammates\nwho connect our synergies that bring beyond the regular working objectives across organizations",
+        "welcome_desc": "Recognizing top 3 teammates,\nwho connect our synergies,\nthat bring beyond the regular working objectives across organizations",
         "start_btn": "Start Nomination",
 
         "step_indicator": "Step {} of 5",
