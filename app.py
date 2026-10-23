@@ -1,9 +1,11 @@
 import os
+import json
 import pandas as pd
 import streamlit as st
 from datetime import datetime
 from PIL import Image
 import io
+import uuid
 
 # --- REPORTLAB PDF GENERATION IMPORTS ---
 from reportlab.lib.pagesizes import letter
@@ -33,9 +35,43 @@ st.set_page_config(
 AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
 NOMINEE_LIBRARY = st.secrets.get("NOMINEE_LIST", ["Nguyen Van A", "John Doe", "Max Mustermann"])
 
+# --- DEVICE TRACKING & PERSISTENCE FILES ---
+DATA_FILE = "danh_sach_de_cu.csv"
+DEVICE_REGISTRY_FILE = "device_registry.json"
+
+def load_device_registry():
+    if os.path.exists(DEVICE_REGISTRY_FILE):
+        try:
+            with open(DEVICE_REGISTRY_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return []
+    return []
+
+def save_device_registry(registry_list):
+    with open(DEVICE_REGISTRY_FILE, "w", encoding="utf-8") as f:
+                json.dump(registry_list, f, ensure_ascii=False, indent=4)
+
+# Assign or retrieve unique device token via URL query params & session state
+if "device_token" not in st.session_state:
+    query_params = st.query_params
+    if "did" in query_params:
+        st.session_state["device_token"] = query_params["did"]
+    else:
+        new_token = str(uuid.uuid4())
+        st.session_state["device_token"] = new_token
+        st.query_params["did"] = new_token
+
+DEVICE_ID = st.session_state["device_token"]
+
 # --- SESSION STATE INITIALIZATION ---
 if "step" not in st.session_state:
-    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You
+    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You, 7: Locked Out
+
+# Check if device has already submitted
+registered_devices = load_device_registry()
+if DEVICE_ID in registered_devices and st.session_state["step"] not in [6, 7]:
+    st.session_state["step"] = 7
 
 # Form data storage in session state
 default_keys = {
@@ -320,13 +356,16 @@ TRANSLATIONS = {
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
-        "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công. Đóng góp của bạn giúp tôn vinh những cá nhân xuất sắc!",
-        "submit_another": "➕ Đề Cử Thêm Cá Nhân Khác",
+        "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công từ thiết bị này. Mỗi thiết bị chỉ được thực hiện đề cử 1 lần duy nhất.",
+        "locked_title": "Thiết Bị Đã Thực Hiện Đề Cử",
+        "locked_msg": "Thiết bị này đã hoàn tất việc gửi đề cử trước đó. Cảm ơn sự tham gia đóng góp của bạn vào chương trình!",
 
         "admin_sec": "🔒 Quản Trị Viên (Xem & Tải Dữ Liệu)",
         "admin_pass_label": "Nhập mật khẩu quản trị",
         "admin_success": "Xác thực thành công!",
         "total_nominations": "Tổng số lượt đề cử:",
+        "reset_devices_btn": "🔄 Đặt Lại Danh Sách Thiết Bị (Cho phép đề cử lại)",
+        "reset_devices_success": "Đã reset thiết bị thành công! Các thiết bị có thể làm mới trang để đề cử lại.",
         "download_btn": "📥 Tải Bảng Dữ Liệu Gốc (CSV)",
         "download_pdf_btn": "📥 Tải Báo Cáo PDF Dashboard",
         "summary_table_title": "📊 Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
@@ -380,13 +419,16 @@ TRANSLATIONS = {
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
-        "thank_you_msg": "Your nomination has been recorded successfully. Your contribution helps recognize outstanding individuals and teams!",
-        "submit_another": "➕ Submit Another Nomination",
+        "thank_you_msg": "Your nomination has been recorded successfully from this device. Each device is permitted one submission only.",
+        "locked_title": "Nomination Already Submitted",
+        "locked_msg": "A nomination has already been submitted from this device. Thank you for your participation!",
 
         "admin_sec": "🔒 Administrator (View & Download Data)",
         "admin_pass_label": "Enter admin password",
         "admin_success": "Authentication successful!",
         "total_nominations": "Total nominations:",
+        "reset_devices_btn": "🔄 Reset Device Registry (Allow Re-nomination)",
+        "reset_devices_success": "Device registry successfully reset! Devices can now reload and submit again.",
         "download_btn": "📥 Download Raw Data (CSV)",
         "download_pdf_btn": "📥 Download Dashboard PDF Report",
         "summary_table_title": "📊 Summary Table of Total Votes & Average Scores:",
@@ -440,13 +482,16 @@ TRANSLATIONS = {
         "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "Vielen Dank für Ihre Nominierung!",
-        "thank_you_msg": "Ihre Nominierung wurde erfolgreich erfasst. Ihr Beitrag hilft dabei, herausragende Einzelpersonen und Teams zu würdigen!",
-        "submit_another": "➕ Weitere Nominierung einreichen",
+        "thank_you_msg": "Ihre Nominierung wurde erfolgreich von diesem Gerät erfasst. Jedes Gerät darf nur einmal einreichen.",
+        "locked_title": "Nominierung Bereits Abgeschlossen",
+        "locked_msg": "Von diesem Gerät wurde bereits eine Nominierung eingereicht. Vielen Dank für Ihre Teilnahme!",
 
         "admin_sec": "🔒 Administrator (Daten anzeigen & herunterladen)",
         "admin_pass_label": "Admin-Passwort eingeben",
         "admin_success": "Authentifizierung erfolgreich!",
         "total_nominations": "Gesamtzahl der Nominierungen:",
+        "reset_devices_btn": "🔄 Geräteliste zurücksetzen (Erneut nominieren erlauben)",
+        "reset_devices_success": "Geräteliste erfolgreich zurückgesetzt! Geräte können die Seite neu laden, um erneut zu nominieren.",
         "download_btn": "📥 Rohdaten herunterladen (CSV)",
         "download_pdf_btn": "📥 Dashboard PDF-Bericht herunterladen",
         "summary_table_title": "📊 Zusammenfassung der Stimmen & Durchschnittswerte:",
@@ -462,9 +507,6 @@ TRANSLATIONS = {
 # Sidebar Language Selector
 selected_lang_key = st.sidebar.selectbox("🌐 Language / Ngôn ngữ / Sprache", list(TRANSLATIONS.keys()))
 t = TRANSLATIONS[selected_lang_key]
-
-# Data File Setup
-DATA_FILE = "danh_sach_de_cu.csv"
 
 
 def init_data_file():
@@ -841,6 +883,12 @@ elif st.session_state["step"] == 5:
             df_new = pd.DataFrame([new_entry])
             df_new.to_csv(DATA_FILE, mode='a', header=False, index=False, encoding='utf-8-sig')
 
+            # Record device token in registry so it cannot submit again
+            current_registry = load_device_registry()
+            if DEVICE_ID not in current_registry:
+                current_registry.append(DEVICE_ID)
+                save_device_registry(current_registry)
+
             st.session_state["step"] = 6
             st.rerun()
 
@@ -848,22 +896,27 @@ elif st.session_state["step"] == 5:
 # SCREEN 6: THANK YOU SCREEN
 # ==========================================
 elif st.session_state["step"] == 6:
-    with st.form(key="thankyou_form"):
-        if IMG_THANKYOU:
-            st.image(IMG_THANKYOU, use_container_width=True)
-        st.markdown(f"""
-            <div style="text-align: center; padding: 1rem 0;">
-                <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
-            </div>
-        """, unsafe_allow_html=True)
+    if IMG_THANKYOU:
+        st.image(IMG_THANKYOU, use_container_width=True)
+    st.markdown(f"""
+        <div style="text-align: center; padding: 1rem 0;">
+            <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
+        </div>
+    """, unsafe_allow_html=True)
 
-        another_clicked = st.form_submit_button(t["submit_another"], use_container_width=True)
-        if another_clicked:
-            for key, default_val in default_keys.items():
-                st.session_state[key] = default_val
-            st.session_state["step"] = 0
-            st.rerun()
+# ==========================================
+# SCREEN 7: LOCKED OUT SCREEN (Already Submitted)
+# ==========================================
+elif st.session_state["step"] == 7:
+    if IMG_THANKYOU:
+        st.image(IMG_THANKYOU, use_container_width=True)
+    st.markdown(f"""
+        <div style="text-align: center; padding: 1rem 0;">
+            <h2 style="color: #F87171; font-size: 2rem; margin-bottom: 1rem;">{t['locked_title']}</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['locked_msg']}</p>
+        </div>
+    """, unsafe_allow_html=True)
 
 # ==========================================
 # ANCHORED ADMINISTRATOR LOGIN PANEL
@@ -873,6 +926,12 @@ with st.expander(t["admin_sec"]):
     admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
     if admin_password == AD_PASS:
         st.success(t["admin_success"])
+
+        # Admin option to reset device registry tokens
+        if st.button(t["reset_devices_btn"]):
+            save_device_registry([])
+            st.success(t["reset_devices_success"])
+
         if os.path.exists(DATA_FILE):
             try:
                 # 1. Original Raw Data Table
