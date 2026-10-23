@@ -34,14 +34,15 @@ st.set_page_config(
 # --- LOAD ADMIN PASSWORD ---
 AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
 
+
 # --- HELPER FUNCTION TO PARSE SECRETS INTO LISTS ---
 def parse_secret_list(secret_val):
     if not secret_val or secret_val == "---":
         return []
-    # If secrets are stored as comma-separated values, split them. If it's already a list, keep it.
     if isinstance(secret_val, list):
         return [str(item).strip() for item in secret_val if str(item).strip()]
     return [name.strip() for name in str(secret_val).split(",") if name.strip()]
+
 
 # --- LOAD DEPT NAME LISTs FROM SECRETS ---
 PB = parse_secret_list(st.secrets.get("PB", ""))
@@ -63,23 +64,117 @@ DEPARTMENT_NAMES = {
     "Quality Management": QM
 }
 
+# --- PHASE 2 TOP 10 FINALISTS CONFIGURATION ---
+# Format: Name, Department, Bio description, Image URL (or placeholder)
+TOP_10_FINALISTS = [
+    {
+        "name": st.secrets.get("P2_NAME_1", "Finalist 1"),
+        "department": st.secrets.get("P2_DEPT_1", "Production"),
+        "bio": st.secrets.get("P2_BIO_1",
+                              "Outstanding contribution to cross-departmental synergy and process innovation."),
+        "image": st.secrets.get("P2_IMG_1", IMG_COLLAB)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_2", "Finalist 2"),
+        "department": st.secrets.get("P2_DEPT_2", "Logistics"),
+        "bio": st.secrets.get("P2_BIO_2", "Exemplary commitment and leadership in supply chain optimization."),
+        "image": st.secrets.get("P2_IMG_2", IMG_INNOV)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_3", "Finalist 3"),
+        "department": st.secrets.get("P2_DEPT_3", "Quality Management"),
+        "bio": st.secrets.get("P2_BIO_3",
+                              "Dedicated to maintaining rigorous standards and fostering collaborative culture."),
+        "image": st.secrets.get("P2_IMG_3", IMG_CULTURE)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_4", "Finalist 4"),
+        "department": st.secrets.get("P2_DEPT_4", "Engineering"),
+        "bio": st.secrets.get("P2_BIO_4", "Pioneered automated tracking systems saving substantial operational hours."),
+        "image": st.secrets.get("P2_IMG_4", IMG_ACC)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_5", "Finalist 5"),
+        "department": st.secrets.get("P2_DEPT_5", "Production - Assembly"),
+        "bio": st.secrets.get("P2_BIO_5", "Consistently demonstrates high accountability and team-first support."),
+        "image": st.secrets.get("P2_IMG_5", IMG_WELCOME)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_6", "Finalist 6"),
+        "department": st.secrets.get("P2_DEPT_6", "Logistics"),
+        "bio": st.secrets.get("P2_BIO_6", "Streamlined material flow and resolved bottlenecks efficiently."),
+        "image": st.secrets.get("P2_IMG_6", IMG_COLLAB)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_7", "Finalist 7"),
+        "department": st.secrets.get("P2_DEPT_7", "Quality Management"),
+        "bio": st.secrets.get("P2_BIO_7", "Championed continuous improvement initiatives across shifts."),
+        "image": st.secrets.get("P2_IMG_7", IMG_INNOV)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_8", "Finalist 8"),
+        "department": st.secrets.get("P2_DEPT_8", "Production - Paintshop"),
+        "bio": st.secrets.get("P2_BIO_8",
+                              "Exceptional problem solver with a strong drive for technological innovation."),
+        "image": st.secrets.get("P2_IMG_8", IMG_CULTURE)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_9", "Finalist 9"),
+        "department": st.secrets.get("P2_DEPT_9", "Engineering PSI"),
+        "bio": st.secrets.get("P2_BIO_9", "Trusted technical lead bridging IT and shopfloor operations seamlessly."),
+        "image": st.secrets.get("P2_IMG_9", IMG_ACC)
+    },
+    {
+        "name": st.secrets.get("P2_NAME_10", "Finalist 10"),
+        "department": st.secrets.get("P2_DEPT_10", "Production - Bodyshop"),
+        "bio": st.secrets.get("P2_BIO_10",
+                              "Exemplifies core corporate values and mentor-like support to junior staff."),
+        "image": st.secrets.get("P2_IMG_10", IMG_WELCOME)
+    }
+]
+
 # --- DEVICE TRACKING & PERSISTENCE FILES ---
 DATA_FILE = "danh_sach_de_cu.csv"
 DEVICE_REGISTRY_FILE = "device_registry.json"
 
+# Phase 2 Persistence files
+DATA_FILE_P2 = "danh_sach_de_cu_phase2.csv"
+DEVICE_REGISTRY_FILE_P2 = "device_registry_phase2.json"
+PHASE2_STATE_FILE = "phase2_state.json"
 
-def load_device_registry():
-    if os.path.exists(DEVICE_REGISTRY_FILE):
+
+def load_json_state(filename, default_val):
+    if os.path.exists(filename):
         try:
-            with open(DEVICE_REGISTRY_FILE, "r", encoding="utf-8") as f:
+            with open(filename, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return default_val
+    return default_val
+
+
+def save_json_state(filename, data):
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+
+# Load Phase 2 active toggle state from persistent file
+phase2_data = load_json_state(PHASE2_STATE_FILE, {"phase2_active": False})
+PHASE_2_ACTIVE = phase2_data.get("phase2_active", False)
+
+
+def load_device_registry(registry_file):
+    if os.path.exists(registry_file):
+        try:
+            with open(registry_file, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
             return []
     return []
 
 
-def save_device_registry(registry_list):
-    with open(DEVICE_REGISTRY_FILE, "w", encoding="utf-8") as f:
+def save_device_registry(registry_file, registry_list):
+    with open(registry_file, "w", encoding="utf-8") as f:
         json.dump(registry_list, f, ensure_ascii=False, indent=4)
 
 
@@ -97,12 +192,20 @@ DEVICE_ID = st.session_state["device_token"]
 
 # --- SESSION STATE INITIALIZATION ---
 if "step" not in st.session_state:
-    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You, 7: Locked Out
+    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, etc.
 
-# Check if device has already submitted
-registered_devices = load_device_registry()
-if DEVICE_ID in registered_devices and st.session_state["step"] not in [6, 7]:
-    st.session_state["step"] = 7
+if "p2_step" not in st.session_state:
+    st.session_state["p2_step"] = 0  # 0: Welcome P2, 1: Voting P2, 2: Thank You P2
+
+# Check device submission lock based on active phase
+if PHASE_2_ACTIVE:
+    registered_devices_p2 = load_device_registry(DEVICE_REGISTRY_FILE_P2)
+    if DEVICE_ID in registered_devices_p2 and st.session_state["p2_step"] not in [2]:
+        st.session_state["p2_step"] = 2
+else:
+    registered_devices = load_device_registry(DEVICE_REGISTRY_FILE)
+    if DEVICE_ID in registered_devices and st.session_state["step"] not in [6, 7]:
+        st.session_state["step"] = 7
 
 # Form data storage in session state
 default_keys = {
@@ -115,7 +218,8 @@ default_keys = {
     "score_culture": 5,
     "evidence_culture": "",
     "score_acc": 5,
-    "evidence_acc": ""
+    "evidence_acc": "",
+    "p2_selected_nominee": TOP_10_FINALISTS[0]["name"]
 }
 for key, default_val in default_keys.items():
     if key not in st.session_state:
@@ -310,6 +414,17 @@ TRANSLATIONS = {
         "welcome_desc": "Vinh danh 3 đồng nghiệp xuất sắc nhất,\nnhững người kết nối các động lực liên phòng ban,\ntạo ra giá trị vượt xa các mục tiêu công việc thông thường trong toàn tổ chức.",
         "start_btn": "Bắt Đầu Đề Cử",
 
+        "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
+        "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
+        "p2_welcome_desc": "Hãy xem qua hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết và lựa chọn ứng viên xứng đáng nhất cho giải thưởng năm nay.",
+        "p2_start_btn": "Bắt Đầu Bình Chọn",
+        "p2_select_label": "Chọn ứng viên chung kết *",
+        "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
+        "p2_thank_you_title": "Cảm Ơn Bạn Đã Bình Chọn!",
+        "p2_thank_you_msg": "Lựa chọn của bạn cho vòng chung kết đã được ghi nhận thành công.",
+        "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
+        "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
+
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
         "dept_label": "Phòng ban / Bộ phận *",
@@ -374,6 +489,17 @@ TRANSLATIONS = {
         "welcome_desc": "Recognizing top 3 teammates,\nwho connect our synergies,\nthat bring beyond the regular working objectives across organizations",
         "start_btn": "Start Nomination",
 
+        "p2_title": "Finals Voting Portal (Phase 2)",
+        "p2_welcome_heading": "Welcome to the Top 10 Finals Voting",
+        "p2_welcome_desc": "Explore the profiles of our top 10 finalists and cast your final vote to celebrate excellence.",
+        "p2_start_btn": "Start Voting",
+        "p2_select_label": "Select Finalist Nominee *",
+        "p2_submit_btn": "Confirm & Submit Vote",
+        "p2_thank_you_title": "Thank You for Voting!",
+        "p2_thank_you_msg": "Your final vote has been successfully recorded.",
+        "p2_locked_title": "Vote Already Submitted",
+        "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
+
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
         "dept_label": "Department *",
@@ -437,6 +563,17 @@ TRANSLATIONS = {
         "welcome_heading": "Willkommen beim Nominierungsportal",
         "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen.\nReichen Sie jetzt Ihre Nominierung ein!",
         "start_btn": "Nominierung Starten",
+
+        "p2_title": "Finalabstimmungsportal (Phase 2)",
+        "p2_welcome_heading": "Willkommen zur Top-10-Finalabstimmung",
+        "p2_welcome_desc": "Entdecken Sie die Profile unserer Top-10-Finalisten und geben Sie Ihre Stimme ab.",
+        "p2_start_btn": "Abstimmung Starten",
+        "p2_select_label": "Finalisten auswählen *",
+        "p2_submit_btn": "Stimme Bestätigen & Absenden",
+        "p2_thank_you_title": "Vielen Dank für Ihre Stimme!",
+        "p2_thank_you_msg": "Ihre Stimme für das Finale wurde erfolgreich erfasst.",
+        "p2_locked_title": "Stimme Bereits Abgeschlossen",
+        "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
 
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
@@ -503,7 +640,8 @@ selected_lang_key = st.sidebar.selectbox("🌐 Language / Ngôn ngữ / Sprache"
 t = TRANSLATIONS[selected_lang_key]
 
 
-def init_data_file():
+def init_data_files():
+    # Phase 1 Data File
     expected_columns = [
         "Thời Gian",
         "Tên Người Được Đề Cử",
@@ -514,21 +652,18 @@ def init_data_file():
         "Điểm Văn Hóa & Giá Trị", "Minh Chứng Văn Hóa & Giá Trị",
         "Điểm Trách Nhiệm", "Minh Chứng Trách Nhiệm"
     ]
-
-    if os.path.exists(DATA_FILE):
-        try:
-            df_existing = pd.read_csv(DATA_FILE, nrows=0)
-            if list(df_existing.columns) != expected_columns:
-                os.remove(DATA_FILE)
-        except Exception:
-            os.remove(DATA_FILE)
-
     if not os.path.exists(DATA_FILE):
         df = pd.DataFrame(columns=expected_columns)
         df.to_csv(DATA_FILE, index=False, encoding='utf-8-sig')
 
+    # Phase 2 Data File
+    expected_columns_p2 = ["Thời Gian", "Tên Ứng Viên", "Phòng Ban", "Device_ID"]
+    if not os.path.exists(DATA_FILE_P2):
+        df_p2 = pd.DataFrame(columns=expected_columns_p2)
+        df_p2.to_csv(DATA_FILE_P2, index=False, encoding='utf-8-sig')
 
-init_data_file()
+
+init_data_files()
 
 
 # Helper function to generate clean ASCII/English PDF report with text wrapping
@@ -583,7 +718,6 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
                   normal_style))
     story.append(Spacer(1, 8))
 
-    # Helper function to format DataFrame into wrapped Paragraph tables with explicit column widths
     def create_wrapped_table(df_subset, col_widths=None):
         headers = list(df_subset.columns)
         table_data = [[Paragraph(str(h), header_cell_style) for h in headers]]
@@ -604,7 +738,6 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
         ]))
         return t
 
-    # 1. Leaderboard Section (English headers for PDF compatibility)
     story.append(Paragraph("Top 10 Leaderboard (Votes & Average Scores)", heading_style))
     lb_pdf = leaderboard_df.rename(columns={
         "Tên Người Được Đề Cử": "Nominee Name",
@@ -614,41 +747,13 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
     story.append(create_wrapped_table(lb_pdf, col_widths=[250, 150, 160]))
     story.append(Spacer(1, 8))
 
-    # 2. Summary Table Section
-    story.append(Paragraph("Aggregated Summary Table", heading_style))
-    sum_pdf = summary_df.rename(columns={
-        "Tên Người Được Đề Cử": "Nominee Name",
-        "Số_Lượt_Đề_Cử": "Total Votes",
-        "Điểm_Trung_Bình_Tổng_Thể": "Overall Avg Score"
-    }).copy()
-    story.append(create_wrapped_table(sum_pdf, col_widths=[250, 150, 160]))
-    story.append(Spacer(1, 8))
-
-    # 3. Raw Submissions Table Section
-    story.append(Paragraph("Raw Nominations Log", heading_style))
-    raw_pdf = raw_df.rename(columns={
-        "Thời Gian": "Timestamp",
-        "Tên Người Được Đề Cử": "Nominee",
-        "Phòng Ban": "Department",
-        "Điểm Trung Bình": "Avg",
-        "Điểm Hợp Tác": "Collab",
-        "Minh Chứng Hợp Tác": "Collab Evidence",
-        "Điểm Đổi Mới": "Innov",
-        "Minh Chứng Đổi Mới": "Innov Evidence",
-        "Điểm Văn Hóa & Giá Trị": "Culture",
-        "Minh Chứng Văn Hóa & Giá Trị": "Culture Evidence",
-        "Điểm Trách Nhiệm": "Acc",
-        "Minh Chứng Trách Nhiệm": "Acc Evidence"
-    }).copy()
-    raw_widths = [55, 65, 55, 30, 35, 65, 35, 65, 35, 65, 30, 60]
-    story.append(create_wrapped_table(raw_pdf, col_widths=raw_widths))
-
     doc.build(story)
     buffer.seek(0)
     return buffer.getvalue()
 
 
 # Header Section with Golden Glow Title Effect
+header_title_text = t['p2_title'] if PHASE_2_ACTIVE else t['title']
 st.markdown(f"""
     <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
         <img src="{LOGO_URL}" alt="Logo" style="
@@ -660,277 +765,352 @@ st.markdown(f"""
         " />
     </div>
     <div class="golden-title-card">
-        <h1 class="golden-glow-text" style="font-family: 'TitleCondOfcVI' !important; width: 100%; text-align: center; margin: 0 auto; white-space: pre-line;">{t['title']}</h1>
+        <h1 class="golden-glow-text" style="font-family: 'TitleCondOfcVI' !important; width: 100%; text-align: center; margin: 0 auto; white-space: pre-line;">{header_title_text}</h1>
     </div>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# SCREEN 0: WELCOME SCREEN
+# PHASE 2: FINALIST VOTING FLOW
 # ==========================================
-if st.session_state["step"] == 0:
-    with st.form(key="welcome_form"):
-        if IMG_WELCOME:
-            st.image(IMG_WELCOME, use_container_width=True)
+if PHASE_2_ACTIVE:
+    if st.session_state["p2_step"] == 0:
+        # Welcome screen for Phase 2
+        with st.form(key="p2_welcome_form"):
+            if IMG_WELCOME:
+                st.image(IMG_WELCOME, use_container_width=True)
+            st.markdown(f"""
+                <div style="text-align: center; padding: 1rem 0;">
+                    <h2 style="font-family: 'TitleCondOfcVI' !important; font-size: 1.8rem; margin-bottom: 1rem;">{t['p2_welcome_heading']}</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleCondOfcVI' !important;">{t['p2_welcome_desc']}</p>
+                </div>
+            """, unsafe_allow_html=True)
+
+            p2_start_clicked = st.form_submit_button(t["p2_start_btn"], use_container_width=True)
+            if p2_start_clicked:
+                st.session_state["p2_step"] = 1
+                st.rerun()
+
+    elif st.session_state["p2_step"] == 1:
+        # Voting Form & Dynamic Profile Info Card
+        st.subheader(t["p2_title"])
+
+        finalist_names = [f["name"] for f in TOP_10_FINALISTS]
+
+
+        def update_p2_selection():
+            st.session_state["p2_selected_nominee"] = st.session_state["p2_selectbox"]
+
+
+        selected_finalist_name = st.selectbox(
+            t["p2_select_label"],
+            options=finalist_names,
+            index=finalist_names.index(st.session_state["p2_selected_nominee"]) if st.session_state[
+                                                                                       "p2_selected_nominee"] in finalist_names else 0,
+            key="p2_selectbox",
+            on_change=update_p2_selection
+        )
+
+        # Retrieve selected finalist profile details
+        current_finalist = next((f for f in TOP_10_FINALISTS if f["name"] == st.session_state["p2_selected_nominee"]),
+                                TOP_10_FINALISTS[0])
+
+        # Render Info Card (Profile Picture & Biography)
         st.markdown(f"""
-            <div style="text-align: center; padding: 1rem 0;">
-                <h2 style="font-family: 'TitleCondOfcVI' !important; font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
-                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleCondOfcVI' !important;">{t['welcome_desc']}</p>
+            <div style="background: rgba(42, 35, 15, 0.7); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 0 0 120px; text-align: center;">
+                        <img src="{current_finalist['image']}" alt="Nominee Photo" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 2px solid #F59E0B;" />
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <h3 style="color: #FDE047; margin-bottom: 0.2rem;">{current_finalist['name']}</h3>
+                        <p style="color: #F7C657; font-size: 0.95rem; font-style: italic; margin-bottom: 0.5rem;">🏢 {current_finalist['department']}</p>
+                        <p style="color: #FFF; font-size: 1.05rem; line-height: 1.5;">{current_finalist['bio']}</p>
+                    </div>
+                </div>
             </div>
         """, unsafe_allow_html=True)
 
-        start_clicked = st.form_submit_button(t["start_btn"], use_container_width=True)
-        if start_clicked:
-            st.session_state["step"] = 1
+        with st.form(key="p2_submit_form"):
+            p2_submit_clicked = st.form_submit_button(t["p2_submit_btn"], use_container_width=True, type="primary")
+
+        if p2_submit_clicked:
+            selected_record = {
+                "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "Tên Ứng Viên": current_finalist['name'],
+                "Phòng Ban": current_finalist['department'],
+                "Device_ID": DEVICE_ID
+            }
+            df_p2_new = pd.DataFrame([selected_record])
+            df_p2_new.to_csv(DATA_FILE_P2, mode='a', header=False, index=False, encoding='utf-8-sig')
+
+            # Record device token in Phase 2 registry
+            current_reg_p2 = load_device_registry(DEVICE_REGISTRY_FILE_P2)
+            if DEVICE_ID not in current_reg_p2:
+                current_reg_p2.append(DEVICE_ID)
+                save_device_registry(DEVICE_REGISTRY_FILE_P2, current_reg_p2)
+
+            st.session_state["p2_step"] = 2
             st.rerun()
 
+    elif st.session_state["p2_step"] == 2:
+        # Thank You Screen P2
+        if IMG_THANKYOU:
+            st.image(IMG_THANKYOU, use_container_width=True)
+        st.markdown(f"""
+            <div style="text-align: center; padding: 1rem 0;">
+                <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['p2_thank_you_title']}</h2>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['p2_thank_you_msg']}</p>
+            </div>
+        """, unsafe_allow_html=True)
+
 # ==========================================
-# SCREEN 1: NOMINEE DETAILS
+# PHASE 1: STANDARD NOMINATION FLOW
 # ==========================================
-elif st.session_state["step"] == 1:
-    with st.form(key="step1_form_t"):
+else:
+    if st.session_state["step"] == 0:
+        with st.form(key="welcome_form"):
+            if IMG_WELCOME:
+                st.image(IMG_WELCOME, use_container_width=True)
+            st.markdown(f"""
+                <div style="text-align: center; padding: 1rem 0;">
+                    <h2 style="font-family: 'TitleCondOfcVI' !important; font-size: 1.8rem; margin-bottom: 1rem;">{t['welcome_heading']}</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; width: 100%; text-align: center; white-space: pre-line; font-family: 'TitleCondOfcVI' !important;">{t['welcome_desc']}</p>
+                </div>
+            """, unsafe_allow_html=True)
+
+            start_clicked = st.form_submit_button(t["start_btn"], use_container_width=True)
+            if start_clicked:
+                st.session_state["step"] = 1
+                st.rerun()
+
+    elif st.session_state["step"] == 1:
         st.subheader(t["sec1"])
 
-    dept_options = list(DEPARTMENT_NAMES.keys())
+        dept_options = list(DEPARTMENT_NAMES.keys())
 
-    # Callback to trigger instant rerun when department changes so name list updates immediately
-    def update_department_selection():
-        st.session_state["department"] = st.session_state["dept_selectbox"]
-        # Reset nominee name when department changes
-        st.session_state["nominee_name"] = ""
 
-    selected_dept = st.selectbox(
-        t["dept_label"],
-        options=dept_options,
-        index=dept_options.index(st.session_state["department"]) if st.session_state["department"] in dept_options else 0,
-        key="dept_selectbox",
-        on_change=update_department_selection
-    )
+        def update_department_selection():
+            st.session_state["department"] = st.session_state["dept_selectbox"]
+            st.session_state["nominee_name"] = ""
 
-    # Retrieve available names for the currently selected department
-    current_dept = st.session_state["department"]
-    available_names = DEPARTMENT_NAMES.get(current_dept, [])
 
-    with st.form(key="step1_form"):
-        if available_names:
-            try:
-                default_name_index = available_names.index(st.session_state["nominee_name"]) if st.session_state["nominee_name"] in available_names else 0
-            except ValueError:
-                default_name_index = 0
+        selected_dept = st.selectbox(
+            t["dept_label"],
+            options=dept_options,
+            index=dept_options.index(st.session_state["department"]) if st.session_state[
+                                                                            "department"] in dept_options else 0,
+            key="dept_selectbox",
+            on_change=update_department_selection
+        )
 
-            nominee_name = st.selectbox(
-                t["nominee_label"],
-                options=available_names,
-                index=default_name_index
-            )
-        else:
-            st.warning(t["err_no_names"])
-            nominee_name = ""
+        current_dept = st.session_state["department"]
+        available_names = DEPARTMENT_NAMES.get(current_dept, [])
 
-        st.write("")
-        col_back, col_next = st.columns([1, 1])
-        with col_next:
-            next_clicked = st.form_submit_button(t["next_btn"], type="primary")
+        with st.form(key="step1_form"):
+            if available_names:
+                try:
+                    default_name_index = available_names.index(st.session_state["nominee_name"]) if st.session_state[
+                                                                                                        "nominee_name"] in available_names else 0
+                except ValueError:
+                    default_name_index = 0
 
-    if next_clicked:
-        if not current_dept or not nominee_name:
-            st.error(t["err_fields"])
-        elif not available_names:
-            st.warning(t["err_no_names"])
-        else:
-            st.session_state["department"] = current_dept
-            st.session_state["nominee_name"] = nominee_name
+                nominee_name = st.selectbox(
+                    t["nominee_label"],
+                    options=available_names,
+                    index=default_name_index
+                )
+            else:
+                st.warning(t["err_no_names"])
+                nominee_name = ""
+
+            st.write("")
+            col_back, col_next = st.columns([1, 1])
+            with col_next:
+                next_clicked = st.form_submit_button(t["next_btn"], type="primary")
+
+        if next_clicked:
+            if not current_dept or not nominee_name:
+                st.error(t["err_fields"])
+            elif not available_names:
+                st.warning(t["err_no_names"])
+            else:
+                st.session_state["department"] = current_dept
+                st.session_state["nominee_name"] = nominee_name
+                st.session_state["step"] = 2
+                st.rerun()
+
+    elif st.session_state["step"] == 2:
+        with st.form(key="step2_form"):
+            if IMG_COLLAB:
+                st.image(IMG_COLLAB, use_container_width=True)
+            st.markdown(f"### {t['collab_title']}")
+            st.caption(t["collab_desc"])
+            score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5,
+                                     value=st.session_state["score_collab"])
+            st.markdown(get_slider_glow_style(score_collab), unsafe_allow_html=True)
+            evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"],
+                                           placeholder=t["collab_ph"])
+
+            st.write("")
+            col_back, col_next = st.columns([1, 1])
+            with col_back:
+                prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+            with col_next:
+                next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+
+        if prev_clicked:
+            st.session_state["step"] = 1
+            st.rerun()
+        elif next_clicked:
+            if not evidence_collab.strip():
+                st.error(t["err_evidence"])
+            else:
+                st.session_state["score_collab"] = score_collab
+                st.session_state["evidence_collab"] = evidence_collab
+                st.session_state["step"] = 3
+                st.rerun()
+
+    elif st.session_state["step"] == 3:
+        with st.form(key="step3_form"):
+            if IMG_INNOV:
+                st.image(IMG_INNOV, use_container_width=True)
+            st.markdown(f"### {t['innov_title']}")
+            st.caption(t["innov_desc"])
+            score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
+            st.markdown(get_slider_glow_style(score_innov), unsafe_allow_html=True)
+            evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"],
+                                          placeholder=t["innov_ph"])
+
+            st.write("")
+            col_back, col_next = st.columns([1, 1])
+            with col_back:
+                prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+            with col_next:
+                next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+
+        if prev_clicked:
             st.session_state["step"] = 2
             st.rerun()
+        elif next_clicked:
+            if not evidence_innov.strip():
+                st.error(t["err_evidence"])
+            else:
+                st.session_state["score_innov"] = score_innov
+                st.session_state["evidence_innov"] = evidence_innov
+                st.session_state["step"] = 4
+                st.rerun()
 
-# ==========================================
-# SCREEN 2: COLLABORATION
-# ==========================================
-elif st.session_state["step"] == 2:
-    with st.form(key="step2_form"):
-        if IMG_COLLAB:
-            st.image(IMG_COLLAB, use_container_width=True)
-        st.markdown(f"### {t['collab_title']}")
-        st.caption(t["collab_desc"])
-        score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5, value=st.session_state["score_collab"])
-        st.markdown(get_slider_glow_style(score_collab), unsafe_allow_html=True)
-        evidence_collab = st.text_area(t["collab_evidence"], value=st.session_state["evidence_collab"],
-                                       placeholder=t["collab_ph"])
+    elif st.session_state["step"] == 4:
+        with st.form(key="step4_form"):
+            if IMG_CULTURE:
+                st.image(IMG_CULTURE, use_container_width=True)
+            st.markdown(f"### {t['culture_title']}")
+            st.caption(t["culture_desc"])
+            score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5,
+                                      value=st.session_state["score_culture"])
+            st.markdown(get_slider_glow_style(score_culture), unsafe_allow_html=True)
+            evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"],
+                                            placeholder=t["culture_ph"])
 
-        st.write("")
-        col_back, col_next = st.columns([1, 1])
-        with col_back:
-            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
-        with col_next:
-            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+            st.write("")
+            col_back, col_next = st.columns([1, 1])
+            with col_back:
+                prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+            with col_next:
+                next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
 
-    if prev_clicked:
-        st.session_state["step"] = 1
-        st.rerun()
-    elif next_clicked:
-        if not evidence_collab.strip():
-            st.error(t["err_evidence"])
-        else:
-            st.session_state["score_collab"] = score_collab
-            st.session_state["evidence_collab"] = evidence_collab
+        if prev_clicked:
             st.session_state["step"] = 3
             st.rerun()
+        elif next_clicked:
+            if not evidence_culture.strip():
+                st.error(t["err_evidence"])
+            else:
+                st.session_state["score_culture"] = score_culture
+                st.session_state["evidence_culture"] = evidence_culture
+                st.session_state["step"] = 5
+                st.rerun()
 
-# ==========================================
-# SCREEN 3: INNOVATION
-# ==========================================
-elif st.session_state["step"] == 3:
-    with st.form(key="step3_form"):
-        if IMG_INNOV:
-            st.image(IMG_INNOV, use_container_width=True)
-        st.markdown(f"### {t['innov_title']}")
-        st.caption(t["innov_desc"])
-        score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
-        st.markdown(get_slider_glow_style(score_innov), unsafe_allow_html=True)
-        evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"],
-                                      placeholder=t["innov_ph"])
+    elif st.session_state["step"] == 5:
+        with st.form(key="step5_form"):
+            if IMG_ACC:
+                st.image(IMG_ACC, use_container_width=True)
+            st.markdown(f"### {t['acc_title']}")
+            st.caption(t["acc_desc"])
+            score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
+            st.markdown(get_slider_glow_style(score_acc), unsafe_allow_html=True)
+            evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"],
+                                        placeholder=t["acc_ph"])
 
-        st.write("")
-        col_back, col_next = st.columns([1, 1])
-        with col_back:
-            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
-        with col_next:
-            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+            st.write("")
+            col_back, col_next = st.columns([1, 1])
+            with col_back:
+                prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
+            with col_next:
+                submit_clicked = st.form_submit_button(t["submit_btn"], use_container_width=True)
 
-    if prev_clicked:
-        st.session_state["step"] = 2
-        st.rerun()
-    elif next_clicked:
-        if not evidence_innov.strip():
-            st.error(t["err_evidence"])
-        else:
-            st.session_state["score_innov"] = score_innov
-            st.session_state["evidence_innov"] = evidence_innov
+        if prev_clicked:
             st.session_state["step"] = 4
             st.rerun()
+        elif submit_clicked:
+            if not evidence_acc.strip():
+                st.error(t["err_evidence"])
+            else:
+                st.session_state["score_acc"] = score_acc
+                st.session_state["evidence_acc"] = evidence_acc
 
-# ==========================================
-# SCREEN 4: CULTURE & VALUE
-# ==========================================
-elif st.session_state["step"] == 4:
-    with st.form(key="step4_form"):
-        if IMG_CULTURE:
-            st.image(IMG_CULTURE, use_container_width=True)
-        st.markdown(f"### {t['culture_title']}")
-        st.caption(t["culture_desc"])
-        score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5,
-                                  value=st.session_state["score_culture"])
-        st.markdown(get_slider_glow_style(score_culture), unsafe_allow_html=True)
-        evidence_culture = st.text_area(t["culture_evidence"], value=st.session_state["evidence_culture"],
-                                        placeholder=t["culture_ph"])
+                avg_score = round((
+                                          st.session_state["score_collab"] +
+                                          st.session_state["score_innov"] +
+                                          st.session_state["score_culture"] +
+                                          st.session_state["score_acc"]
+                                  ) / 4.0, 2)
 
-        st.write("")
-        col_back, col_next = st.columns([1, 1])
-        with col_back:
-            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
-        with col_next:
-            next_clicked = st.form_submit_button(t["next_btn"], use_container_width=True)
+                new_entry = {
+                    "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "Tên Người Được Đề Cử": st.session_state["nominee_name"],
+                    "Phòng Ban": st.session_state["department"],
+                    "Điểm Trung Bình": avg_score,
+                    "Điểm Hợp Tác": st.session_state["score_collab"],
+                    "Minh Chứng Hợp Tác": st.session_state["evidence_collab"],
+                    "Điểm Đổi Mới": st.session_state["score_innov"],
+                    "Minh Chứng Đổi Mới": st.session_state["evidence_innov"],
+                    "Điểm Văn Hóa & Giá Trị": st.session_state["score_culture"],
+                    "Minh Chứng Văn Hóa & Giá Trị": st.session_state["evidence_culture"],
+                    "Điểm Trách Nhiệm": st.session_state["score_acc"],
+                    "Minh Chứng Trách Nhiệm": st.session_state["evidence_acc"]
+                }
 
-    if prev_clicked:
-        st.session_state["step"] = 3
-        st.rerun()
-    elif next_clicked:
-        if not evidence_culture.strip():
-            st.error(t["err_evidence"])
-        else:
-            st.session_state["score_culture"] = score_culture
-            st.session_state["evidence_culture"] = evidence_culture
-            st.session_state["step"] = 5
-            st.rerun()
+                df_new = pd.DataFrame([new_entry])
+                df_new.to_csv(DATA_FILE, mode='a', header=False, index=False, encoding='utf-8-sig')
 
-# ==========================================
-# SCREEN 5: ACCOUNTABILITY & FINAL SUBMIT
-# ==========================================
-elif st.session_state["step"] == 5:
-    with st.form(key="step5_form"):
-        if IMG_ACC:
-            st.image(IMG_ACC, use_container_width=True)
-        st.markdown(f"### {t['acc_title']}")
-        st.caption(t["acc_desc"])
-        score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["score_acc"])
-        st.markdown(get_slider_glow_style(score_acc), unsafe_allow_html=True)
-        evidence_acc = st.text_area(t["acc_evidence"], value=st.session_state["evidence_acc"], placeholder=t["acc_ph"])
+                current_registry = load_device_registry(DEVICE_REGISTRY_FILE)
+                if DEVICE_ID not in current_registry:
+                    current_registry.append(DEVICE_ID)
+                    save_device_registry(DEVICE_REGISTRY_FILE, current_registry)
 
-        st.write("")
-        col_back, col_next = st.columns([1, 1])
-        with col_back:
-            prev_clicked = st.form_submit_button(t["prev_btn"], use_container_width=True)
-        with col_next:
-            submit_clicked = st.form_submit_button(t["submit_btn"], use_container_width=True)
+                st.session_state["step"] = 6
+                st.rerun()
 
-    if prev_clicked:
-        st.session_state["step"] = 4
-        st.rerun()
-    elif submit_clicked:
-        if not evidence_acc.strip():
-            st.error(t["err_evidence"])
-        else:
-            st.session_state["score_acc"] = score_acc
-            st.session_state["evidence_acc"] = evidence_acc
+    elif st.session_state["step"] == 6:
+        if IMG_THANKYOU:
+            st.image(IMG_THANKYOU, use_container_width=True)
+        st.markdown(f"""
+            <div style="text-align: center; padding: 1rem 0;">
+                <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
+            </div>
+        """, unsafe_allow_html=True)
 
-            avg_score = round((
-                                      st.session_state["score_collab"] +
-                                      st.session_state["score_innov"] +
-                                      st.session_state["score_culture"] +
-                                      st.session_state["score_acc"]
-                              ) / 4.0, 2)
-
-            new_entry = {
-                "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "Tên Người Được Đề Cử": st.session_state["nominee_name"],
-                "Phòng Ban": st.session_state["department"],
-                "Điểm Trung Bình": avg_score,
-                "Điểm Hợp Tác": st.session_state["score_collab"],
-                "Minh Chứng Hợp Tác": st.session_state["evidence_collab"],
-                "Điểm Đổi Mới": st.session_state["score_innov"],
-                "Minh Chứng Đổi Mới": st.session_state["evidence_innov"],
-                "Điểm Văn Hóa & Giá Trị": st.session_state["score_culture"],
-                "Minh Chứng Văn Hóa & Giá Trị": st.session_state["evidence_culture"],
-                "Điểm Trách Nhiệm": st.session_state["score_acc"],
-                "Minh Chứng Trách Nhiệm": st.session_state["evidence_acc"]
-            }
-
-            df_new = pd.DataFrame([new_entry])
-            df_new.to_csv(DATA_FILE, mode='a', header=False, index=False, encoding='utf-8-sig')
-
-            # Record device token in registry so it cannot submit again
-            current_registry = load_device_registry()
-            if DEVICE_ID not in current_registry:
-                current_registry.append(DEVICE_ID)
-                save_device_registry(current_registry)
-
-            st.session_state["step"] = 6
-            st.rerun()
-
-# ==========================================
-# SCREEN 6: THANK YOU SCREEN
-# ==========================================
-elif st.session_state["step"] == 6:
-    if IMG_THANKYOU:
-        st.image(IMG_THANKYOU, use_container_width=True)
-    st.markdown(f"""
-        <div style="text-align: center; padding: 1rem 0;">
-            <h2 style="color: #4ADE80; font-size: 2rem; margin-bottom: 1rem;">{t['thank_you_title']}</h2>
-            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['thank_you_msg']}</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-# ==========================================
-# SCREEN 7: LOCKED OUT SCREEN (Already Submitted)
-# ==========================================
-elif st.session_state["step"] == 7:
-    if IMG_THANKYOU:
-        st.image(IMG_THANKYOU, use_container_width=True)
-    st.markdown(f"""
-        <div style="text-align: center; padding: 1rem 0;">
-            <h2 style="color: #F87171; font-size: 2rem; margin-bottom: 1rem;">{t['locked_title']}</h2>
-            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['locked_msg']}</p>
-        </div>
-    """, unsafe_allow_html=True)
+    elif st.session_state["step"] == 7:
+        if IMG_THANKYOU:
+            st.image(IMG_THANKYOU, use_container_width=True)
+        st.markdown(f"""
+            <div style="text-align: center; padding: 1rem 0;">
+                <h2 style="color: #F87171; font-size: 2rem; margin-bottom: 1rem;">{t['locked_title']}</h2>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['locked_msg']}</p>
+            </div>
+        """, unsafe_allow_html=True)
 
 # ==========================================
 # ANCHORED ADMINISTRATOR LOGIN PANEL
@@ -941,19 +1121,54 @@ with st.expander(t["admin_sec"]):
     if admin_password == AD_PASS:
         st.success(t["admin_success"])
 
+        # --- PHASE 2 TOGGLE CONTROLS ---
+        st.markdown("---")
+        st.subheader("⚙️ Phase Management Control")
+        new_phase2_toggle = st.toggle("Enable Phase 2 Finals Voting Mode", value=PHASE_2_ACTIVE)
+        if new_phase2_toggle != PHASE_2_ACTIVE:
+            save_json_state(PHASE2_STATE_FILE, {"phase2_active": new_phase2_toggle})
+            st.success(f"Phase 2 status updated to: {new_phase2_toggle}. Reloading...")
+            st.rerun()
+
         # Admin option to reset device registry tokens
-        if st.button(t["reset_devices_btn"]):
-            save_device_registry([])
-            st.success(t["reset_devices_success"])
+        col_r1, col_r2 = st.columns(2)
+        with col_r1:
+            if st.button("🔄 Reset Phase 1 Devices"):
+                save_device_registry(DEVICE_REGISTRY_FILE, [])
+                st.success("Phase 1 device registry reset!")
+        with col_r2:
+            if st.button("🔄 Reset Phase 2 Devices"):
+                save_device_registry(DEVICE_REGISTRY_FILE_P2, [])
+                st.success("Phase 2 device registry reset!")
+
+        # --- DISPLAY PHASE 2 VOTING RESULTS IF ACTIVE OR AVAILABLE ---
+        if os.path.exists(DATA_FILE_P2):
+            try:
+                df_p2_raw = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip')
+                st.markdown(f"### 🗳️ Phase 2 Votes Summary (Total: {len(df_p2_raw)})")
+                if not df_p2_raw.empty and "Tên Ứng Viên" in df_p2_raw.columns:
+                    summary_p2 = df_p2_raw.groupby("Tên Ứng Viên").agg(
+                        Số_Lượt_Bình_Chọn=("Phòng Ban", "count")
+                    ).reset_index().sort_values(by="Số_Lượt_Bình_Chọn", ascending=False)
+                    st.dataframe(summary_p2, use_container_width=True)
+                    st.bar_chart(summary_p2.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
+
+                    csv_p2_data = df_p2_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
+                    st.download_button(
+                        label="📥 Download Phase 2 Votes CSV",
+                        data=csv_p2_data,
+                        file_name=f"phase2_votes_{datetime.now().strftime('%Y%m%d')}.csv",
+                        mime="text/csv"
+                    )
+            except Exception as e:
+                st.info(f"Phase 2 data log empty or unreadable: {e}")
 
         if os.path.exists(DATA_FILE):
             try:
-                # 1. Original Raw Data Table
                 df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
                 st.write(f"**{t['total_nominations']}** {len(df_raw)}")
 
                 if not df_raw.empty and "Tên Người Được Đề Cử" in df_raw.columns and "Điểm Trung Bình" in df_raw.columns:
-                    # 2. Aggregated Summary Calculation Table
                     summary_df = df_raw.groupby("Tên Người Được Đề Cử").agg(
                         Số_Lượt_Đề_Cử=("Điểm Trung Bình", "count"),
                         Điểm_Trung_Bình_Tổng_Thể=("Điểm Trung Bình", "mean")
@@ -966,47 +1181,17 @@ with st.expander(t["admin_sec"]):
                     st.markdown(f"### {t['summary_table_title']}")
                     st.dataframe(summary_df, use_container_width=True)
 
-                    # --- CHARTS & LEADERBOARD ---
                     st.markdown("---")
-
-                    # Bar Chart 1: Top 10 Most Voted Nominees
                     st.markdown(f"### {t['chart_votes_title']}")
                     top_votes = summary_df.sort_values(by="Số_Lượt_Đề_Cử", ascending=False).head(10)
-                    chart_votes_data = top_votes.set_index("Tên Người Được Đề Cử")["Số_Lượt_Đề_Cử"]
-                    st.bar_chart(chart_votes_data)
+                    st.bar_chart(top_votes.set_index("Tên Người Được Đề Cử")["Số_Lượt_Đề_Cử"])
 
-                    # Bar Chart 2: Top 10 Highest Average Scores
-                    st.markdown(f"### {t['chart_scores_title']}")
-                    top_scores = summary_df.sort_values(by="Điểm_Trung_Bình_Tổng_Thể", ascending=False).head(10)
-                    chart_scores_data = top_scores.set_index("Tên Người Được Đề Cử")["Điểm_Trung_Bình_Tổng_Thể"]
-                    st.bar_chart(chart_scores_data)
-
-                    # Pie Chart: Vote Percentage Allocation
-                    st.markdown(f"### {t['chart_pie_title']}")
-                    import altair as alt
-
-                    pie_data = summary_df.copy()
-                    total_votes_sum = pie_data["Số_Lượt_Đề_Cử"].sum()
-                    pie_data["Phần_Trăm"] = (pie_data[
-                                                 "Số_Lượt_Đề_Cử"] / total_votes_sum) * 100 if total_votes_sum > 0 else 0
-
-                    pie_chart = alt.Chart(pie_data).mark_arc(innerRadius=50).encode(
-                        theta=alt.Theta(field="Số_Lượt_Đề_Cử", type="quantitative"),
-                        color=alt.Color(field="Tên Người Được Đề Cử", type="nominal",
-                                        legend=alt.Legend(title="Nominee")),
-                        tooltip=["Tên Người Được Đề Cử", "Số_Lượt_Đề_Cử",
-                                 alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
-                    ).properties(width=400, height=350)
-                    st.altair_chart(pie_chart, use_container_width=True)
-
-                    # Leaderboard: Top 10 Nominees combining votes + highest average scores
                     st.markdown(f"### {t['leaderboard_title']}")
                     leaderboard_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"],
                                                             ascending=[False, False]).head(10).reset_index(drop=True)
-                    leaderboard_df.index += 1  # 1-based rank
+                    leaderboard_df.index += 1
                     st.dataframe(leaderboard_df, use_container_width=True)
 
-                # Render the original raw nomination data table separately below
                 st.markdown(f"### {t['raw_table_title']}")
                 st.dataframe(df_raw, use_container_width=True)
 
@@ -1029,6 +1214,5 @@ with st.expander(t["admin_sec"]):
                     )
             except Exception as e:
                 st.error(f"⚠️ Lỗi đọc file dữ liệu: {e}")
-                st.info("💡 Bạn có thể xóa file `danh_sach_de_cu.csv` để ứng dụng khởi tạo lại bảng dữ liệu mới.")
     elif admin_password != "":
         st.error(t["err_pass"])
