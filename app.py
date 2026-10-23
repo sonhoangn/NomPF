@@ -690,25 +690,25 @@ elif st.session_state["step"] == 1:
     with st.form(key="step1_form_t"):
         st.subheader(t["sec1"])
 
-        dept_options = list(DEPARTMENT_NAMES.keys())
+    dept_options = list(DEPARTMENT_NAMES.keys())
 
-        # Callback to trigger instant rerun when department changes so name list updates immediately
-        def update_department_selection():
-            st.session_state["department"] = st.session_state["dept_selectbox"]
-            # Reset nominee name when department changes
-            st.session_state["nominee_name"] = ""
+    # Callback to trigger instant rerun when department changes so name list updates immediately
+    def update_department_selection():
+        st.session_state["department"] = st.session_state["dept_selectbox"]
+        # Reset nominee name when department changes
+        st.session_state["nominee_name"] = ""
 
-        selected_dept = st.selectbox(
-            t["dept_label"],
-            options=dept_options,
-            index=dept_options.index(st.session_state["department"]) if st.session_state["department"] in dept_options else 0,
-            key="dept_selectbox",
-            on_change=update_department_selection
-        )
+    selected_dept = st.selectbox(
+        t["dept_label"],
+        options=dept_options,
+        index=dept_options.index(st.session_state["department"]) if st.session_state["department"] in dept_options else 0,
+        key="dept_selectbox",
+        on_change=update_department_selection
+    )
 
-        # Retrieve available names for the currently selected department
-        current_dept = st.session_state["department"]
-        available_names = DEPARTMENT_NAMES.get(current_dept, [])
+    # Retrieve available names for the currently selected department
+    current_dept = st.session_state["department"]
+    available_names = DEPARTMENT_NAMES.get(current_dept, [])
 
     with st.form(key="step1_form"):
         if available_names:
