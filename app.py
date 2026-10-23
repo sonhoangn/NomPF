@@ -691,7 +691,8 @@ if st.session_state["step"] == 0:
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
-    st.subheader(t["sec1"])
+    with st.form(key="step1_form_t"):
+        st.subheader(t["sec1"])
 
     dept_options = list(DEPARTMENT_NAMES.keys())
 
