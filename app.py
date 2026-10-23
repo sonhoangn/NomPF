@@ -34,18 +34,29 @@ st.set_page_config(
 # --- LOAD ADMIN PASSWORD ---
 AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
 
+# --- LOAD DEPT NAME LISTs ---
+EPSI = st.secrets.get("EPSI", "---")
+EF = st.secrets.get("EF", "---")
+PB = st.secrets.get("PB", "---")
+PEDC = st.secrets.get("PEDC", "---")
+PP = st.secrets.get("PP", "---")
+PA = st.secrets.get("PA", "---")
+PEF = st.secrets.get("PEF", "---")
+LG = st.secrets.get("LG", "---")
+QM = st.secrets.get("QM", "---")
+
 # --- DEPARTMENT & PLACEHOLDER NAMES MAPPING ---
 # Customize or fill in names for each department below as needed
 DEPARTMENT_NAMES = {
-    "Engineering PSI": "EPSI",
-    "Engineering Facility": "EF",
-    "Production - Bodyshop": "PB",
-    "Production - EDC": "PEDC",
-    "Production - Paintshop": "PP",
-    "Production - Assembly": "PA",
-    "Production - EoL/Finish": "PEF",
-    "Logistics": "LG",
-    "Quality Management": "QM"
+    "Engineering PSI": EPSI,
+    "Engineering Facility": EF,
+    "Production - Bodyshop": PB,
+    "Production - EDC": PEDC,
+    "Production - Paintshop": PP,
+    "Production - Assembly": PA,
+    "Production - EoL/Finish": PEF,
+    "Logistics": LG,
+    "Quality Management": QM
 }
 
 # --- DEVICE TRACKING & PERSISTENCE FILES ---
