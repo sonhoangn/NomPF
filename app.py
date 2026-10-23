@@ -31,13 +31,27 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- LOAD SECRETS FOR NOMINEE LIBRARY & ADMIN ---
+# --- LOAD ADMIN PASSWORD ---
 AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
-NOMINEE_LIBRARY = st.secrets.get("NOMINEE_LIST", ["Nguyen Van A", "John Doe", "Max Mustermann"])
+
+# --- DEPARTMENT & PLACEHOLDER NAMES MAPPING ---
+# Customize or fill in names for each department below as needed
+DEPARTMENT_NAMES = {
+    "Engineering PSI": "EPSI",
+    "Engineering Facility": "EF",
+    "Production - Bodyshop": "PB",
+    "Production - EDC": "PEDC",
+    "Production - Paintshop": "PP",
+    "Production - Assembly": "PA",
+    "Production - EoL/Finish": "PEF",
+    "Logistics": "LG",
+    "Quality Management": "QM"
+}
 
 # --- DEVICE TRACKING & PERSISTENCE FILES ---
 DATA_FILE = "danh_sach_de_cu.csv"
 DEVICE_REGISTRY_FILE = "device_registry.json"
+
 
 def load_device_registry():
     if os.path.exists(DEVICE_REGISTRY_FILE):
@@ -48,9 +62,11 @@ def load_device_registry():
             return []
     return []
 
+
 def save_device_registry(registry_list):
     with open(DEVICE_REGISTRY_FILE, "w", encoding="utf-8") as f:
-                json.dump(registry_list, f, ensure_ascii=False, indent=4)
+        json.dump(registry_list, f, ensure_ascii=False, indent=4)
+
 
 # Assign or retrieve unique device token via URL query params & session state
 if "device_token" not in st.session_state:
@@ -66,7 +82,8 @@ DEVICE_ID = st.session_state["device_token"]
 
 # --- SESSION STATE INITIALIZATION ---
 if "step" not in st.session_state:
-    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You, 7: Locked Out
+    st.session_state[
+        "step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You, 7: Locked Out
 
 # Check if device has already submitted
 registered_devices = load_device_registry()
@@ -76,7 +93,7 @@ if DEVICE_ID in registered_devices and st.session_state["step"] not in [6, 7]:
 # Form data storage in session state
 default_keys = {
     "nominee_name": "",
-    "department": "Others",
+    "department": list(DEPARTMENT_NAMES.keys())[0],
     "score_collab": 5,
     "evidence_collab": "",
     "score_innov": 5,
@@ -89,46 +106,6 @@ default_keys = {
 for key, default_val in default_keys.items():
     if key not in st.session_state:
         st.session_state[key] = default_val
-
-
-# --- ADVANCED NAME MATCHING & NORMALIZATION ENGINE ---
-def normalize_tokens(name_str):
-    """Removes commas, extra whitespace, and splits into lowercase tokens."""
-    cleaned = name_str.replace(",", " ").strip()
-    return [token.lower() for token in cleaned.split() if token]
-
-
-def get_canonical_name(input_name, library_list):
-    """
-    Matches input name against the library considering comma placement and token variations.
-    Strictly preserves token sequence orders (e.g., 'Nguyen Van A' != 'Nguyen A Van').
-    """
-    if not input_name:
-        return input_name
-
-    input_tokens = normalize_tokens(input_name)
-    if not input_tokens:
-        return input_name
-
-    for lib_name in library_list:
-        lib_tokens = normalize_tokens(lib_name)
-
-        # 1. Direct strict token match
-        if input_tokens == lib_tokens:
-            return lib_name
-
-        # 2. Check comma-shifted variations (e.g., "Nguyen, Van A" or "A, Nguyen Van")
-        raw_parts = [p.strip() for p in input_name.split(",")]
-        if len(raw_parts) > 1:
-            reconstructed_tokens = []
-            for part in raw_parts:
-                reconstructed_tokens.extend([t.lower() for t in part.split() if t])
-
-            if reconstructed_tokens == lib_tokens:
-                return lib_name
-
-    # If no library match is found, return the original input capitalized cleanly
-    return " ".join([t.capitalize() for t in normalize_tokens(input_name)])
 
 
 # Helper function to generate safe dynamic glow style based on slider value
@@ -321,9 +298,9 @@ TRANSLATIONS = {
 
         "step_indicator": "Bước {} / 5",
         "sec1": "1. Thông tin người được đề cử",
-        "nominee_label": "Nhập tên *",
-        "nominee_placeholder": "Nhập họ tên đầy đủ...",
         "dept_label": "Phòng ban / Bộ phận *",
+        "nominee_label": "Chọn tên nhân sự *",
+        "nominee_placeholder": "Chọn tên từ danh sách...",
 
         "collab_title": "1. Hợp Tác (Collaboration)",
         "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
@@ -352,7 +329,8 @@ TRANSLATIONS = {
         "next_btn": "Tiếp theo ➔",
         "prev_btn": "⬅️ Quay lại",
         "submit_btn": "Hoàn Tất & Gửi Đề Cử",
-        "err_fields": "⚠️ Vui lòng nhập tên người được đề cử!",
+        "err_fields": "⚠️ Vui lòng chọn đầy đủ phòng ban và tên người được đề cử!",
+        "err_no_names": "⚠️ Phòng ban này chưa có tên nhân sự trong danh sách!",
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
@@ -384,9 +362,9 @@ TRANSLATIONS = {
 
         "step_indicator": "Step {} of 5",
         "sec1": "1. Nominee Information",
-        "nominee_label": "Type name manually *",
-        "nominee_placeholder": "Type full name...",
         "dept_label": "Department *",
+        "nominee_label": "Select Nominee Name *",
+        "nominee_placeholder": "Select name from list...",
 
         "collab_title": "1. Collaboration",
         "collab_desc": "Description: Demonstrate a teamwork spirit that goes beyond the defined scope of work; coordinate effectively with others through knowledge sharing, teammate support, proactive feedback, and constructive conflict resolution.",
@@ -415,7 +393,8 @@ TRANSLATIONS = {
         "next_btn": "Next ➔",
         "prev_btn": "⬅️ Back",
         "submit_btn": "Submit Nomination",
-        "err_fields": "⚠️ Please type the nominee name!",
+        "err_fields": "⚠️ Please select both a department and a nominee name!",
+        "err_no_names": "⚠️ This department does not have any names listed yet!",
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
@@ -447,9 +426,9 @@ TRANSLATIONS = {
 
         "step_indicator": "Schritt {} von 5",
         "sec1": "1. Informationen zum Nominierten",
-        "nominee_label": "Namen manuell eingeben *",
-        "nominee_placeholder": "Vollständigen Namen eingeben...",
         "dept_label": "Abteilung *",
+        "nominee_label": "Namen des Nominierten auswählen *",
+        "nominee_placeholder": "Namen aus der Liste auswählen...",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
         "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
@@ -478,7 +457,8 @@ TRANSLATIONS = {
         "next_btn": "Weiter ➔",
         "prev_btn": "⬅️ Zurück",
         "submit_btn": "Nominierung Absenden",
-        "err_fields": "⚠️ Bitte geben Sie den Namen ein!",
+        "err_fields": "⚠️ Bitte wählen Sie sowohl eine Abteilung als auch einen Namen aus!",
+        "err_no_names": "⚠️ Diese Abteilung hat noch keine Namen in der Liste!",
         "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "Vielen Dank für Ihre Nominierung!",
@@ -696,15 +676,7 @@ elif st.session_state["step"] == 1:
     with st.form(key="step1_form"):
         st.subheader(t["sec1"])
 
-        typed_custom_name = st.text_input(
-            t["nominee_label"],
-            value=st.session_state["nominee_name"],
-            placeholder=t["nominee_placeholder"]
-        )
-
-        dept_options = ["Engineering PSI", "Engineering Facility", "Production - Bodyshop", "Production - EDC",
-                        "Production - Paintshop", "Production - Assembly", "Production - EoL/Finish",
-                        "Logistics", "Quality Management", "Others"]
+        dept_options = list(DEPARTMENT_NAMES.keys())
         try:
             default_dept_index = dept_options.index(st.session_state["department"])
         except ValueError:
@@ -712,19 +684,28 @@ elif st.session_state["step"] == 1:
 
         department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index)
 
+        # Retrieve available names for the selected department
+        available_names = DEPARTMENT_NAMES.get(department, [])
+
+        nominee_name = st.selectbox(
+            t["nominee_label"],
+            options=available_names,
+            index=0 if available_names else None
+        )
+
         st.write("")
         col_back, col_next = st.columns([1, 1])
         with col_next:
             next_clicked = st.form_submit_button(t["next_btn"], type="primary")
 
     if next_clicked:
-        raw_name = typed_custom_name.strip()
-        if not raw_name:
+        if not department or not nominee_name:
             st.error(t["err_fields"])
+        elif not available_names:
+            st.warning(t["err_no_names"])
         else:
-            canonical_name = get_canonical_name(raw_name, NOMINEE_LIBRARY)
-            st.session_state["nominee_name"] = canonical_name
             st.session_state["department"] = department
+            st.session_state["nominee_name"] = nominee_name
             st.session_state["step"] = 2
             st.rerun()
 
