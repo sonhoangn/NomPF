@@ -796,14 +796,15 @@ st.markdown(f"""
 # PORTAL CLOSED CHECK OR ACTIVE FLOW
 # ==========================================
 if PORTAL_CLOSED:
-    if IMG_THANKYOU:
-        st.image(IMG_THANKYOU, use_container_width=True)
-    st.markdown(f"""
-        <div style="text-align: center; padding: 2rem 0;">
-            <h2 style="color: #F87171; font-size: 2.2rem; margin-bottom: 1rem;">{t['portal_closed_title']}</h2>
-            <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['portal_closed_msg']}</p>
-        </div>
-    """, unsafe_allow_html=True)
+    with st.form(key="portal_closed_form"):
+        if IMG_THANKYOU:
+            st.image(IMG_THANKYOU, use_container_width=True)
+        st.markdown(f"""
+            <div style="text-align: center; padding: 2rem 0;">
+                <h2 style="color: #F87171; font-size: 2.2rem; margin-bottom: 1rem;">{t['portal_closed_title']}</h2>
+                <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 1.5rem;">{t['portal_closed_msg']}</p>
+            </div>
+        """, unsafe_allow_html=True)
 else:
     # ==========================================
     # PHASE 2: FINALIST VOTING & SCORING FLOW
