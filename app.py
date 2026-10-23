@@ -34,19 +34,27 @@ st.set_page_config(
 # --- LOAD ADMIN PASSWORD ---
 AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
 
-# --- LOAD DEPT NAME LISTs ---
-EPSI = st.secrets.get("EPSI", "---")
-EF = st.secrets.get("EF", "---")
-PB = st.secrets.get("PB", "---")
-PEDC = st.secrets.get("PEDC", "---")
-PP = st.secrets.get("PP", "---")
-PA = st.secrets.get("PA", "---")
-PEF = st.secrets.get("PEF", "---")
-LG = st.secrets.get("LG", "---")
-QM = st.secrets.get("QM", "---")
+# --- HELPER FUNCTION TO PARSE SECRETS INTO LISTS ---
+def parse_secret_list(secret_val):
+    if not secret_val or secret_val == "---":
+        return []
+    # If secrets are stored as comma-separated values, split them. If it's already a list, keep it.
+    if isinstance(secret_val, list):
+        return [str(item).strip() for item in secret_val if str(item).strip()]
+    return [name.strip() for name in str(secret_val).split(",") if name.strip()]
+
+# --- LOAD DEPT NAME LISTs FROM SECRETS ---
+EPSI = parse_secret_list(st.secrets.get("EPSI", ""))
+EF = parse_secret_list(st.secrets.get("EF", ""))
+PB = parse_secret_list(st.secrets.get("PB", ""))
+PEDC = parse_secret_list(st.secrets.get("PEDC", ""))
+PP = parse_secret_list(st.secrets.get("PP", ""))
+PA = parse_secret_list(st.secrets.get("PA", ""))
+PEF = parse_secret_list(st.secrets.get("PEF", ""))
+LG = parse_secret_list(st.secrets.get("LG", ""))
+QM = parse_secret_list(st.secrets.get("QM", ""))
 
 # --- DEPARTMENT & PLACEHOLDER NAMES MAPPING ---
-# Customize or fill in names for each department below as needed
 DEPARTMENT_NAMES = {
     "Engineering PSI": EPSI,
     "Engineering Facility": EF,
@@ -93,8 +101,7 @@ DEVICE_ID = st.session_state["device_token"]
 
 # --- SESSION STATE INITIALIZATION ---
 if "step" not in st.session_state:
-    st.session_state[
-        "step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You, 7: Locked Out
+    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, 2: Collab, 3: Innov, 4: Culture, 5: Acc, 6: Thank You, 7: Locked Out
 
 # Check if device has already submitted
 registered_devices = load_device_registry()
@@ -341,7 +348,7 @@ TRANSLATIONS = {
         "prev_btn": "⬅️ Quay lại",
         "submit_btn": "Hoàn Tất & Gửi Đề Cử",
         "err_fields": "⚠️ Vui lòng chọn đầy đủ phòng ban và tên người được đề cử!",
-        "err_no_names": "⚠️ Phòng ban này chưa có tên nhân sự trong danh sách!",
+        "err_no_names": "⚠️ Phòng ban này chưa có tên nhân sự trong danh sách cấu hình!",
         "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
@@ -405,7 +412,7 @@ TRANSLATIONS = {
         "prev_btn": "⬅️ Back",
         "submit_btn": "Submit Nomination",
         "err_fields": "⚠️ Please select both a department and a nominee name!",
-        "err_no_names": "⚠️ This department does not have any names listed yet!",
+        "err_no_names": "⚠️ This department does not have any names listed in the configuration yet!",
         "err_evidence": "⚠️ Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
@@ -469,7 +476,7 @@ TRANSLATIONS = {
         "prev_btn": "⬅️ Zurück",
         "submit_btn": "Nominierung Absenden",
         "err_fields": "⚠️ Bitte wählen Sie sowohl eine Abteilung als auch einen Namen aus!",
-        "err_no_names": "⚠️ Diese Abteilung hat noch keine Namen in der Liste!",
+        "err_no_names": "⚠️ Diese Abteilung hat noch keine Namen in der Konfiguration!",
         "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "Vielen Dank für Ihre Nominierung!",
@@ -684,25 +691,43 @@ if st.session_state["step"] == 0:
 # SCREEN 1: NOMINEE DETAILS
 # ==========================================
 elif st.session_state["step"] == 1:
+    st.subheader(t["sec1"])
+
+    dept_options = list(DEPARTMENT_NAMES.keys())
+
+    # Callback to trigger instant rerun when department changes so name list updates immediately
+    def update_department_selection():
+        st.session_state["department"] = st.session_state["dept_selectbox"]
+        # Reset nominee name when department changes
+        st.session_state["nominee_name"] = ""
+
+    selected_dept = st.selectbox(
+        t["dept_label"],
+        options=dept_options,
+        index=dept_options.index(st.session_state["department"]) if st.session_state["department"] in dept_options else 0,
+        key="dept_selectbox",
+        on_change=update_department_selection
+    )
+
+    # Retrieve available names for the currently selected department
+    current_dept = st.session_state["department"]
+    available_names = DEPARTMENT_NAMES.get(current_dept, [])
+
     with st.form(key="step1_form"):
-        st.subheader(t["sec1"])
+        if available_names:
+            try:
+                default_name_index = available_names.index(st.session_state["nominee_name"]) if st.session_state["nominee_name"] in available_names else 0
+            except ValueError:
+                default_name_index = 0
 
-        dept_options = list(DEPARTMENT_NAMES.keys())
-        try:
-            default_dept_index = dept_options.index(st.session_state["department"])
-        except ValueError:
-            default_dept_index = 0
-
-        department = st.selectbox(t["dept_label"], options=dept_options, index=default_dept_index)
-
-        # Retrieve available names for the selected department
-        available_names = DEPARTMENT_NAMES.get(department, [])
-
-        nominee_name = st.selectbox(
-            t["nominee_label"],
-            options=available_names,
-            index=0 if available_names else None
-        )
+            nominee_name = st.selectbox(
+                t["nominee_label"],
+                options=available_names,
+                index=default_name_index
+            )
+        else:
+            st.warning(t["err_no_names"])
+            nominee_name = ""
 
         st.write("")
         col_back, col_next = st.columns([1, 1])
@@ -710,12 +735,12 @@ elif st.session_state["step"] == 1:
             next_clicked = st.form_submit_button(t["next_btn"], type="primary")
 
     if next_clicked:
-        if not department or not nominee_name:
+        if not current_dept or not nominee_name:
             st.error(t["err_fields"])
         elif not available_names:
             st.warning(t["err_no_names"])
         else:
-            st.session_state["department"] = department
+            st.session_state["department"] = current_dept
             st.session_state["nominee_name"] = nominee_name
             st.session_state["step"] = 2
             st.rerun()
