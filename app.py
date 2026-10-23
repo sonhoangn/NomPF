@@ -461,31 +461,31 @@ TRANSLATIONS = {
         "acc_ph": "Nêu ví dụ về tinh thần trách nhiệm trong công việc...",
 
         "next_btn": "Tiếp theo ➔",
-        "prev_btn": "⬅️ Quay lại",
+        "prev_btn": "Quay lại",
         "submit_btn": "Hoàn Tất & Gửi Đề Cử",
-        "err_fields": "⚠️ Vui lòng chọn đầy đủ phòng ban và tên người được đề cử!",
-        "err_no_names": "⚠️ Phòng ban này chưa có tên nhân sự trong danh sách cấu hình!",
-        "err_evidence": "⚠️ Vui lòng điền minh chứng cho tiêu chí này!",
+        "err_fields": "Vui lòng chọn đầy đủ phòng ban và tên người được đề cử!",
+        "err_no_names": "Phòng ban này chưa có tên nhân sự trong danh sách cấu hình!",
+        "err_evidence": "Vui lòng điền minh chứng cho tiêu chí này!",
 
         "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
         "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công từ thiết bị này. Mỗi thiết bị chỉ được thực hiện đề cử 1 lần duy nhất.",
         "locked_title": "Thiết Bị Đã Thực Hiện Đề Cử",
         "locked_msg": "Thiết bị này đã hoàn tất việc gửi đề cử trước đó. Cảm ơn sự tham gia đóng góp của bạn vào chương trình!",
 
-        "admin_sec": "🔒 Quản Trị Viên (Xem & Tải Dữ Liệu)",
+        "admin_sec": "Quản Trị Viên (Xem & Tải Dữ Liệu)",
         "admin_pass_label": "Nhập mật khẩu quản trị",
         "admin_success": "Xác thực thành công!",
         "total_nominations": "Tổng số lượt đề cử:",
-        "reset_devices_btn": "🔄 Đặt Lại Danh Sách Thiết Bị (Cho phép đề cử lại)",
+        "reset_devices_btn": "Đặt Lại Danh Sách Thiết Bị (Cho phép đề cử lại)",
         "reset_devices_success": "Đã reset thiết bị thành công! Các thiết bị có thể làm mới trang để đề cử lại.",
-        "download_btn": "📥 Tải Bảng Dữ Liệu Gốc (CSV)",
-        "download_pdf_btn": "📥 Tải Báo Cáo PDF Dashboard",
-        "summary_table_title": "📊 Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
-        "raw_table_title": "📋 Bảng Dữ Liệu Gốc Các Đề Cử:",
-        "chart_votes_title": "📈 Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
-        "chart_scores_title": "⭐ Top 10 Đề Cử Điểm Trung Bình Cao Nhất",
-        "chart_pie_title": "🥧 Tỷ Lệ Phân Bổ Bình Chọn (Phần Trăm Lượt Đề Cử)",
-        "leaderboard_title": "🏆 Bảng Xếp Hạng (Top 10 Đề Cử Hàng Đầu)",
+        "download_btn": "Tải Bảng Dữ Liệu Gốc (CSV)",
+        "download_pdf_btn": "Tải Báo Cáo PDF Dashboard",
+        "summary_table_title": "Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
+        "raw_table_title": "Bảng Dữ Liệu Gốc Các Đề Cử:",
+        "chart_votes_title": "Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
+        "chart_scores_title": "Top 10 Đề Cử Điểm Trung Bình Cao Nhất",
+        "chart_pie_title": "Tỷ Lệ Phân Bổ Bình Chọn (Phần Trăm Lượt Đề Cử)",
+        "leaderboard_title": "Bảng Xếp Hạng (Top 10 Đề Cử Hàng Đầu)",
         "err_pass": "Mật khẩu không chính xác!"
     },
     "English": {
@@ -536,31 +536,31 @@ TRANSLATIONS = {
         "acc_ph": "Provide examples of strong responsibility in work...",
 
         "next_btn": "Next ➔",
-        "prev_btn": "⬅️ Back",
+        "prev_btn": "Back",
         "submit_btn": "Submit Nomination",
-        "err_fields": "⚠️ Please select both a department and a nominee name!",
-        "err_no_names": "⚠️ This department does not have any names listed in the configuration yet!",
-        "err_evidence": "⚠️ Please provide evidence for this criterion!",
+        "err_fields": "Please select both a department and a nominee name!",
+        "err_no_names": "This department does not have any names listed in the configuration yet!",
+        "err_evidence": "Please provide evidence for this criterion!",
 
         "thank_you_title": "Thank You for Your Nomination!",
         "thank_you_msg": "Your nomination has been recorded successfully from this device. Each device is permitted one submission only.",
         "locked_title": "Nomination Already Submitted",
         "locked_msg": "A nomination has already been submitted from this device. Thank you for your participation!",
 
-        "admin_sec": "🔒 Administrator (View & Download Data)",
+        "admin_sec": "Administrator (View & Download Data)",
         "admin_pass_label": "Enter admin password",
         "admin_success": "Authentication successful!",
         "total_nominations": "Total nominations:",
-        "reset_devices_btn": "🔄 Reset Device Registry (Allow Re-nomination)",
+        "reset_devices_btn": "Reset Device Registry (Allow Re-nomination)",
         "reset_devices_success": "Device registry successfully reset! Devices can now reload and submit again.",
-        "download_btn": "📥 Download Raw Data (CSV)",
-        "download_pdf_btn": "📥 Download Dashboard PDF Report",
-        "summary_table_title": "📊 Summary Table of Total Votes & Average Scores:",
-        "raw_table_title": "📋 Raw Nominations Table:",
-        "chart_votes_title": "📈 Top 10 Most Voted Nominees",
-        "chart_scores_title": "⭐ Top 10 Highest Average Scores",
-        "chart_pie_title": "🥧 Vote Allocation Percentage (Pie Chart)",
-        "leaderboard_title": "🏆 Leaderboard (Top 10 Nominees)",
+        "download_btn": "Download Raw Data (CSV)",
+        "download_pdf_btn": "Download Dashboard PDF Report",
+        "summary_table_title": "Summary Table of Total Votes & Average Scores:",
+        "raw_table_title": "Raw Nominations Table:",
+        "chart_votes_title": "Top 10 Most Voted Nominees",
+        "chart_scores_title": "Top 10 Highest Average Scores",
+        "chart_pie_title": "Vote Allocation Percentage (Pie Chart)",
+        "leaderboard_title": "Leaderboard (Top 10 Nominees)",
         "err_pass": "Incorrect password!"
     },
     "Deutsch (German)": {
@@ -611,31 +611,31 @@ TRANSLATIONS = {
         "acc_ph": "Geben Sie Beispiele für starkes Verantwortungsbewusstsein bei der Arbeit an...",
 
         "next_btn": "Weiter ➔",
-        "prev_btn": "⬅️ Zurück",
+        "prev_btn": "Zurück",
         "submit_btn": "Nominierung Absenden",
-        "err_fields": "⚠️ Bitte wählen Sie sowohl eine Abteilung als auch einen Namen aus!",
-        "err_no_names": "⚠️ Diese Abteilung hat noch keine Namen in der Konfiguration!",
-        "err_evidence": "⚠️ Bitte geben Sie für dieses Kriterium Nachweise an!",
+        "err_fields": "Bitte wählen Sie sowohl eine Abteilung als auch einen Namen aus!",
+        "err_no_names": "Diese Abteilung hat noch keine Namen in der Konfiguration!",
+        "err_evidence": "Bitte geben Sie für dieses Kriterium Nachweise an!",
 
         "thank_you_title": "Vielen Dank für Ihre Nominierung!",
         "thank_you_msg": "Ihre Nominierung wurde erfolgreich von diesem Gerät erfasst. Jedes Gerät darf nur einmal einreichen.",
         "locked_title": "Nominierung Bereits Abgeschlossen",
         "locked_msg": "Von diesem Gerät wurde bereits eine Nominierung eingereicht. Vielen Dank für Ihre Teilnahme!",
 
-        "admin_sec": "🔒 Administrator (Daten anzeigen & herunterladen)",
+        "admin_sec": "Administrator (Daten anzeigen & herunterladen)",
         "admin_pass_label": "Admin-Passwort eingeben",
         "admin_success": "Authentifizierung erfolgreich!",
         "total_nominations": "Gesamtzahl der Nominierungen:",
-        "reset_devices_btn": "🔄 Geräteliste zurücksetzen (Erneut nominieren erlauben)",
+        "reset_devices_btn": "Geräteliste zurücksetzen (Erneut nominieren erlauben)",
         "reset_devices_success": "Geräteliste erfolgreich zurückgesetzt! Geräte können die Seite neu laden, um erneut zu nominieren.",
-        "download_btn": "📥 Rohdaten herunterladen (CSV)",
-        "download_pdf_btn": "📥 Dashboard PDF-Bericht herunterladen",
-        "summary_table_title": "📊 Zusammenfassung der Stimmen & Durchschnittswerte:",
-        "raw_table_title": "📋 Rohdaten-Tabelle der Nominierungen:",
-        "chart_votes_title": "📈 Top 10 Nominierte nach Stimmen",
-        "chart_scores_title": "⭐ Top 10 Höchste Durchschnittswerte",
-        "chart_pie_title": "🥧 Stimmverteilung (Prozentdiagramm)",
-        "leaderboard_title": "🏆 Bestenliste (Top 10 Nominierte)",
+        "download_btn": "Rohdaten herunterladen (CSV)",
+        "download_pdf_btn": "Dashboard PDF-Bericht herunterladen",
+        "summary_table_title": "Zusammenfassung der Stimmen & Durchschnittswerte:",
+        "raw_table_title": "Rohdaten-Tabelle der Nominierungen:",
+        "chart_votes_title": "Top 10 Nominierte nach Stimmen",
+        "chart_scores_title": "Top 10 Höchste Durchschnittswerte",
+        "chart_pie_title": "Stimmverteilung (Prozentdiagramm)",
+        "leaderboard_title": "Bestenliste (Top 10 Nominierte)",
         "err_pass": "Falsches Passwort!"
     }
 }
@@ -830,7 +830,7 @@ if PHASE_2_ACTIVE:
                     </div>
                     <div style="flex: 1; min-width: 200px;">
                         <h3 style="color: #FDE047; margin-bottom: 0.2rem;">{current_finalist['name']}</h3>
-                        <p style="color: #F7C657; font-size: 0.95rem; font-style: italic; margin-bottom: 0.5rem;">🏢 {current_finalist['department']}</p>
+                        <p style="color: #F7C657; font-size: 0.95rem; font-style: italic; margin-bottom: 0.5rem;">{current_finalist['department']}</p>
                         <p style="color: #FFF; font-size: 1.05rem; line-height: 1.5;">{current_finalist['bio']}</p>
                     </div>
                 </div>
@@ -1163,7 +1163,7 @@ with st.expander(t["admin_sec"]):
 
         # --- PHASE 2 TOGGLE CONTROLS ---
         st.markdown("---")
-        st.subheader("⚙️ Phase Management Control")
+        st.subheader("Phase Management Control")
         new_phase2_toggle = st.toggle("Enable Phase 2 Finals Voting Mode", value=PHASE_2_ACTIVE)
         if new_phase2_toggle != PHASE_2_ACTIVE:
             save_json_state(PHASE2_STATE_FILE, {"phase2_active": new_phase2_toggle})
@@ -1172,11 +1172,11 @@ with st.expander(t["admin_sec"]):
 
         col_r1, col_r2 = st.columns(2)
         with col_r1:
-            if st.button("🔄 Reset Phase 1 Devices"):
+            if st.button("Reset Phase 1 Devices"):
                 save_device_registry(DEVICE_REGISTRY_FILE, [])
                 st.success("Phase 1 device registry reset!")
         with col_r2:
-            if st.button("🔄 Reset Phase 2 Devices"):
+            if st.button("Reset Phase 2 Devices"):
                 save_device_registry(DEVICE_REGISTRY_FILE_P2, [])
                 st.success("Phase 2 device registry reset!")
 
@@ -1184,7 +1184,7 @@ with st.expander(t["admin_sec"]):
         if os.path.exists(DATA_FILE_P2):
             try:
                 df_p2_raw = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip')
-                st.markdown(f"### 🏆 Phase 2 Finals Dashboard (Total Votes: {len(df_p2_raw)})")
+                st.markdown(f"### Phase 2 Finals Dashboard (Total Votes: {len(df_p2_raw)})")
 
                 if not df_p2_raw.empty and "Tên Ứng Viên" in df_p2_raw.columns:
                     summary_p2 = df_p2_raw.groupby("Tên Ứng Viên").agg(
@@ -1194,7 +1194,7 @@ with st.expander(t["admin_sec"]):
                     summary_p2["Điểm_Trung_Bình"] = summary_p2["Điểm_Trung_Bình"].round(2)
 
                     # 1. Pie Chart showing vote allocation between the 10 finalists
-                    st.markdown("#### 🥧 Vote Allocation Percentage (Top 10 Finalists)")
+                    st.markdown("#### Vote Allocation Percentage (Top 10 Finalists)")
                     total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
                     summary_p2["Phần_Trăm"] = (summary_p2["Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
 
@@ -1206,28 +1206,28 @@ with st.expander(t["admin_sec"]):
                     st.altair_chart(pie_chart_p2, use_container_width=True)
 
                     # 2. Bar Chart showing top 3 finalists with the most votes
-                    st.markdown("#### 📈 Top 3 Finalists with Most Votes")
+                    st.markdown("#### Top 3 Finalists with Most Votes")
                     top3_votes = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(3)
                     st.bar_chart(top3_votes.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
 
                     # 3. Bar Chart showing top 3 finalists with the most average score
-                    st.markdown("#### ⭐ Top 3 Finalists with Highest Average Scores")
+                    st.markdown("#### Top 3 Finalists with Highest Average Scores")
                     top3_scores = summary_p2.sort_values(by="Điểm_Trung_Bình", ascending=False).head(3)
                     st.bar_chart(top3_scores.set_index("Tên Ứng Viên")["Điểm_Trung_Bình"])
 
                     # 4. Bar Chart showing top 3 finalists with both most votes and highest average score combined ranking
-                    st.markdown("#### 🚀 Top 3 Finalists (Most Votes & Highest Average Score Combined)")
+                    st.markdown("#### Top 3 Finalists (Most Votes & Highest Average Score Combined)")
                     top3_combined = summary_p2.sort_values(by=["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"], ascending=[False, False]).head(3)
                     # For combined comparison chart, plot votes
                     st.bar_chart(top3_combined.set_index("Tên Ứng Viên")[["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"]])
 
                     # 5. Raw Nomination Data Table for Phase 2
-                    st.markdown("#### 📋 Phase 2 Raw Nomination Data")
+                    st.markdown("#### Phase 2 Raw Nomination Data")
                     st.dataframe(df_p2_raw, use_container_width=True)
 
                     csv_p2_data = df_p2_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
                     st.download_button(
-                        label="📥 Download Phase 2 CSV Data",
+                        label="Download Phase 2 CSV Data",
                         data=csv_p2_data,
                         file_name=f"phase2_data_{datetime.now().strftime('%Y%m%d')}.csv",
                         mime="text/csv"
@@ -1239,7 +1239,7 @@ with st.expander(t["admin_sec"]):
         if os.path.exists(DATA_FILE):
             try:
                 df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
-                st.markdown(f"### 📋 Phase 1 Nominations Summary (Total: {len(df_raw)})")
+                st.markdown(f"### Phase 1 Nominations Summary (Total: {len(df_raw)})")
 
                 if not df_raw.empty and "Tên Người Được Đề Cử" in df_raw.columns and "Điểm Trung Bình" in df_raw.columns:
                     summary_df = df_raw.groupby("Tên Người Được Đề Cử").agg(
@@ -1284,6 +1284,6 @@ with st.expander(t["admin_sec"]):
                         mime="application/pdf"
                     )
             except Exception as e:
-                st.error(f"⚠️ Lỗi đọc file dữ liệu: {e}")
+                st.error(f"Lỗi đọc file dữ liệu: {e}")
     elif admin_password != "":
         st.error(t["err_pass"])
