@@ -6,6 +6,7 @@ from datetime import datetime
 from PIL import Image
 import io
 import uuid
+import altair as alt
 
 # --- REPORTLAB PDF GENERATION IMPORTS ---
 from reportlab.lib.pagesizes import letter
@@ -65,13 +66,11 @@ DEPARTMENT_NAMES = {
 }
 
 # --- PHASE 2 TOP 10 FINALISTS CONFIGURATION ---
-# Format: Name, Department, Bio description, Image URL (or placeholder)
 TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_1", "Finalist 1"),
         "department": st.secrets.get("P2_DEPT_1", "Production"),
-        "bio": st.secrets.get("P2_BIO_1",
-                              "Outstanding contribution to cross-departmental synergy and process innovation."),
+        "bio": st.secrets.get("P2_BIO_1", "Outstanding contribution to cross-departmental synergy and process innovation."),
         "image": st.secrets.get("P2_IMG_1", IMG_COLLAB)
     },
     {
@@ -83,8 +82,7 @@ TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_3", "Finalist 3"),
         "department": st.secrets.get("P2_DEPT_3", "Quality Management"),
-        "bio": st.secrets.get("P2_BIO_3",
-                              "Dedicated to maintaining rigorous standards and fostering collaborative culture."),
+        "bio": st.secrets.get("P2_BIO_3", "Dedicated to maintaining rigorous standards and fostering collaborative culture."),
         "image": st.secrets.get("P2_IMG_3", IMG_CULTURE)
     },
     {
@@ -114,8 +112,7 @@ TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_8", "Finalist 8"),
         "department": st.secrets.get("P2_DEPT_8", "Production - Paintshop"),
-        "bio": st.secrets.get("P2_BIO_8",
-                              "Exceptional problem solver with a strong drive for technological innovation."),
+        "bio": st.secrets.get("P2_BIO_8", "Exceptional problem solver with a strong drive for technological innovation."),
         "image": st.secrets.get("P2_IMG_8", IMG_CULTURE)
     },
     {
@@ -127,8 +124,7 @@ TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_10", "Finalist 10"),
         "department": st.secrets.get("P2_DEPT_10", "Production - Bodyshop"),
-        "bio": st.secrets.get("P2_BIO_10",
-                              "Exemplifies core corporate values and mentor-like support to junior staff."),
+        "bio": st.secrets.get("P2_BIO_10", "Exemplifies core corporate values and mentor-like support to junior staff."),
         "image": st.secrets.get("P2_IMG_10", IMG_WELCOME)
     }
 ]
@@ -192,10 +188,19 @@ DEVICE_ID = st.session_state["device_token"]
 
 # --- SESSION STATE INITIALIZATION ---
 if "step" not in st.session_state:
-    st.session_state["step"] = 0  # 0: Welcome, 1: Nominee Info, etc.
+    st.session_state["step"] = 0
 
 if "p2_step" not in st.session_state:
-    st.session_state["p2_step"] = 0  # 0: Welcome P2, 1: Voting P2, 2: Thank You P2
+    st.session_state["p2_step"] = 0
+
+if "p2_score_collab" not in st.session_state:
+    st.session_state["p2_score_collab"] = 5
+if "p2_score_innov" not in st.session_state:
+    st.session_state["p2_score_innov"] = 5
+if "p2_score_culture" not in st.session_state:
+    st.session_state["p2_score_culture"] = 5
+if "p2_score_acc" not in st.session_state:
+    st.session_state["p2_score_acc"] = 5
 
 # Check device submission lock based on active phase
 if PHASE_2_ACTIVE:
@@ -416,12 +421,12 @@ TRANSLATIONS = {
 
         "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
         "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
-        "p2_welcome_desc": "Hãy xem qua hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết và lựa chọn ứng viên xứng đáng nhất cho giải thưởng năm nay.",
+        "p2_welcome_desc": "Hãy xem qua hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết và lựa chọn ứng viên xứng đáng nhất cùng với điểm số đánh giá.",
         "p2_start_btn": "Bắt Đầu Bình Chọn",
         "p2_select_label": "Chọn ứng viên chung kết *",
         "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
         "p2_thank_you_title": "Cảm Ơn Bạn Đã Bình Chọn!",
-        "p2_thank_you_msg": "Lựa chọn của bạn cho vòng chung kết đã được ghi nhận thành công.",
+        "p2_thank_you_msg": "Lựa chọn và điểm số của bạn cho vòng chung kết đã được ghi nhận thành công.",
         "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
         "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
 
@@ -491,12 +496,12 @@ TRANSLATIONS = {
 
         "p2_title": "Finals Voting Portal (Phase 2)",
         "p2_welcome_heading": "Welcome to the Top 10 Finals Voting",
-        "p2_welcome_desc": "Explore the profiles of our top 10 finalists and cast your final vote to celebrate excellence.",
+        "p2_welcome_desc": "Explore the profiles of our top 10 finalists and cast your final vote and scores to celebrate excellence.",
         "p2_start_btn": "Start Voting",
         "p2_select_label": "Select Finalist Nominee *",
         "p2_submit_btn": "Confirm & Submit Vote",
         "p2_thank_you_title": "Thank You for Voting!",
-        "p2_thank_you_msg": "Your final vote has been successfully recorded.",
+        "p2_thank_you_msg": "Your final vote and scoring have been successfully recorded.",
         "p2_locked_title": "Vote Already Submitted",
         "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
 
@@ -566,12 +571,12 @@ TRANSLATIONS = {
 
         "p2_title": "Finalabstimmungsportal (Phase 2)",
         "p2_welcome_heading": "Willkommen zur Top-10-Finalabstimmung",
-        "p2_welcome_desc": "Entdecken Sie die Profile unserer Top-10-Finalisten und geben Sie Ihre Stimme ab.",
+        "p2_welcome_desc": "Entdecken Sie die Profile unserer Top-10-Finalisten und geben Sie Ihre Stimme und Bewertung ab.",
         "p2_start_btn": "Abstimmung Starten",
         "p2_select_label": "Finalisten auswählen *",
         "p2_submit_btn": "Stimme Bestätigen & Absenden",
         "p2_thank_you_title": "Vielen Dank für Ihre Stimme!",
-        "p2_thank_you_msg": "Ihre Stimme für das Finale wurde erfolgreich erfasst.",
+        "p2_thank_you_msg": "Ihre Finalstimme und Bewertung wurden erfolgreich erfasst.",
         "p2_locked_title": "Stimme Bereits Abgeschlossen",
         "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
 
@@ -641,7 +646,6 @@ t = TRANSLATIONS[selected_lang_key]
 
 
 def init_data_files():
-    # Phase 1 Data File
     expected_columns = [
         "Thời Gian",
         "Tên Người Được Đề Cử",
@@ -656,8 +660,17 @@ def init_data_files():
         df = pd.DataFrame(columns=expected_columns)
         df.to_csv(DATA_FILE, index=False, encoding='utf-8-sig')
 
-    # Phase 2 Data File
-    expected_columns_p2 = ["Thời Gian", "Tên Ứng Viên", "Phòng Ban", "Device_ID"]
+    expected_columns_p2 = [
+        "Thời Gian",
+        "Tên Ứng Viên",
+        "Phòng Ban",
+        "Điểm Trung Bình",
+        "Điểm Hợp Tác",
+        "Điểm Đổi Mới",
+        "Điểm Văn Hóa & Giá Trị",
+        "Điểm Trách Nhiệm",
+        "Device_ID"
+    ]
     if not os.path.exists(DATA_FILE_P2):
         df_p2 = pd.DataFrame(columns=expected_columns_p2)
         df_p2.to_csv(DATA_FILE_P2, index=False, encoding='utf-8-sig')
@@ -666,7 +679,6 @@ def init_data_files():
 init_data_files()
 
 
-# Helper function to generate clean ASCII/English PDF report with text wrapping
 def generate_pdf_report(summary_df, leaderboard_df, raw_df):
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=25, leftMargin=25, topMargin=30, bottomMargin=30)
@@ -711,7 +723,6 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
         textColor=colors.whitesmoke
     )
 
-    # Title & Metadata
     story.append(Paragraph("Synergy Star 2026 - Admin Dashboard Report", title_style))
     story.append(
         Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Total Submissions: {len(raw_df)}",
@@ -752,7 +763,6 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
     return buffer.getvalue()
 
 
-# Header Section with Golden Glow Title Effect
 header_title_text = t['p2_title'] if PHASE_2_ACTIVE else t['title']
 st.markdown(f"""
     <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
@@ -770,11 +780,10 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# PHASE 2: FINALIST VOTING FLOW
+# PHASE 2: FINALIST VOTING & SCORING FLOW
 # ==========================================
 if PHASE_2_ACTIVE:
     if st.session_state["p2_step"] == 0:
-        # Welcome screen for Phase 2
         with st.form(key="p2_welcome_form"):
             if IMG_WELCOME:
                 st.image(IMG_WELCOME, use_container_width=True)
@@ -791,7 +800,6 @@ if PHASE_2_ACTIVE:
                 st.rerun()
 
     elif st.session_state["p2_step"] == 1:
-        # Voting Form & Dynamic Profile Info Card
         st.subheader(t["p2_title"])
 
         finalist_names = [f["name"] for f in TOP_10_FINALISTS]
@@ -810,7 +818,6 @@ if PHASE_2_ACTIVE:
             on_change=update_p2_selection
         )
 
-        # Retrieve selected finalist profile details
         current_finalist = next((f for f in TOP_10_FINALISTS if f["name"] == st.session_state["p2_selected_nominee"]),
                                 TOP_10_FINALISTS[0])
 
@@ -830,20 +837,54 @@ if PHASE_2_ACTIVE:
             </div>
         """, unsafe_allow_html=True)
 
-        with st.form(key="p2_submit_form"):
+        # 4 Criteria Sliders for Phase 2 (without evidence text fields)
+        with st.form(key="p2_scoring_form"):
+            st.markdown(f"### {t['collab_title']}")
+            st.caption(t["collab_desc"])
+            p2_score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5,
+                                        value=st.session_state["p2_score_collab"])
+            st.markdown(get_slider_glow_style(p2_score_collab), unsafe_allow_html=True)
+
+            st.markdown("---")
+            st.markdown(f"### {t['innov_title']}")
+            st.caption(t["innov_desc"])
+            p2_score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5,
+                                       value=st.session_state["p2_score_innov"])
+            st.markdown(get_slider_glow_style(p2_score_innov), unsafe_allow_html=True)
+
+            st.markdown("---")
+            st.markdown(f"### {t['culture_title']}")
+            st.caption(t["culture_desc"])
+            p2_score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5,
+                                         value=st.session_state["p2_score_culture"])
+            st.markdown(get_slider_glow_style(p2_score_culture), unsafe_allow_html=True)
+
+            st.markdown("---")
+            st.markdown(f"### {t['acc_title']}")
+            st.caption(t["acc_desc"])
+            p2_score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["p2_score_acc"])
+            st.markdown(get_slider_glow_style(p2_score_acc), unsafe_allow_html=True)
+
+            st.write("")
             p2_submit_clicked = st.form_submit_button(t["p2_submit_btn"], use_container_width=True, type="primary")
 
         if p2_submit_clicked:
+            avg_score_p2 = round((p2_score_collab + p2_score_innov + p2_score_culture + p2_score_acc) / 4.0, 2)
+
             selected_record = {
                 "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "Tên Ứng Viên": current_finalist['name'],
                 "Phòng Ban": current_finalist['department'],
+                "Điểm Trung Bình": avg_score_p2,
+                "Điểm Hợp Tác": p2_score_collab,
+                "Điểm Đổi Mới": p2_score_innov,
+                "Điểm Văn Hóa & Giá Trị": p2_score_culture,
+                "Điểm Trách Nhiệm": p2_score_acc,
                 "Device_ID": DEVICE_ID
             }
             df_p2_new = pd.DataFrame([selected_record])
             df_p2_new.to_csv(DATA_FILE_P2, mode='a', header=False, index=False, encoding='utf-8-sig')
 
-            # Record device token in Phase 2 registry
             current_reg_p2 = load_device_registry(DEVICE_REGISTRY_FILE_P2)
             if DEVICE_ID not in current_reg_p2:
                 current_reg_p2.append(DEVICE_ID)
@@ -853,7 +894,6 @@ if PHASE_2_ACTIVE:
             st.rerun()
 
     elif st.session_state["p2_step"] == 2:
-        # Thank You Screen P2
         if IMG_THANKYOU:
             st.image(IMG_THANKYOU, use_container_width=True)
         st.markdown(f"""
@@ -1130,7 +1170,6 @@ with st.expander(t["admin_sec"]):
             st.success(f"Phase 2 status updated to: {new_phase2_toggle}. Reloading...")
             st.rerun()
 
-        # Admin option to reset device registry tokens
         col_r1, col_r2 = st.columns(2)
         with col_r1:
             if st.button("🔄 Reset Phase 1 Devices"):
@@ -1141,32 +1180,66 @@ with st.expander(t["admin_sec"]):
                 save_device_registry(DEVICE_REGISTRY_FILE_P2, [])
                 st.success("Phase 2 device registry reset!")
 
-        # --- DISPLAY PHASE 2 VOTING RESULTS IF ACTIVE OR AVAILABLE ---
+        # --- PHASE 2 ADMIN DASHBOARD SECTION ---
         if os.path.exists(DATA_FILE_P2):
             try:
                 df_p2_raw = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip')
-                st.markdown(f"### 🗳️ Phase 2 Votes Summary (Total: {len(df_p2_raw)})")
+                st.markdown(f"### 🏆 Phase 2 Finals Dashboard (Total Votes: {len(df_p2_raw)})")
+
                 if not df_p2_raw.empty and "Tên Ứng Viên" in df_p2_raw.columns:
                     summary_p2 = df_p2_raw.groupby("Tên Ứng Viên").agg(
-                        Số_Lượt_Bình_Chọn=("Phòng Ban", "count")
-                    ).reset_index().sort_values(by="Số_Lượt_Bình_Chọn", ascending=False)
-                    st.dataframe(summary_p2, use_container_width=True)
-                    st.bar_chart(summary_p2.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
+                        Số_Lượt_Bình_Chọn=("Phòng Ban", "count"),
+                        Điểm_Trung_Bình=("Điểm Trung Bình", "mean")
+                    ).reset_index()
+                    summary_p2["Điểm_Trung_Bình"] = summary_p2["Điểm_Trung_Bình"].round(2)
+
+                    # 1. Pie Chart showing vote allocation between the 10 finalists
+                    st.markdown("#### 🥧 Vote Allocation Percentage (Top 10 Finalists)")
+                    total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
+                    summary_p2["Phần_Trăm"] = (summary_p2["Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
+
+                    pie_chart_p2 = alt.Chart(summary_p2).mark_arc(innerRadius=50).encode(
+                        theta=alt.Theta(field="Số_Lượt_Bình_Chọn", type="quantitative"),
+                        color=alt.Color(field="Tên Ứng Viên", type="nominal", legend=alt.Legend(title="Finalist")),
+                        tooltip=["Tên Ứng Viên", "Số_Lượt_Bình_Chọn", alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
+                    ).properties(width=400, height=350)
+                    st.altair_chart(pie_chart_p2, use_container_width=True)
+
+                    # 2. Bar Chart showing top 3 finalists with the most votes
+                    st.markdown("#### 📈 Top 3 Finalists with Most Votes")
+                    top3_votes = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(3)
+                    st.bar_chart(top3_votes.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
+
+                    # 3. Bar Chart showing top 3 finalists with the most average score
+                    st.markdown("#### ⭐ Top 3 Finalists with Highest Average Scores")
+                    top3_scores = summary_p2.sort_values(by="Điểm_Trung_Bình", ascending=False).head(3)
+                    st.bar_chart(top3_scores.set_index("Tên Ứng Viên")["Điểm_Trung_Bình"])
+
+                    # 4. Bar Chart showing top 3 finalists with both most votes and highest average score combined ranking
+                    st.markdown("#### 🚀 Top 3 Finalists (Most Votes & Highest Average Score Combined)")
+                    top3_combined = summary_p2.sort_values(by=["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"], ascending=[False, False]).head(3)
+                    # For combined comparison chart, plot votes
+                    st.bar_chart(top3_combined.set_index("Tên Ứng Viên")[["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"]])
+
+                    # 5. Raw Nomination Data Table for Phase 2
+                    st.markdown("#### 📋 Phase 2 Raw Nomination Data")
+                    st.dataframe(df_p2_raw, use_container_width=True)
 
                     csv_p2_data = df_p2_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
                     st.download_button(
-                        label="📥 Download Phase 2 Votes CSV",
+                        label="📥 Download Phase 2 CSV Data",
                         data=csv_p2_data,
-                        file_name=f"phase2_votes_{datetime.now().strftime('%Y%m%d')}.csv",
+                        file_name=f"phase2_data_{datetime.now().strftime('%Y%m%d')}.csv",
                         mime="text/csv"
                     )
             except Exception as e:
                 st.info(f"Phase 2 data log empty or unreadable: {e}")
 
+        # --- PHASE 1 ADMIN DATA SECTION ---
         if os.path.exists(DATA_FILE):
             try:
                 df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
-                st.write(f"**{t['total_nominations']}** {len(df_raw)}")
+                st.markdown(f"### 📋 Phase 1 Nominations Summary (Total: {len(df_raw)})")
 
                 if not df_raw.empty and "Tên Người Được Đề Cử" in df_raw.columns and "Điểm Trung Bình" in df_raw.columns:
                     summary_df = df_raw.groupby("Tên Người Được Đề Cử").agg(
@@ -1175,8 +1248,7 @@ with st.expander(t["admin_sec"]):
                     ).reset_index()
 
                     summary_df["Điểm_Trung_Bình_Tổng_Thể"] = summary_df["Điểm_Trung_Bình_Tổng_Thể"].round(2)
-                    summary_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"],
-                                                        ascending=False)
+                    summary_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"], ascending=False)
 
                     st.markdown(f"### {t['summary_table_title']}")
                     st.dataframe(summary_df, use_container_width=True)
@@ -1187,8 +1259,7 @@ with st.expander(t["admin_sec"]):
                     st.bar_chart(top_votes.set_index("Tên Người Được Đề Cử")["Số_Lượt_Đề_Cử"])
 
                     st.markdown(f"### {t['leaderboard_title']}")
-                    leaderboard_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"],
-                                                            ascending=[False, False]).head(10).reset_index(drop=True)
+                    leaderboard_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"], ascending=[False, False]).head(10).reset_index(drop=True)
                     leaderboard_df.index += 1
                     st.dataframe(leaderboard_df, use_container_width=True)
 
