@@ -44,26 +44,22 @@ def parse_secret_list(secret_val):
     return [name.strip() for name in str(secret_val).split(",") if name.strip()]
 
 # --- LOAD DEPT NAME LISTs FROM SECRETS ---
-EPSI = parse_secret_list(st.secrets.get("EPSI", ""))
-EF = parse_secret_list(st.secrets.get("EF", ""))
 PB = parse_secret_list(st.secrets.get("PB", ""))
 PEDC = parse_secret_list(st.secrets.get("PEDC", ""))
-PP = parse_secret_list(st.secrets.get("PP", ""))
-PA = parse_secret_list(st.secrets.get("PA", ""))
-PEF = parse_secret_list(st.secrets.get("PEF", ""))
+PBP = parse_secret_list(st.secrets.get("PBP", ""))
 LG = parse_secret_list(st.secrets.get("LG", ""))
+PA = parse_secret_list(st.secrets.get("PA", ""))
+PP = parse_secret_list(st.secrets.get("PP", ""))
 QM = parse_secret_list(st.secrets.get("QM", ""))
 
 # --- DEPARTMENT & PLACEHOLDER NAMES MAPPING ---
 DEPARTMENT_NAMES = {
-    "Engineering PSI": EPSI,
-    "Engineering Facility": EF,
     "Production - Bodyshop": PB,
-    "Production - EDC": PEDC,
-    "Production - Paintshop": PP,
-    "Production - Assembly": PA,
-    "Production - EoL/Finish": PEF,
+    "Production - ED Coating": PEDC,
+    "Production - Bodyshop & Paintshop": PBP,
     "Logistics": LG,
+    "Production - Assembly": PA,
+    "Production - Paintshop": PP,
     "Quality Management": QM
 }
 
