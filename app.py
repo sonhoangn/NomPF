@@ -70,7 +70,8 @@ TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_1", "Finalist 1"),
         "department": st.secrets.get("P2_DEPT_1", "Production"),
-        "bio": st.secrets.get("P2_BIO_1", "Outstanding contribution to cross-departmental synergy and process innovation."),
+        "bio": st.secrets.get("P2_BIO_1",
+                              "Outstanding contribution to cross-departmental synergy and process innovation."),
         "image": st.secrets.get("P2_IMG_1", IMG_COLLAB)
     },
     {
@@ -82,7 +83,8 @@ TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_3", "Finalist 3"),
         "department": st.secrets.get("P2_DEPT_3", "Quality Management"),
-        "bio": st.secrets.get("P2_BIO_3", "Dedicated to maintaining rigorous standards and fostering collaborative culture."),
+        "bio": st.secrets.get("P2_BIO_3",
+                              "Dedicated to maintaining rigorous standards and fostering collaborative culture."),
         "image": st.secrets.get("P2_IMG_3", IMG_CULTURE)
     },
     {
@@ -112,7 +114,8 @@ TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_8", "Finalist 8"),
         "department": st.secrets.get("P2_DEPT_8", "Production - Paintshop"),
-        "bio": st.secrets.get("P2_BIO_8", "Exceptional problem solver with a strong drive for technological innovation."),
+        "bio": st.secrets.get("P2_BIO_8",
+                              "Exceptional problem solver with a strong drive for technological innovation."),
         "image": st.secrets.get("P2_IMG_8", IMG_CULTURE)
     },
     {
@@ -124,7 +127,8 @@ TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_10", "Finalist 10"),
         "department": st.secrets.get("P2_DEPT_10", "Production - Bodyshop"),
-        "bio": st.secrets.get("P2_BIO_10", "Exemplifies core corporate values and mentor-like support to junior staff."),
+        "bio": st.secrets.get("P2_BIO_10",
+                              "Exemplifies core corporate values and mentor-like support to junior staff."),
         "image": st.secrets.get("P2_IMG_10", IMG_WELCOME)
     }
 ]
@@ -845,8 +849,9 @@ else:
                 on_change=update_p2_selection
             )
 
-            current_finalist = next((f for f in TOP_10_FINALISTS if f["name"] == st.session_state["p2_selected_nominee"]),
-                                    TOP_10_FINALISTS[0])
+            current_finalist = next(
+                (f for f in TOP_10_FINALISTS if f["name"] == st.session_state["p2_selected_nominee"]),
+                TOP_10_FINALISTS[0])
 
             # Render Info Card (Profile Picture & Biography)
             st.markdown(f"""
@@ -889,7 +894,8 @@ else:
                 st.markdown("---")
                 st.markdown(f"### {t['acc_title']}")
                 st.caption(t["acc_desc"])
-                p2_score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5, value=st.session_state["p2_score_acc"])
+                p2_score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5,
+                                         value=st.session_state["p2_score_acc"])
                 st.markdown(get_slider_glow_style(p2_score_acc), unsafe_allow_html=True)
 
                 st.write("")
@@ -976,8 +982,9 @@ else:
             with st.form(key="step1_form"):
                 if available_names:
                     try:
-                        default_name_index = available_names.index(st.session_state["nominee_name"]) if st.session_state[
-                                                                                                            "nominee_name"] in available_names else 0
+                        default_name_index = available_names.index(st.session_state["nominee_name"]) if \
+                        st.session_state[
+                            "nominee_name"] in available_names else 0
                     except ValueError:
                         default_name_index = 0
 
@@ -1043,7 +1050,8 @@ else:
                     st.image(IMG_INNOV, use_container_width=True)
                 st.markdown(f"### {t['innov_title']}")
                 st.caption(t["innov_desc"])
-                score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5, value=st.session_state["score_innov"])
+                score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5,
+                                        value=st.session_state["score_innov"])
                 st.markdown(get_slider_glow_style(score_innov), unsafe_allow_html=True)
                 evidence_innov = st.text_area(t["innov_evidence"], value=st.session_state["evidence_innov"],
                                               placeholder=t["innov_ph"])
@@ -1215,6 +1223,49 @@ with st.expander(t["admin_sec"]):
                 save_device_registry(DEVICE_REGISTRY_FILE_P2, [])
                 st.success("Phase 2 device registry reset!")
 
+        # --- DATA RESTORATION & IMPORT SECTION WITH DEDUPLICATION ---
+        st.markdown("---")
+        st.subheader("📂 Restore & Import Previous Data (CSV)")
+        st.caption(
+            "Upload previously downloaded CSV backups to restore platform data after a server reset. 100% duplicate rows will be automatically excluded.")
+
+        col_imp1, col_imp2 = st.columns(2)
+        with col_imp1:
+            uploaded_file_p1 = st.file_uploader("Import Phase 1 CSV Backup", type=["csv"], key="import_p1")
+            if uploaded_file_p1 is not None:
+                try:
+                    df_imported = pd.read_csv(uploaded_file_p1, on_bad_lines='skip')
+                    df_existing = pd.read_csv(DATA_FILE, on_bad_lines='skip') if os.path.exists(
+                        DATA_FILE) else pd.DataFrame(columns=df_imported.columns)
+
+                    # Combine and drop exact duplicate rows (100% match)
+                    combined_df = pd.concat([df_existing, df_imported]).drop_duplicates(keep='first')
+                    new_records_count = len(combined_df) - len(df_existing)
+
+                    combined_df.to_csv(DATA_FILE, index=False, encoding='utf-8-sig')
+                    st.success(
+                        f"✅ Phase 1 imported successfully! Added {new_records_count} new unique record(s). ({len(df_existing)} -> {len(combined_df)} total)")
+                except Exception as e:
+                    st.error(f"⚠️ Error importing Phase 1 CSV: {e}")
+
+        with col_imp2:
+            uploaded_file_p2 = st.file_uploader("Import Phase 2 CSV Backup", type=["csv"], key="import_p2")
+            if uploaded_file_p2 is not None:
+                try:
+                    df_imported_p2 = pd.read_csv(uploaded_file_p2, on_bad_lines='skip')
+                    df_existing_p2 = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip') if os.path.exists(
+                        DATA_FILE_P2) else pd.DataFrame(columns=df_imported_p2.columns)
+
+                    # Combine and drop exact duplicate rows (100% match)
+                    combined_df_p2 = pd.concat([df_existing_p2, df_imported_p2]).drop_duplicates(keep='first')
+                    new_records_p2_count = len(combined_df_p2) - len(df_existing_p2)
+
+                    combined_df_p2.to_csv(DATA_FILE_P2, index=False, encoding='utf-8-sig')
+                    st.success(
+                        f"✅ Phase 2 imported successfully! Added {new_records_p2_count} new unique record(s). ({len(df_existing_p2)} -> {len(combined_df_p2)} total)")
+                except Exception as e:
+                    st.error(f"⚠️ Error importing Phase 2 CSV: {e}")
+
         # --- PHASE 2 ADMIN DASHBOARD SECTION ---
         if os.path.exists(DATA_FILE_P2):
             try:
@@ -1231,12 +1282,14 @@ with st.expander(t["admin_sec"]):
                     # 1. Pie Chart showing vote allocation between the 10 finalists
                     st.markdown("#### Vote Allocation Percentage (Top 10 Finalists)")
                     total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
-                    summary_p2["Phần_Trăm"] = (summary_p2["Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
+                    summary_p2["Phần_Trăm"] = (summary_p2[
+                                                   "Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
 
                     pie_chart_p2 = alt.Chart(summary_p2).mark_arc(innerRadius=50).encode(
                         theta=alt.Theta(field="Số_Lượt_Bình_Chọn", type="quantitative"),
                         color=alt.Color(field="Tên Ứng Viên", type="nominal", legend=alt.Legend(title="Finalist")),
-                        tooltip=["Tên Ứng Viên", "Số_Lượt_Bình_Chọn", alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
+                        tooltip=["Tên Ứng Viên", "Số_Lượt_Bình_Chọn",
+                                 alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
                     ).properties(width=400, height=350)
                     st.altair_chart(pie_chart_p2, use_container_width=True)
 
@@ -1252,7 +1305,8 @@ with st.expander(t["admin_sec"]):
 
                     # 4. Bar Chart showing top 3 finalists with both most votes and highest average score combined ranking
                     st.markdown("#### Top 3 Finalists (Most Votes & Highest Average Score Combined)")
-                    top3_combined = summary_p2.sort_values(by=["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"], ascending=[False, False]).head(3)
+                    top3_combined = summary_p2.sort_values(by=["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"],
+                                                           ascending=[False, False]).head(3)
                     st.bar_chart(top3_combined.set_index("Tên Ứng Viên")[["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"]])
 
                     # 5. Raw Nomination Data Table for Phase 2
@@ -1282,7 +1336,8 @@ with st.expander(t["admin_sec"]):
                     ).reset_index()
 
                     summary_df["Điểm_Trung_Bình_Tổng_Thể"] = summary_df["Điểm_Trung_Bình_Tổng_Thể"].round(2)
-                    summary_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"], ascending=False)
+                    summary_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"],
+                                                        ascending=False)
 
                     st.markdown(f"### {t['summary_table_title']}")
                     st.dataframe(summary_df, use_container_width=True)
@@ -1293,7 +1348,8 @@ with st.expander(t["admin_sec"]):
                     st.bar_chart(top_votes.set_index("Tên Người Được Đề Cử")["Số_Lượt_Đề_Cử"])
 
                     st.markdown(f"### {t['leaderboard_title']}")
-                    leaderboard_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"], ascending=[False, False]).head(10).reset_index(drop=True)
+                    leaderboard_df = summary_df.sort_values(by=["Số_Lượt_Đề_Cử", "Điểm_Trung_Bình_Tổng_Thể"],
+                                                            ascending=[False, False]).head(10).reset_index(drop=True)
                     leaderboard_df.index += 1
                     st.dataframe(leaderboard_df, use_container_width=True)
 
