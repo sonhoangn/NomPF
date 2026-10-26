@@ -443,7 +443,7 @@ TRANSLATIONS = {
         "nominee_label": "Chọn tên nhân sự *",
         "nominee_placeholder": "Chọn tên từ danh sách...",
 
-        "collab_title": "1. Hợp Tác (Collaboration)",
+        "collab_title": "1. Tinh Thần Tương Trợ (Collaboration)",
         "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
         "collab_slider": "Điểm Hợp Tác",
         "collab_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Hợp Tác *",
@@ -455,13 +455,13 @@ TRANSLATIONS = {
         "innov_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Đổi Mới *",
         "innov_ph": "Mô tả ý tưởng hoặc cải tiến đã được áp dụng...",
 
-        "culture_title": "3. Văn Hóa & Giá Trị (Culture & Value)",
+        "culture_title": "3. Kết Nối Giá Trị Văn Hóa (Culture & Value)",
         "culture_desc": "Mô tả: Thể hiện các giá trị của công ty thông qua sự chính trực, tôn trọng và tuân thủ các chuẩn mực đạo đức.",
         "culture_slider": "Điểm Văn Hóa & Giá Trị",
         "culture_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Văn Hóa & Giá Trị *",
         "culture_ph": "Nêu ví dụ về hành động thể hiện giá trị văn hóa...",
 
-        "acc_title": "4. Trách Nhiệm (Accountability)",
+        "acc_title": "4. Tinh Thần Trách Nhiệm (Accountability)",
         "acc_desc": "Mô tả: Thực hiện đúng cam kết, tuân thủ kỷ luật thời gian, chuẩn bị công việc chu đáo và thực hiện đúng quy trình; đồng thời không ngừng cải thiện để cùng nhau tạo nên sự khác biệt.",
         "acc_slider": "Điểm Trách Nhiệm",
         "acc_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Trách Nhiệm *",
