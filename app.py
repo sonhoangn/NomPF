@@ -493,6 +493,7 @@ TRANSLATIONS = {
         "reset_devices_success": "Đã reset thiết bị thành công! Các thiết bị có thể làm mới trang để đề cử lại.",
         "download_btn": "Tải Bảng Dữ Liệu Gốc (CSV)",
         "download_pdf_btn": "Tải Báo Cáo PDF Dashboard",
+        "download_html_btn": "Tải Báo Cáo Phase 1 HTML Comprehensive",
         "summary_table_title": "Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
         "raw_table_title": "Bảng Dữ Liệu Gốc Các Đề Cử:",
         "chart_votes_title": "Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
@@ -571,6 +572,7 @@ TRANSLATIONS = {
         "reset_devices_success": "Device registry successfully reset! Devices can now reload and submit again.",
         "download_btn": "Download Raw Data (CSV)",
         "download_pdf_btn": "Download Dashboard PDF Report",
+        "download_html_btn": "Download Phase 1 HTML Comprehensive Report",
         "summary_table_title": "Summary Table of Total Votes & Average Scores:",
         "raw_table_title": "Raw Nominations Table:",
         "chart_votes_title": "Top 10 Most Voted Nominees",
@@ -649,6 +651,7 @@ TRANSLATIONS = {
         "reset_devices_success": "Geräteliste erfolgreich zurückgesetzt! Geräte können die Seite neu laden, um erneut zu nominieren.",
         "download_btn": "Rohdaten herunterladen (CSV)",
         "download_pdf_btn": "Dashboard PDF-Bericht herunterladen",
+        "download_html_btn": "Phase 1 HTML-Bericht herunterladen",
         "summary_table_title": "Zusammenfassung der Stimmen & Durchschnittswerte:",
         "raw_table_title": "Rohdaten-Tabelle der Nominierungen:",
         "chart_votes_title": "Top 10 Nominierte nach Stimmen",
@@ -780,6 +783,455 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
     doc.build(story)
     buffer.seek(0)
     return buffer.getvalue()
+
+
+def generate_phase1_html_report(raw_df, achievement_summaries=None):
+    """
+    Generates a standalone, aesthetically styled Phase 1 HTML Report.
+    Includes:
+    - Pie chart showing vote distribution (via Chart.js)
+    - Top 10 Nominees ranked by votes & average points in Infocard format
+    - Nominee Name, Department, Average scores by category (Consolidated)
+    - Achievement Summary section (editable / pre-filled)
+    """
+    if achievement_summaries is None:
+        achievement_summaries = {}
+
+    if raw_df.empty or "Tên Người Được Đề Cử" not in raw_df.columns:
+        return "<html><body><h1>No Data Available to Generate Report</h1></body></html>"
+
+    # Consolidate Phase 1 data
+    group_cols = ["Tên Người Được Đề Cử", "Phòng Ban"]
+    numeric_cols = ["Điểm Trung Bình", "Điểm Hợp Tác", "Điểm Đổi Mới", "Điểm Văn Hóa & Giá Trị", "Điểm Trách Nhiệm"]
+
+    for col in numeric_cols:
+        if col in raw_df.columns:
+            raw_df[col] = pd.to_numeric(raw_df[col], errors='coerce')
+
+    aggregated = raw_df.groupby(group_cols).agg(
+        Total_Votes=("Điểm Trung Bình", "count"),
+        Avg_Overall=("Điểm Trung Bình", "mean"),
+        Avg_Collab=("Điểm Hợp Tác", "mean"),
+        Avg_Innov=("Điểm Đổi Mới", "mean"),
+        Avg_Culture=("Điểm Văn Hóa & Giá Trị", "mean"),
+        Avg_Acc=("Điểm Trách Nhiệm", "mean")
+    ).reset_index()
+
+    # Sort to determine Top 10 Nominees (Most votes, then highest average overall)
+    aggregated = aggregated.sort_values(by=["Total_Votes", "Avg_Overall"], ascending=[False, False])
+    top_10 = aggregated.head(10).copy()
+
+    # Data preparation for Chart.js Pie Chart (Vote Distribution across all nominees)
+    vote_distribution = raw_df["Tên Người Được Đề Cử"].value_counts()
+    chart_labels = json.dumps(list(vote_distribution.index.astype(str)))
+    chart_data = json.dumps(list(vote_distribution.values.astype(int)))
+
+    # Construct Nominee Infocards HTML
+    infocards_html = ""
+    for idx, row in top_10.reset_index(drop=True).iterrows():
+        name = str(row["Tên Người Được Đề Cử"])
+        dept = str(row["Phòng Ban"])
+        votes = int(row["Total_Votes"])
+        avg_overall = round(float(row["Avg_Overall"]), 2) if pd.notnull(row["Avg_Overall"]) else 0.0
+        avg_collab = round(float(row["Avg_Collab"]), 2) if pd.notnull(row["Avg_Collab"]) else 0.0
+        avg_innov = round(float(row["Avg_Innov"]), 2) if pd.notnull(row["Avg_Innov"]) else 0.0
+        avg_culture = round(float(row["Avg_Culture"]), 2) if pd.notnull(row["Avg_Culture"]) else 0.0
+        avg_acc = round(float(row["Avg_Acc"]), 2) if pd.notnull(row["Avg_Acc"]) else 0.0
+
+        summary_text = achievement_summaries.get(name,
+                                                  "Consistently demonstrated exceptional commitment, cross-departmental collaboration, and leadership excellence during Phase 1.")
+
+        infocards_html += f"""
+        <div class="infocard">
+            <div class="card-header">
+                <div class="rank-badge">#{idx + 1}</div>
+                <div class="nominee-info">
+                    <h3 class="nominee-name">{name}</h3>
+                    <span class="department-tag">{dept}</span>
+                </div>
+                <div class="score-pill">
+                    <span class="score-val">{avg_overall}</span>
+                    <span class="score-lbl">Avg Point</span>
+                </div>
+            </div>
+            
+            <div class="votes-banner">
+                <i class="fas fa-vote-yea"></i> Total Nominations: <strong>{votes} votes</strong>
+            </div>
+
+            <div class="scores-grid">
+                <div class="score-item">
+                    <span class="cat-name">Collaboration</span>
+                    <div class="bar-bg"><div class="bar-fill collab" style="width: {(avg_collab / 5.0) * 100}%;"></div></div>
+                    <span class="cat-score">{avg_collab} / 5</span>
+                </div>
+                <div class="score-item">
+                    <span class="cat-name">Innovation</span>
+                    <div class="bar-bg"><div class="bar-fill innov" style="width: {(avg_innov / 5.0) * 100}%;"></div></div>
+                    <span class="cat-score">{avg_innov} / 5</span>
+                </div>
+                <div class="score-item">
+                    <span class="cat-name">Culture & Value</span>
+                    <div class="bar-bg"><div class="bar-fill culture" style="width: {(avg_culture / 5.0) * 100}%;"></div></div>
+                    <span class="cat-score">{avg_culture} / 5</span>
+                </div>
+                <div class="score-item">
+                    <span class="cat-name">Accountability</span>
+                    <div class="bar-bg"><div class="bar-fill acc" style="width: {(avg_acc / 5.0) * 100}%;"></div></div>
+                    <span class="cat-score">{avg_acc} / 5</span>
+                </div>
+            </div>
+
+            <div class="achievement-section">
+                <h4><i class="fas fa-award"></i> Achievement Summary</h4>
+                <div class="achievement-body" contenteditable="true" title="Click to edit manually">{summary_text}</div>
+            </div>
+        </div>
+        """
+
+    html_template = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synergy Star 2026 - Phase 1 Comprehensive Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {{
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #172554 100%);
+            --card-bg: rgba(30, 41, 59, 0.75);
+            --card-border: rgba(245, 158, 11, 0.3);
+            --accent-gold: #f59e0b;
+            --accent-yellow: #fde047;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }}
+
+        * {{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }}
+
+        body {{
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+        }}
+
+        .container {{
+            max-width: 1200px;
+            margin: 0 auto;
+        }}
+
+        .report-header {{
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }}
+
+        .report-header h1 {{
+            font-size: 2.5rem;
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            margin-bottom: 0.5rem;
+        }}
+
+        .report-header p {{
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }}
+
+        .section-title {{
+            font-size: 1.6rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 0.5rem;
+        }}
+
+        .chart-card {{
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }}
+
+        .chart-container {{
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            height: 380px;
+        }}
+
+        .grid-cards {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }}
+
+        .infocard {{
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }}
+
+        .infocard:hover {{
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(245, 158, 11, 0.2);
+        }}
+
+        .card-header {{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }}
+
+        .rank-badge {{
+            background: linear-gradient(135deg, #f59e0b, #b45309);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }}
+
+        .nominee-info {{
+            flex: 1;
+        }}
+
+        .nominee-name {{
+            font-size: 1.25rem;
+            color: var(--accent-yellow);
+            margin-bottom: 0.2rem;
+        }}
+
+        .department-tag {{
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.08);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+        }}
+
+        .score-pill {{
+            text-align: right;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+        }}
+
+        .score-val {{
+            display: block;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-yellow);
+        }}
+
+        .score-lbl {{
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }}
+
+        .votes-banner {{
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }}
+
+        .scores-grid {{
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }}
+
+        .score-item {{
+            display: grid;
+            grid-template-columns: 110px 1fr 45px;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }}
+
+        .cat-name {{
+            color: var(--text-muted);
+        }}
+
+        .bar-bg {{
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }}
+
+        .bar-fill {{
+            height: 100%;
+            border-radius: 4px;
+        }}
+
+        .bar-fill.collab {{ background: #3b82f6; }}
+        .bar-fill.innov {{ background: #10b981; }}
+        .bar-fill.culture {{ background: #ec4899; }}
+        .bar-fill.acc {{ background: #f59e0b; }}
+
+        .cat-score {{
+            text-align: right;
+            font-weight: bold;
+            color: var(--text-main);
+        }}
+
+        .achievement-section {{
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 0.8rem;
+        }}
+
+        .achievement-section h4 {{
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }}
+
+        .achievement-body {{
+            font-size: 0.9rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 0.6rem 0.8rem;
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            outline: none;
+        }}
+
+        .achievement-body:focus {{
+            border-color: var(--accent-gold);
+            background: rgba(15, 23, 42, 0.8);
+        }}
+
+        footer {{
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="report-header">
+            <h1><i class="fas fa-star"></i> Phase 1 Comprehensive Report</h1>
+            <p>Synergy Star 2026 - Official Nomination & Evaluation Analysis</p>
+        </header>
+
+        <section>
+            <h2 class="section-title"><i class="fas fa-chart-pie"></i> Vote Distribution Percentage</h2>
+            <div class="chart-card">
+                <div class="chart-container">
+                    <canvas id="votePieChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Top 10 Nominees (Most Votes & Highest Points)</h2>
+            <div class="grid-cards">
+                {infocards_html}
+            </div>
+        </section>
+
+        <footer>
+            <p>Generated automatically on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Synergy Star 2026 System</p>
+        </footer>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('votePieChart').getContext('2d');
+        const votePieChart = new Chart(ctx, {{
+            type: 'pie',
+            data: {{
+                labels: {chart_labels},
+                datasets: [{{
+                    data: {chart_data},
+                    backgroundColor: [
+                        '#f59e0b', '#3b82f6', '#10b981', '#ec4899', '#8b5cf6',
+                        '#06b6d4', '#f97316', '#84cc16', '#e11d48', '#6366f1'
+                    ],
+                    borderColor: '#1e293b',
+                    borderWidth: 2
+                }}]
+            }},
+            options: {{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {{
+                    legend: {{
+                        position: 'right',
+                        labels: {{
+                            color: '#f8fafc',
+                            font: {{ size: 12 }}
+                        }}
+                    }},
+                    tooltip: {{
+                        callbacks: {{
+                            label: function(context) {{
+                                let label = context.label || '';
+                                let value = context.raw || 0;
+                                let total = context.chart._metasets[0].total;
+                                let percentage = ((value / total) * 100).toFixed(1);
+                                return label + ': ' + value + ' votes (' + percentage + '%)';
+                            }}
+                        }}
+                    }}
+                }}
+            }}
+        }});
+    </script>
+</body>
+</html>
+"""
+    return html_template
 
 
 header_title_text = t['p2_title'] if PHASE_2_ACTIVE else t['title']
@@ -1358,7 +1810,7 @@ with st.expander(t["admin_sec"]):
                 st.markdown(f"### {t['raw_table_title']}")
                 st.dataframe(df_raw, use_container_width=True)
 
-                col_dl1, col_dl2 = st.columns(2)
+                col_dl1, col_dl2, col_dl3 = st.columns(3)
                 with col_dl1:
                     csv_data = df_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
                     st.download_button(
@@ -1374,6 +1826,14 @@ with st.expander(t["admin_sec"]):
                         data=pdf_bytes,
                         file_name=f"synergy_star_report_{datetime.now().strftime('%Y%m%d')}.pdf",
                         mime="application/pdf"
+                    )
+                with col_dl3:
+                    html_report_str = generate_phase1_html_report(df_raw)
+                    st.download_button(
+                        label=t["download_html_btn"],
+                        data=html_report_str.encode('utf-8'),
+                        file_name=f"phase1_comprehensive_report_{datetime.now().strftime('%Y%m%d')}.html",
+                        mime="text/html"
                     )
             except Exception as e:
                 st.error(f"Lỗi đọc file dữ liệu: {e}")
