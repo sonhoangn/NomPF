@@ -46,6 +46,7 @@ def parse_secret_list(secret_val):
 
 
 # --- LOAD DEPT NAME LISTs FROM SECRETS ---
+EN = parse_secret_list(st.secrets.get("EN", ""))
 PB = parse_secret_list(st.secrets.get("PB", ""))
 PEDC = parse_secret_list(st.secrets.get("PEDC", ""))
 PBP = parse_secret_list(st.secrets.get("PBP", ""))
@@ -56,6 +57,7 @@ QM = parse_secret_list(st.secrets.get("QM", ""))
 
 # --- DEPARTMENT & PLACEHOLDER NAMES MAPPING ---
 DEPARTMENT_NAMES = {
+    "Engineering": EN,
     "Production - Bodyshop": PB,
     "Production - ED Coating": PEDC,
     "Production - Bodyshop & Paintshop": PBP,
