@@ -123,7 +123,7 @@ TRANSLATIONS = {
         "culture_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Văn Hóa & Giá Trị *",
         "culture_ph": "Nêu ví dụ về hành động thể hiện giá trị văn hóa...",
 
-        "acc_title": "4. Tinh Th thần Trách Nhiệm (Accountability)",
+        "acc_title": "4. Tinh Thần Trách Nhiệm (Accountability)",
         "acc_desc": "Mô tả: Thực hiện đúng cam kết, tuân thủ kỷ luật thời gian, chuẩn bị công việc chu đáo và thực hiện đúng quy trình; đồng thời không ngừng cải thiện để cùng nhau tạo nên sự khác biệt.",
         "acc_slider": "Điểm Trách Nhiệm",
         "acc_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Trách Nhiệm *",
@@ -264,7 +264,7 @@ TRANSLATIONS = {
         "nominee_placeholder": "Namen aus der Liste auswählen...",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
-        "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
+        "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den địnhierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
         "collab_slider": "Bewertung der Zusammenarbeit",
         "collab_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Zusammenarbeit *",
         "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
@@ -1310,17 +1310,17 @@ else:
                 (f for f in TOP_10_FINALISTS if f["name"] == st.session_state["p2_selected_nominee"]),
                 TOP_10_FINALISTS[0])
 
-            # Render Info Card (Profile Picture & Biography)
+            # Render Info Card (Portrait 4:5 Aspect Ratio Profile Picture & Biography)
             st.markdown(f"""
                 <div style="background: rgba(42, 35, 15, 0.7); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem;">
-                    <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
-                        <div style="flex: 0 0 120px; text-align: center;">
-                            <img src="{current_finalist['image']}" alt="Nominee Photo" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 2px solid #F59E0B;" />
+                    <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
+                        <div style="flex: 0 0 160px; text-align: center;">
+                            <img src="{current_finalist['image']}" alt="Nominee Photo" style="width: 160px; height: 200px; aspect-ratio: 4 / 5; border-radius: 8px; object-fit: cover; border: 2px solid #F59E0B; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" />
                         </div>
                         <div style="flex: 1; min-width: 200px;">
-                            <h3 style="color: #FDE047; margin-bottom: 0.2rem;">{current_finalist['name']}</h3>
-                            <p style="color: #F7C657; font-size: 0.95rem; font-style: italic; margin-bottom: 0.5rem;">{current_finalist['department']}</p>
-                            <p style="color: #FFF; font-size: 1.05rem; line-height: 1.5;">{current_finalist['bio']}</p>
+                            <h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.5rem;">{current_finalist['name']}</h3>
+                            <p style="color: #F7C657; font-size: 1rem; font-style: italic; margin-bottom: 0.8rem;">{current_finalist['department']}</p>
+                            <p style="color: #FFF; font-size: 1.05rem; line-height: 1.6;">{current_finalist['bio']}</p>
                         </div>
                     </div>
                 </div>
