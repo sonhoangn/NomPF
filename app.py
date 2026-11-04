@@ -24,6 +24,16 @@ IMG_COLLAB = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/
 IMG_INNOV = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/in1.png"
 IMG_CULTURE = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cv1.png"
 IMG_ACC = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ac1.png"
+IMG_F1 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f1.png"
+IMG_F2 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f2.png"
+IMG_F3 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f3.png"
+IMG_F4 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f4.png"
+IMG_F5 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f5.png"
+IMG_F6 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f6.png"
+IMG_F7 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f7.png"
+IMG_F8 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f8.png"
+IMG_F9 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f9.png"
+IMG_F10 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f10.png"
 
 # Configure page settings
 st.set_page_config(
@@ -70,68 +80,64 @@ DEPARTMENT_NAMES = {
 # --- PHASE 2 TOP 10 FINALISTS CONFIGURATION ---
 TOP_10_FINALISTS = [
     {
-        "name": st.secrets.get("P2_NAME_1", "Finalist 1"),
-        "department": st.secrets.get("P2_DEPT_1", "Production"),
-        "bio": st.secrets.get("P2_BIO_1",
-                              "Outstanding contribution to cross-departmental synergy and process innovation."),
-        "image": st.secrets.get("P2_IMG_1", IMG_COLLAB)
+        "name": st.secrets.get("P2_NAME_1"),
+        "department": st.secrets.get("P2_DEPT_1"),
+        "bio": st.secrets.get("P2_BIO_1"),
+        "image": st.secrets.get(IMG_F1)
     },
     {
-        "name": st.secrets.get("P2_NAME_2", "Finalist 2"),
-        "department": st.secrets.get("P2_DEPT_2", "Logistics"),
-        "bio": st.secrets.get("P2_BIO_2", "Exemplary commitment and leadership in supply chain optimization."),
-        "image": st.secrets.get("P2_IMG_2", IMG_INNOV)
+        "name": st.secrets.get("P2_NAME_2"),
+        "department": st.secrets.get("P2_DEPT_2"),
+        "bio": st.secrets.get("P2_BIO_2"),
+        "image": st.secrets.get(IMG_F2)
     },
     {
-        "name": st.secrets.get("P2_NAME_3", "Finalist 3"),
-        "department": st.secrets.get("P2_DEPT_3", "Quality Management"),
-        "bio": st.secrets.get("P2_BIO_3",
-                              "Dedicated to maintaining rigorous standards and fostering collaborative culture."),
-        "image": st.secrets.get("P2_IMG_3", IMG_CULTURE)
+        "name": st.secrets.get("P2_NAME_3"),
+        "department": st.secrets.get("P2_DEPT_3"),
+        "bio": st.secrets.get("P2_BIO_3"),
+        "image": st.secrets.get(IMG_F3)
     },
     {
-        "name": st.secrets.get("P2_NAME_4", "Finalist 4"),
-        "department": st.secrets.get("P2_DEPT_4", "Engineering"),
-        "bio": st.secrets.get("P2_BIO_4", "Pioneered automated tracking systems saving substantial operational hours."),
-        "image": st.secrets.get("P2_IMG_4", IMG_ACC)
+        "name": st.secrets.get("P2_NAME_4"),
+        "department": st.secrets.get("P2_DEPT_4"),
+        "bio": st.secrets.get("P2_BIO_4"),
+        "image": st.secrets.get(IMG_F4)
     },
     {
-        "name": st.secrets.get("P2_NAME_5", "Finalist 5"),
-        "department": st.secrets.get("P2_DEPT_5", "Production - Assembly"),
-        "bio": st.secrets.get("P2_BIO_5", "Consistently demonstrates high accountability and team-first support."),
-        "image": st.secrets.get("P2_IMG_5", IMG_WELCOME)
+        "name": st.secrets.get("P2_NAME_5"),
+        "department": st.secrets.get("P2_DEPT_5"),
+        "bio": st.secrets.get("P2_BIO_5"),
+        "image": st.secrets.get(IMG_F5)
     },
     {
-        "name": st.secrets.get("P2_NAME_6", "Finalist 6"),
-        "department": st.secrets.get("P2_DEPT_6", "Logistics"),
-        "bio": st.secrets.get("P2_BIO_6", "Streamlined material flow and resolved bottlenecks efficiently."),
-        "image": st.secrets.get("P2_IMG_6", IMG_COLLAB)
+        "name": st.secrets.get("P2_NAME_6"),
+        "department": st.secrets.get("P2_DEPT_6"),
+        "bio": st.secrets.get("P2_BIO_6"),
+        "image": st.secrets.get(IMG_F6)
     },
     {
-        "name": st.secrets.get("P2_NAME_7", "Finalist 7"),
-        "department": st.secrets.get("P2_DEPT_7", "Quality Management"),
-        "bio": st.secrets.get("P2_BIO_7", "Championed continuous improvement initiatives across shifts."),
-        "image": st.secrets.get("P2_IMG_7", IMG_INNOV)
+        "name": st.secrets.get("P2_NAME_7"),
+        "department": st.secrets.get("P2_DEPT_7"),
+        "bio": st.secrets.get("P2_BIO_7"),
+        "image": st.secrets.get(IMG_F7)
     },
     {
-        "name": st.secrets.get("P2_NAME_8", "Finalist 8"),
-        "department": st.secrets.get("P2_DEPT_8", "Production - Paintshop"),
-        "bio": st.secrets.get("P2_BIO_8",
-                              "Exceptional problem solver with a strong drive for technological innovation."),
-        "image": st.secrets.get("P2_IMG_8", IMG_CULTURE)
+        "name": st.secrets.get("P2_NAME_8"),
+        "department": st.secrets.get("P2_DEPT_8"),
+        "bio": st.secrets.get("P2_BIO_8"),
+        "image": st.secrets.get(IMG_F8)
     },
     {
-        "name": st.secrets.get("P2_NAME_9", "Finalist 9"),
-        "department": st.secrets.get("P2_DEPT_9", "Engineering PSI"),
-        "bio": st.secrets.get("P2_BIO_9", "Trusted technical lead bridging IT and shopfloor operations seamlessly."),
-        "image": st.secrets.get("P2_IMG_9", IMG_ACC)
+        "name": st.secrets.get("P2_NAME_9"),
+        "department": st.secrets.get("P2_DEPT_9"),
+        "bio": st.secrets.get("P2_BIO_9"),
+        "image": st.secrets.get(IMG_F9)
     },
     {
-        "name": st.secrets.get("P2_NAME_10", "Finalist 10"),
-        "department": st.secrets.get("P2_DEPT_10", "Production - Bodyshop"),
-        "bio": st.secrets.get("P2_BIO_10",
-                              "Exemplifies core corporate values and mentor-like support to junior staff."),
-        "image": st.secrets.get("P2_IMG_10", IMG_WELCOME)
+        "name": st.secrets.get("P2_NAME_10"),
+        "department": st.secrets.get("P2_DEPT_10"),
+        "bio": st.secrets.get("P2_BIO_10"),
+        "image": st.secrets.get(IMG_F10)
     }
 ]
 
@@ -786,14 +792,6 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
 
 
 def generate_phase1_html_report(raw_df, achievement_summaries=None):
-    """
-    Generates a standalone, aesthetically styled Phase 1 HTML Report.
-    Includes:
-    - Pie chart showing vote distribution (via Chart.js)
-    - Top 10 Nominees ranked by votes & average points in Infocard format
-    - Nominee Name, Department, Average scores by category (Consolidated)
-    - Achievement Summary section (editable / pre-filled)
-    """
     if achievement_summaries is None:
         achievement_summaries = {}
 
