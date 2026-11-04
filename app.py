@@ -77,67 +77,320 @@ DEPARTMENT_NAMES = {
     "Quality Management": QM
 }
 
-# --- PHASE 2 TOP 10 FINALISTS CONFIGURATION ---
+# --- MULTI-LANGUAGE DICTIONARY ---
+TRANSLATIONS = {
+    "Tiếng Việt (Vietnamese)": {
+        "title": "Cổng Đề Cử\nNgôi Sao\nTạo Động Lực",
+        "welcome_heading": "Chào Mừng Đến Cổng Đề Cử",
+        "welcome_desc": "Vinh danh 3 đồng nghiệp xuất sắc nhất,\nnhững người kết nối các động lực liên phòng ban,\ntạo ra giá trị vượt xa các mục tiêu công việc thông thường trong toàn tổ chức.",
+        "start_btn": "Bắt Đầu Đề Cử",
+
+        "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
+        "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
+        "p2_welcome_desc": "Hãy xem qua hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết và lựa chọn ứng viên xứng đáng nhất cùng với điểm số đánh giá.",
+        "p2_start_btn": "Bắt Đầu Bình Chọn",
+        "p2_select_label": "Chọn ứng viên chung kết *",
+        "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
+        "p2_thank_you_title": "Cảm Ơn Bạn Đã Bình Chọn!",
+        "p2_thank_you_msg": "Lựa chọn và điểm số của bạn cho vòng chung kết đã được ghi nhận thành công.",
+        "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
+        "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
+
+        "portal_closed_title": "Cổng Đề Cử Hiện Đang Tạm Đóng",
+        "portal_closed_msg": "Cổng tiếp nhận đề cử và bình chọn hiện đang tạm thời đóng bởi Quản trị viên. Vui lòng quay lại sau!",
+
+        "step_indicator": "Bước {} / 5",
+        "sec1": "1. Thông tin người được đề cử",
+        "dept_label": "Phòng ban / Bộ phận *",
+        "nominee_label": "Chọn tên nhân sự *",
+        "nominee_placeholder": "Chọn tên từ danh sách...",
+
+        "collab_title": "1. Tinh Thần Tương Trợ (Collaboration)",
+        "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
+        "collab_slider": "Điểm Hợp Tác",
+        "collab_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Hợp Tác *",
+        "collab_ph": "Nêu rõ tình huống hoặc dự án phối hợp thành công...",
+
+        "innov_title": "2. Đổi Mới Sáng Tạo (Innovation)",
+        "innov_desc": "Mô tả: Có khả năng đưa ra các ý tưởng có giá trị, thách thức lối mòn và giải quyết vấn đề một cách sáng tạo.",
+        "innov_slider": "Điểm Đổi Mới",
+        "innov_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Đổi Mới *",
+        "innov_ph": "Mô tả ý tưởng hoặc cải tiến đã được áp dụng...",
+
+        "culture_title": "3. Kết Nối Giá Trị Văn Hóa (Culture & Value)",
+        "culture_desc": "Mô tả: Thể hiện các giá trị của công ty thông qua sự chính trực, tôn trọng và tuân thủ các chuẩn mực đạo đức.",
+        "culture_slider": "Điểm Văn Hóa & Giá Trị",
+        "culture_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Văn Hóa & Giá Trị *",
+        "culture_ph": "Nêu ví dụ về hành động thể hiện giá trị văn hóa...",
+
+        "acc_title": "4. Tinh Th thần Trách Nhiệm (Accountability)",
+        "acc_desc": "Mô tả: Thực hiện đúng cam kết, tuân thủ kỷ luật thời gian, chuẩn bị công việc chu đáo và thực hiện đúng quy trình; đồng thời không ngừng cải thiện để cùng nhau tạo nên sự khác biệt.",
+        "acc_slider": "Điểm Trách Nhiệm",
+        "acc_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Trách Nhiệm *",
+        "acc_ph": "Nêu ví dụ về tinh thần trách nhiệm trong công việc...",
+
+        "next_btn": "Tiếp theo ➔",
+        "prev_btn": "Quay lại",
+        "submit_btn": "Hoàn Tất & Gửi Đề Cử",
+        "err_fields": "Vui lòng chọn đầy đủ phòng ban và tên người được đề cử!",
+        "err_no_names": "Phòng ban này chưa có tên nhân sự trong danh sách cấu hình!",
+        "err_evidence": "Vui lòng điền minh chứng cho tiêu chí này!",
+
+        "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
+        "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công từ thiết bị này. Mỗi thiết bị chỉ được thực hiện đề cử 1 lần duy nhất.",
+        "locked_title": "Thiết Bị Đã Thực Hiện Đề Cử",
+        "locked_msg": "Thiết bị này đã hoàn tất việc gửi đề cử trước đó. Cảm ơn sự tham gia đóng góp của bạn vào chương trình!",
+
+        "admin_sec": "Quản Trị Viên (Xem & Tải Dữ Liệu)",
+        "admin_pass_label": "Nhập mật khẩu quản trị",
+        "admin_success": "Xác thực thành công!",
+        "total_nominations": "Tổng số lượt đề cử:",
+        "reset_devices_btn": "Đặt Lại Danh Sách Thiết Bị (Cho phép đề cử lại)",
+        "reset_devices_success": "Đã reset thiết bị thành công! Các thiết bị có thể làm mới trang để đề cử lại.",
+        "download_btn": "Tải Bảng Dữ Liệu Gốc (CSV)",
+        "download_pdf_btn": "Tải Báo Cáo PDF Dashboard",
+        "download_html_btn": "Tải Báo Cáo Phase 1 HTML Comprehensive",
+        "summary_table_title": "Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
+        "raw_table_title": "Bảng Dữ Liệu Gốc Các Đề Cử:",
+        "chart_votes_title": "Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
+        "chart_scores_title": "Top 10 Đề Cử Điểm Trung Bình Cao Nhất",
+        "chart_pie_title": "Tỷ Lệ Phân Bổ Bình Chọn (Phần Trăm Lượt Đề Cử)",
+        "leaderboard_title": "Bảng Xếp Hạng (Top 10 Đề Cử Hàng Đầu)",
+        "err_pass": "Mật khẩu không chính xác!"
+    },
+    "English": {
+        "title": "Synergy Star \nNomination Portal",
+        "welcome_heading": "Welcome to the Award Nomination Portal",
+        "welcome_desc": "Recognizing top 3 teammates,\nwho connect our synergies,\nthat bring beyond the regular working objectives across organizations",
+        "start_btn": "Start Nomination",
+
+        "p2_title": "Finals Voting Portal (Phase 2)",
+        "p2_welcome_heading": "Welcome to the Top 10 Finals Voting",
+        "p2_welcome_desc": "Explore the profiles of our top 10 finalists and cast your final vote and scores to celebrate excellence.",
+        "p2_start_btn": "Start Voting",
+        "p2_select_label": "Select Finalist Nominee *",
+        "p2_submit_btn": "Confirm & Submit Vote",
+        "p2_thank_you_title": "Thank You for Voting!",
+        "p2_thank_you_msg": "Your final vote and scoring have been successfully recorded.",
+        "p2_locked_title": "Vote Already Submitted",
+        "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
+
+        "portal_closed_title": "Nomination Portal Temporarily Closed",
+        "portal_closed_msg": "The nomination and voting portal is currently closed by the administrator. Please check back later!",
+
+        "step_indicator": "Step {} of 5",
+        "sec1": "1. Nominee Information",
+        "dept_label": "Department *",
+        "nominee_label": "Select Nominee Name *",
+        "nominee_placeholder": "Select name from list...",
+
+        "collab_title": "1. Collaboration",
+        "collab_desc": "Description: Demonstrate a teamwork spirit that goes beyond the defined scope of work; coordinate effectively with others through knowledge sharing, teammate support, proactive feedback, and constructive conflict resolution.",
+        "collab_slider": "Collaboration Score",
+        "collab_evidence": "Evidence / Specific example for Collaboration *",
+        "collab_ph": "Describe the successful collaboration scenario or project...",
+
+        "innov_title": "2. Innovation",
+        "innov_desc": "Description: Capable of coming up with valuable ideas, challenging the rut, and solving problems creatively.",
+        "innov_slider": "Innovation Score",
+        "innov_evidence": "Evidence / Specific example for Innovation *",
+        "innov_ph": "Describe the idea or workflow improvement implemented...",
+
+        "culture_title": "3. Culture & Value",
+        "culture_desc": "Description: Demonstrate company values through integrity, respect, and adherence to ethical standards.",
+        "culture_slider": "Culture & Value Score",
+        "culture_evidence": "Evidence / Specific example for Culture & Value *",
+        "culture_ph": "Provide examples of actions reflecting cultural values...",
+
+        "acc_title": "4. Accountability",
+        "acc_desc": "Description: Fulfilling commitments, complying with time discipline, preparing work thoughtfully and implementing the right process; at the same time, constantly improving to make a difference together.",
+        "acc_slider": "Accountability Score",
+        "acc_evidence": "Evidence / Specific example for Accountability *",
+        "acc_ph": "Provide examples of strong responsibility in work...",
+
+        "next_btn": "Next ➔",
+        "prev_btn": "Back",
+        "submit_btn": "Submit Nomination",
+        "err_fields": "Please select both a department and a nominee name!",
+        "err_no_names": "This department does not have any names listed in the configuration yet!",
+        "err_evidence": "Please provide evidence for this criterion!",
+
+        "thank_you_title": "Thank You for Your Nomination!",
+        "thank_you_msg": "Your nomination has been recorded successfully from this device. Each device is permitted one submission only.",
+        "locked_title": "Nomination Already Submitted",
+        "locked_msg": "A nomination has already been submitted from this device. Thank you for your participation!",
+
+        "admin_sec": "Administrator (View & Download Data)",
+        "admin_pass_label": "Enter admin password",
+        "admin_success": "Authentication successful!",
+        "total_nominations": "Total nominations:",
+        "reset_devices_btn": "Reset Device Registry (Allow Re-nomination)",
+        "reset_devices_success": "Device registry successfully reset! Devices can now reload and submit again.",
+        "download_btn": "Download Raw Data (CSV)",
+        "download_pdf_btn": "Download Dashboard PDF Report",
+        "download_html_btn": "Download Phase 1 HTML Comprehensive Report",
+        "summary_table_title": "Summary Table of Total Votes & Average Scores:",
+        "raw_table_title": "Raw Nominations Table:",
+        "chart_votes_title": "Top 10 Most Voted Nominees",
+        "chart_scores_title": "Top 10 Highest Average Scores",
+        "chart_pie_title": "Vote Allocation Percentage (Pie Chart)",
+        "leaderboard_title": "Leaderboard (Top 10 Nominees)",
+        "err_pass": "Incorrect password!"
+    },
+    "Deutsch (German)": {
+        "title": "Mitarbeiter-Nominierungsportal",
+        "welcome_heading": "Willkommen beim Nominierungsportal",
+        "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen.\nReichen Sie jetzt Ihre Nominierung ein!",
+        "start_btn": "Nominierung Starten",
+
+        "p2_title": "Finalabstimmungsportal (Phase 2)",
+        "p2_welcome_heading": "Willkommen zur Top-10-Finalabstimmung",
+        "p2_welcome_desc": "Entdecken Sie die Profile unserer Top-10-Finalisten und geben Sie Ihre Stimme und Bewertung ab.",
+        "p2_start_btn": "Abstimmung Starten",
+        "p2_select_label": "Finalisten auswählen *",
+        "p2_submit_btn": "Stimme Bestätigen & Absenden",
+        "p2_thank_you_title": "Vielen Dank für Ihre Stimme!",
+        "p2_thank_you_msg": "Ihre Finalstimme und Bewertung wurden erfolgreich erfasst.",
+        "p2_locked_title": "Stimme Bereits Abgeschlossen",
+        "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
+
+        "portal_closed_title": "Nominierungsportal Vorübergehend Geschlossen",
+        "portal_closed_msg": "Das Nominierungs- und Abstimmungsportal wurde vom Administrator vorübergehend geschlossen. Bitte versuchen Sie es später noch einmal!",
+
+        "step_indicator": "Schritt {} von 5",
+        "sec1": "1. Informationen zum Nominierten",
+        "dept_label": "Abteilung *",
+        "nominee_label": "Namen des Nominierten auswählen *",
+        "nominee_placeholder": "Namen aus der Liste auswählen...",
+
+        "collab_title": "1. Zusammenarbeit (Collaboration)",
+        "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
+        "collab_slider": "Bewertung der Zusammenarbeit",
+        "collab_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Zusammenarbeit *",
+        "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
+
+        "innov_title": "2. Innovation",
+        "innov_desc": "Beschreibung: Fähigkeit, wertvolle Ideen einzubringen, eingefahrene Wege zu hinterfragen und Probleme kreativ zu lösen.",
+        "innov_slider": "Bewertung für Innovation",
+        "innov_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Innovation *",
+        "innov_ph": "Beschreiben Sie die umgesetzte Idee oder Prozessverbesserung...",
+
+        "culture_title": "3. Kultur & Werte (Culture & Value)",
+        "culture_desc": "Beschreibung: Demonstration der Unternehmenswerte durch Integrität, Respekt und die Einhaltung ethischer Standards.",
+        "culture_slider": "Bewertung für Kultur & Werte",
+        "culture_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Kultur & Werte *",
+        "culture_ph": "Geben Sie Beispiele für Handlungen an, die kulturelle Werte widerspiegeln...",
+
+        "acc_title": "4. Verantwortlichkeit (Accountability)",
+        "acc_desc": "Beschreibung: Erfüllung von Verpflichtungen, Einhaltung der Zeitdisziplin, sorgfältige Vorbereitung der Arbeit und Umsetzung des richtigen Prozesses; gleichzeitig ständige Verbesserung, um gemeinsam etwas zu bewegen.",
+        "acc_slider": "Bewertung der Verantwortlichkeit",
+        "acc_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Verantwortlichkeit *",
+        "acc_ph": "Geben Sie Beispiele für starkes Verantwortungsbewusstsein bei der Arbeit an...",
+
+        "next_btn": "Weiter ➔",
+        "prev_btn": "Zurück",
+        "submit_btn": "Nominierung Absenden",
+        "err_fields": "Bitte wählen Sie sowohl eine Abteilung als auch einen Namen aus!",
+        "err_no_names": "Diese Abteilung hat noch keine Namen in der Konfiguration!",
+        "err_evidence": "Bitte geben Sie für dieses Kriterium Nachweise an!",
+
+        "thank_you_title": "Vielen Dank für Ihre Nominierung!",
+        "thank_you_msg": "Ihre Nominierung wurde erfolgreich von diesem Gerät erfasst. Jedes Gerät darf nur einmal einreichen.",
+        "locked_title": "Nominierung Bereits Abgeschlossen",
+        "locked_msg": "Von diesem Gerät wurde bereits eine Nominierung eingereicht. Vielen Dank für Ihre Teilnahme!",
+
+        "admin_sec": "Administrator (Daten anzeigen & herunterladen)",
+        "admin_pass_label": "Admin-Passwort eingeben",
+        "admin_success": "Authentifizierung erfolgreich!",
+        "total_nominations": "Gesamtzahl der Nominierungen:",
+        "reset_devices_btn": "Geräteliste zurücksetzen (Erneut nominieren erlauben)",
+        "reset_devices_success": "Geräteliste erfolgreich zurückgesetzt! Geräte können die Seite neu laden, um erneut zu nominieren.",
+        "download_btn": "Rohdaten herunterladen (CSV)",
+        "download_pdf_btn": "Dashboard PDF-Bericht herunterladen",
+        "download_html_btn": "Phase 1 HTML-Bericht herunterladen",
+        "summary_table_title": "Zusammenfassung der Stimmen & Durchschnittswerte:",
+        "raw_table_title": "Rohdaten-Tabelle der Nominierungen:",
+        "chart_votes_title": "Top 10 Nominierte nach Stimmen",
+        "chart_scores_title": "Top 10 Höchste Durchschnittswerte",
+        "chart_pie_title": "Stimmverteilung (Prozentdiagramm)",
+        "leaderboard_title": "Bestenliste (Top 10 Nominierte)",
+        "err_pass": "Falsches Passwort!"
+    }
+}
+
+# Sidebar Language Selector
+selected_lang_key = st.sidebar.selectbox("🌐 Language / Ngôn ngữ / Sprache", list(TRANSLATIONS.keys()))
+t = TRANSLATIONS[selected_lang_key]
+
+# Determine bio suffix based on selected language
+if selected_lang_key == "Tiếng Việt (Vietnamese)":
+    bio_suffix = "_V"
+elif selected_lang_key == "Deutsch (German)":
+    bio_suffix = "_D"
+else:
+    bio_suffix = "_E"
+
+# --- PHASE 2 TOP 10 FINALISTS CONFIGURATION WITH MULTI-LANGUAGE BIOS ---
 TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_1"),
         "department": st.secrets.get("P2_DEPT_1"),
-        "bio": st.secrets.get("P2_BIO_1"),
-        "image": st.secrets.get(IMG_F1)
+        "bio": st.secrets.get(f"P2_BIO_1{bio_suffix}", st.secrets.get("P2_BIO_1", "")),
+        "image": IMG_F1
     },
     {
         "name": st.secrets.get("P2_NAME_2"),
         "department": st.secrets.get("P2_DEPT_2"),
-        "bio": st.secrets.get("P2_BIO_2"),
-        "image": st.secrets.get(IMG_F2)
+        "bio": st.secrets.get(f"P2_BIO_2{bio_suffix}", st.secrets.get("P2_BIO_2", "")),
+        "image": IMG_F2
     },
     {
         "name": st.secrets.get("P2_NAME_3"),
         "department": st.secrets.get("P2_DEPT_3"),
-        "bio": st.secrets.get("P2_BIO_3"),
-        "image": st.secrets.get(IMG_F3)
+        "bio": st.secrets.get(f"P2_BIO_3{bio_suffix}", st.secrets.get("P2_BIO_3", "")),
+        "image": IMG_F3
     },
     {
         "name": st.secrets.get("P2_NAME_4"),
         "department": st.secrets.get("P2_DEPT_4"),
-        "bio": st.secrets.get("P2_BIO_4"),
-        "image": st.secrets.get(IMG_F4)
+        "bio": st.secrets.get(f"P2_BIO_4{bio_suffix}", st.secrets.get("P2_BIO_4", "")),
+        "image": IMG_F4
     },
     {
         "name": st.secrets.get("P2_NAME_5"),
         "department": st.secrets.get("P2_DEPT_5"),
-        "bio": st.secrets.get("P2_BIO_5"),
-        "image": st.secrets.get(IMG_F5)
+        "bio": st.secrets.get(f"P2_BIO_5{bio_suffix}", st.secrets.get("P2_BIO_5", "")),
+        "image": IMG_F5
     },
     {
         "name": st.secrets.get("P2_NAME_6"),
         "department": st.secrets.get("P2_DEPT_6"),
-        "bio": st.secrets.get("P2_BIO_6"),
-        "image": st.secrets.get(IMG_F6)
+        "bio": st.secrets.get(f"P2_BIO_6{bio_suffix}", st.secrets.get("P2_BIO_6", "")),
+        "image": IMG_F6
     },
     {
         "name": st.secrets.get("P2_NAME_7"),
         "department": st.secrets.get("P2_DEPT_7"),
-        "bio": st.secrets.get("P2_BIO_7"),
-        "image": st.secrets.get(IMG_F7)
+        "bio": st.secrets.get(f"P2_BIO_7{bio_suffix}", st.secrets.get("P2_BIO_7", "")),
+        "image": IMG_F7
     },
     {
         "name": st.secrets.get("P2_NAME_8"),
         "department": st.secrets.get("P2_DEPT_8"),
-        "bio": st.secrets.get("P2_BIO_8"),
-        "image": st.secrets.get(IMG_F8)
+        "bio": st.secrets.get(f"P2_BIO_8{bio_suffix}", st.secrets.get("P2_BIO_8", "")),
+        "image": IMG_F8
     },
     {
         "name": st.secrets.get("P2_NAME_9"),
         "department": st.secrets.get("P2_DEPT_9"),
-        "bio": st.secrets.get("P2_BIO_9"),
-        "image": st.secrets.get(IMG_F9)
+        "bio": st.secrets.get(f"P2_BIO_9{bio_suffix}", st.secrets.get("P2_BIO_9", "")),
+        "image": IMG_F9
     },
     {
         "name": st.secrets.get("P2_NAME_10"),
         "department": st.secrets.get("P2_DEPT_10"),
-        "bio": st.secrets.get("P2_BIO_10"),
-        "image": st.secrets.get(IMG_F10)
+        "bio": st.secrets.get(f"P2_BIO_10{bio_suffix}", st.secrets.get("P2_BIO_10", "")),
+        "image": IMG_F10
     }
 ]
 
@@ -427,251 +680,6 @@ if BG_IMAGE_URL:
         </style>
         """, unsafe_allow_html=True)
 
-# --- MULTI-LANGUAGE DICTIONARY ---
-TRANSLATIONS = {
-    "Tiếng Việt (Vietnamese)": {
-        "title": "Cổng Đề Cử\nNgôi Sao\nTạo Động Lực",
-        "welcome_heading": "Chào Mừng Đến Cổng Đề Cử",
-        "welcome_desc": "Vinh danh 3 đồng nghiệp xuất sắc nhất,\nnhững người kết nối các động lực liên phòng ban,\ntạo ra giá trị vượt xa các mục tiêu công việc thông thường trong toàn tổ chức.",
-        "start_btn": "Bắt Đầu Đề Cử",
-
-        "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
-        "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
-        "p2_welcome_desc": "Hãy xem qua hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết và lựa chọn ứng viên xứng đáng nhất cùng với điểm số đánh giá.",
-        "p2_start_btn": "Bắt Đầu Bình Chọn",
-        "p2_select_label": "Chọn ứng viên chung kết *",
-        "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
-        "p2_thank_you_title": "Cảm Ơn Bạn Đã Bình Chọn!",
-        "p2_thank_you_msg": "Lựa chọn và điểm số của bạn cho vòng chung kết đã được ghi nhận thành công.",
-        "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
-        "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
-
-        "portal_closed_title": "Cổng Đề Cử Hiện Đang Tạm Đóng",
-        "portal_closed_msg": "Cổng tiếp nhận đề cử và bình chọn hiện đang tạm thời đóng bởi Quản trị viên. Vui lòng quay lại sau!",
-
-        "step_indicator": "Bước {} / 5",
-        "sec1": "1. Thông tin người được đề cử",
-        "dept_label": "Phòng ban / Bộ phận *",
-        "nominee_label": "Chọn tên nhân sự *",
-        "nominee_placeholder": "Chọn tên từ danh sách...",
-
-        "collab_title": "1. Tinh Thần Tương Trợ (Collaboration)",
-        "collab_desc": "Mô tả: Thể hiện tinh thần làm việc nhóm vượt ra ngoài phạm vi công việc được xác định; phối hợp hiệu quả với người khác thông qua chia sẻ kiến thức, hỗ trợ đồng đội, chủ động tiếp nhận phản hồi và giải quyết xung đột mang tính xây dựng.",
-        "collab_slider": "Điểm Hợp Tác",
-        "collab_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Hợp Tác *",
-        "collab_ph": "Nêu rõ tình huống hoặc dự án phối hợp thành công...",
-
-        "innov_title": "2. Đổi Mới Sáng Tạo (Innovation)",
-        "innov_desc": "Mô tả: Có khả năng đưa ra các ý tưởng có giá trị, thách thức lối mòn và giải quyết vấn đề một cách sáng tạo.",
-        "innov_slider": "Điểm Đổi Mới",
-        "innov_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Đổi Mới *",
-        "innov_ph": "Mô tả ý tưởng hoặc cải tiến đã được áp dụng...",
-
-        "culture_title": "3. Kết Nối Giá Trị Văn Hóa (Culture & Value)",
-        "culture_desc": "Mô tả: Thể hiện các giá trị của công ty thông qua sự chính trực, tôn trọng và tuân thủ các chuẩn mực đạo đức.",
-        "culture_slider": "Điểm Văn Hóa & Giá Trị",
-        "culture_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Văn Hóa & Giá Trị *",
-        "culture_ph": "Nêu ví dụ về hành động thể hiện giá trị văn hóa...",
-
-        "acc_title": "4. Tinh Thần Trách Nhiệm (Accountability)",
-        "acc_desc": "Mô tả: Thực hiện đúng cam kết, tuân thủ kỷ luật thời gian, chuẩn bị công việc chu đáo và thực hiện đúng quy trình; đồng thời không ngừng cải thiện để cùng nhau tạo nên sự khác biệt.",
-        "acc_slider": "Điểm Trách Nhiệm",
-        "acc_evidence": "Minh chứng / Ví dụ cụ thể cho tiêu chí Trách Nhiệm *",
-        "acc_ph": "Nêu ví dụ về tinh thần trách nhiệm trong công việc...",
-
-        "next_btn": "Tiếp theo ➔",
-        "prev_btn": "Quay lại",
-        "submit_btn": "Hoàn Tất & Gửi Đề Cử",
-        "err_fields": "Vui lòng chọn đầy đủ phòng ban và tên người được đề cử!",
-        "err_no_names": "Phòng ban này chưa có tên nhân sự trong danh sách cấu hình!",
-        "err_evidence": "Vui lòng điền minh chứng cho tiêu chí này!",
-
-        "thank_you_title": "Cảm Ơn Bạn Đã Đề Cử!",
-        "thank_you_msg": "Thông tin đề cử của bạn đã được ghi nhận thành công từ thiết bị này. Mỗi thiết bị chỉ được thực hiện đề cử 1 lần duy nhất.",
-        "locked_title": "Thiết Bị Đã Thực Hiện Đề Cử",
-        "locked_msg": "Thiết bị này đã hoàn tất việc gửi đề cử trước đó. Cảm ơn sự tham gia đóng góp của bạn vào chương trình!",
-
-        "admin_sec": "Quản Trị Viên (Xem & Tải Dữ Liệu)",
-        "admin_pass_label": "Nhập mật khẩu quản trị",
-        "admin_success": "Xác thực thành công!",
-        "total_nominations": "Tổng số lượt đề cử:",
-        "reset_devices_btn": "Đặt Lại Danh Sách Thiết Bị (Cho phép đề cử lại)",
-        "reset_devices_success": "Đã reset thiết bị thành công! Các thiết bị có thể làm mới trang để đề cử lại.",
-        "download_btn": "Tải Bảng Dữ Liệu Gốc (CSV)",
-        "download_pdf_btn": "Tải Báo Cáo PDF Dashboard",
-        "download_html_btn": "Tải Báo Cáo Phase 1 HTML Comprehensive",
-        "summary_table_title": "Bảng Tổng Hợp Số Lượt Đề Cử & Điểm Trung Bình:",
-        "raw_table_title": "Bảng Dữ Liệu Gốc Các Đề Cử:",
-        "chart_votes_title": "Top 10 Đề Cử Nhiều Nhất (Nhiều Lượt Bình Chọn Nhất)",
-        "chart_scores_title": "Top 10 Đề Cử Điểm Trung Bình Cao Nhất",
-        "chart_pie_title": "Tỷ Lệ Phân Bổ Bình Chọn (Phần Trăm Lượt Đề Cử)",
-        "leaderboard_title": "Bảng Xếp Hạng (Top 10 Đề Cử Hàng Đầu)",
-        "err_pass": "Mật khẩu không chính xác!"
-    },
-    "English": {
-        "title": "Synergy Star \nNomination Portal",
-        "welcome_heading": "Welcome to the Award Nomination Portal",
-        "welcome_desc": "Recognizing top 3 teammates,\nwho connect our synergies,\nthat bring beyond the regular working objectives across organizations",
-        "start_btn": "Start Nomination",
-
-        "p2_title": "Finals Voting Portal (Phase 2)",
-        "p2_welcome_heading": "Welcome to the Top 10 Finals Voting",
-        "p2_welcome_desc": "Explore the profiles of our top 10 finalists and cast your final vote and scores to celebrate excellence.",
-        "p2_start_btn": "Start Voting",
-        "p2_select_label": "Select Finalist Nominee *",
-        "p2_submit_btn": "Confirm & Submit Vote",
-        "p2_thank_you_title": "Thank You for Voting!",
-        "p2_thank_you_msg": "Your final vote and scoring have been successfully recorded.",
-        "p2_locked_title": "Vote Already Submitted",
-        "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
-
-        "portal_closed_title": "Nomination Portal Temporarily Closed",
-        "portal_closed_msg": "The nomination and voting portal is currently closed by the administrator. Please check back later!",
-
-        "step_indicator": "Step {} of 5",
-        "sec1": "1. Nominee Information",
-        "dept_label": "Department *",
-        "nominee_label": "Select Nominee Name *",
-        "nominee_placeholder": "Select name from list...",
-
-        "collab_title": "1. Collaboration",
-        "collab_desc": "Description: Demonstrate a teamwork spirit that goes beyond the defined scope of work; coordinate effectively with others through knowledge sharing, teammate support, proactive feedback, and constructive conflict resolution.",
-        "collab_slider": "Collaboration Score",
-        "collab_evidence": "Evidence / Specific example for Collaboration *",
-        "collab_ph": "Describe the successful collaboration scenario or project...",
-
-        "innov_title": "2. Innovation",
-        "innov_desc": "Description: Capable of coming up with valuable ideas, challenging the rut, and solving problems creatively.",
-        "innov_slider": "Innovation Score",
-        "innov_evidence": "Evidence / Specific example for Innovation *",
-        "innov_ph": "Describe the idea or workflow improvement implemented...",
-
-        "culture_title": "3. Culture & Value",
-        "culture_desc": "Description: Demonstrate company values through integrity, respect, and adherence to ethical standards.",
-        "culture_slider": "Culture & Value Score",
-        "culture_evidence": "Evidence / Specific example for Culture & Value *",
-        "culture_ph": "Provide examples of actions reflecting cultural values...",
-
-        "acc_title": "4. Accountability",
-        "acc_desc": "Description: Fulfilling commitments, complying with time discipline, preparing work thoughtfully and implementing the right process; at the same time, constantly improving to make a difference together.",
-        "acc_slider": "Accountability Score",
-        "acc_evidence": "Evidence / Specific example for Accountability *",
-        "acc_ph": "Provide examples of strong responsibility in work...",
-
-        "next_btn": "Next ➔",
-        "prev_btn": "Back",
-        "submit_btn": "Submit Nomination",
-        "err_fields": "Please select both a department and a nominee name!",
-        "err_no_names": "This department does not have any names listed in the configuration yet!",
-        "err_evidence": "Please provide evidence for this criterion!",
-
-        "thank_you_title": "Thank You for Your Nomination!",
-        "thank_you_msg": "Your nomination has been recorded successfully from this device. Each device is permitted one submission only.",
-        "locked_title": "Nomination Already Submitted",
-        "locked_msg": "A nomination has already been submitted from this device. Thank you for your participation!",
-
-        "admin_sec": "Administrator (View & Download Data)",
-        "admin_pass_label": "Enter admin password",
-        "admin_success": "Authentication successful!",
-        "total_nominations": "Total nominations:",
-        "reset_devices_btn": "Reset Device Registry (Allow Re-nomination)",
-        "reset_devices_success": "Device registry successfully reset! Devices can now reload and submit again.",
-        "download_btn": "Download Raw Data (CSV)",
-        "download_pdf_btn": "Download Dashboard PDF Report",
-        "download_html_btn": "Download Phase 1 HTML Comprehensive Report",
-        "summary_table_title": "Summary Table of Total Votes & Average Scores:",
-        "raw_table_title": "Raw Nominations Table:",
-        "chart_votes_title": "Top 10 Most Voted Nominees",
-        "chart_scores_title": "Top 10 Highest Average Scores",
-        "chart_pie_title": "Vote Allocation Percentage (Pie Chart)",
-        "leaderboard_title": "Leaderboard (Top 10 Nominees)",
-        "err_pass": "Incorrect password!"
-    },
-    "Deutsch (German)": {
-        "title": "Mitarbeiter-Nominierungsportal",
-        "welcome_heading": "Willkommen beim Nominierungsportal",
-        "welcome_desc": "Dieses Programm ehrt herausragende Einzelpersonen mit außergewöhnlichen Beiträgen.\nReichen Sie jetzt Ihre Nominierung ein!",
-        "start_btn": "Nominierung Starten",
-
-        "p2_title": "Finalabstimmungsportal (Phase 2)",
-        "p2_welcome_heading": "Willkommen zur Top-10-Finalabstimmung",
-        "p2_welcome_desc": "Entdecken Sie die Profile unserer Top-10-Finalisten und geben Sie Ihre Stimme und Bewertung ab.",
-        "p2_start_btn": "Abstimmung Starten",
-        "p2_select_label": "Finalisten auswählen *",
-        "p2_submit_btn": "Stimme Bestätigen & Absenden",
-        "p2_thank_you_title": "Vielen Dank für Ihre Stimme!",
-        "p2_thank_you_msg": "Ihre Finalstimme und Bewertung wurden erfolgreich erfasst.",
-        "p2_locked_title": "Stimme Bereits Abgeschlossen",
-        "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
-
-        "portal_closed_title": "Nominierungsportal Vorübergehend Geschlossen",
-        "portal_closed_msg": "Das Nominierungs- und Abstimmungsportal wurde vom Administrator vorübergehend geschlossen. Bitte versuchen Sie es später noch einmal!",
-
-        "step_indicator": "Schritt {} von 5",
-        "sec1": "1. Informationen zum Nominierten",
-        "dept_label": "Abteilung *",
-        "nominee_label": "Namen des Nominierten auswählen *",
-        "nominee_placeholder": "Namen aus der Liste auswählen...",
-
-        "collab_title": "1. Zusammenarbeit (Collaboration)",
-        "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
-        "collab_slider": "Bewertung der Zusammenarbeit",
-        "collab_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Zusammenarbeit *",
-        "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
-
-        "innov_title": "2. Innovation",
-        "innov_desc": "Beschreibung: Fähigkeit, wertvolle Ideen einzubringen, eingefahrene Wege zu hinterfragen und Probleme kreativ zu lösen.",
-        "innov_slider": "Bewertung für Innovation",
-        "innov_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Innovation *",
-        "innov_ph": "Beschreiben Sie die umgesetzte Idee oder Prozessverbesserung...",
-
-        "culture_title": "3. Kultur & Werte (Culture & Value)",
-        "culture_desc": "Beschreibung: Demonstration der Unternehmenswerte durch Integrität, Respekt und die Einhaltung ethischer Standards.",
-        "culture_slider": "Bewertung für Kultur & Werte",
-        "culture_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Kultur & Werte *",
-        "culture_ph": "Geben Sie Beispiele für Handlungen an, die kulturelle Werte widerspiegeln...",
-
-        "acc_title": "4. Verantwortlichkeit (Accountability)",
-        "acc_desc": "Beschreibung: Erfüllung von Verpflichtungen, Einhaltung der Zeitdisziplin, sorgfältige Vorbereitung der Arbeit und Umsetzung des richtigen Prozesses; gleichzeitig ständige Verbesserung, um gemeinsam etwas zu bewegen.",
-        "acc_slider": "Bewertung der Verantwortlichkeit",
-        "acc_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Verantwortlichkeit *",
-        "acc_ph": "Geben Sie Beispiele für starkes Verantwortungsbewusstsein bei der Arbeit an...",
-
-        "next_btn": "Weiter ➔",
-        "prev_btn": "Zurück",
-        "submit_btn": "Nominierung Absenden",
-        "err_fields": "Bitte wählen Sie sowohl eine Abteilung als auch einen Namen aus!",
-        "err_no_names": "Diese Abteilung hat noch keine Namen in der Konfiguration!",
-        "err_evidence": "Bitte geben Sie für dieses Kriterium Nachweise an!",
-
-        "thank_you_title": "Vielen Dank für Ihre Nominierung!",
-        "thank_you_msg": "Ihre Nominierung wurde erfolgreich von diesem Gerät erfasst. Jedes Gerät darf nur einmal einreichen.",
-        "locked_title": "Nominierung Bereits Abgeschlossen",
-        "locked_msg": "Von diesem Gerät wurde bereits eine Nominierung eingereicht. Vielen Dank für Ihre Teilnahme!",
-
-        "admin_sec": "Administrator (Daten anzeigen & herunterladen)",
-        "admin_pass_label": "Admin-Passwort eingeben",
-        "admin_success": "Authentifizierung erfolgreich!",
-        "total_nominations": "Gesamtzahl der Nominierungen:",
-        "reset_devices_btn": "Geräteliste zurücksetzen (Erneut nominieren erlauben)",
-        "reset_devices_success": "Geräteliste erfolgreich zurückgesetzt! Geräte können die Seite neu laden, um erneut zu nominieren.",
-        "download_btn": "Rohdaten herunterladen (CSV)",
-        "download_pdf_btn": "Dashboard PDF-Bericht herunterladen",
-        "download_html_btn": "Phase 1 HTML-Bericht herunterladen",
-        "summary_table_title": "Zusammenfassung der Stimmen & Durchschnittswerte:",
-        "raw_table_title": "Rohdaten-Tabelle der Nominierungen:",
-        "chart_votes_title": "Top 10 Nominierte nach Stimmen",
-        "chart_scores_title": "Top 10 Höchste Durchschnittswerte",
-        "chart_pie_title": "Stimmverteilung (Prozentdiagramm)",
-        "leaderboard_title": "Bestenliste (Top 10 Nominierte)",
-        "err_pass": "Falsches Passwort!"
-    }
-}
-
-# Sidebar Language Selector
-selected_lang_key = st.sidebar.selectbox("🌐 Language / Ngôn ngữ / Sprache", list(TRANSLATIONS.keys()))
-t = TRANSLATIONS[selected_lang_key]
-
 
 def init_data_files():
     expected_columns = [
@@ -798,7 +806,6 @@ def generate_phase1_html_report(raw_df, achievement_summaries=None):
     if raw_df.empty or "Tên Người Được Đề Cử" not in raw_df.columns:
         return "<html><body><h1>No Data Available to Generate Report</h1></body></html>"
 
-    # Consolidate Phase 1 data
     group_cols = ["Tên Người Được Đề Cử", "Phòng Ban"]
     numeric_cols = ["Điểm Trung Bình", "Điểm Hợp Tác", "Điểm Đổi Mới", "Điểm Văn Hóa & Giá Trị", "Điểm Trách Nhiệm"]
 
@@ -815,16 +822,13 @@ def generate_phase1_html_report(raw_df, achievement_summaries=None):
         Avg_Acc=("Điểm Trách Nhiệm", "mean")
     ).reset_index()
 
-    # Sort to determine Top 10 Nominees (Most votes, then highest average overall)
     aggregated = aggregated.sort_values(by=["Total_Votes", "Avg_Overall"], ascending=[False, False])
     top_10 = aggregated.head(10).copy()
 
-    # Data preparation for Chart.js Pie Chart (Vote Distribution across all nominees)
     vote_distribution = raw_df["Tên Người Được Đề Cử"].value_counts()
     chart_labels = json.dumps(list(vote_distribution.index.astype(str)))
     chart_data = json.dumps(list(vote_distribution.values.astype(int)))
 
-    # Construct Nominee Infocards HTML
     infocards_html = ""
     for idx, row in top_10.reset_index(drop=True).iterrows():
         name = str(row["Tên Người Được Đề Cử"])
@@ -837,7 +841,7 @@ def generate_phase1_html_report(raw_df, achievement_summaries=None):
         avg_acc = round(float(row["Avg_Acc"]), 2) if pd.notnull(row["Avg_Acc"]) else 0.0
 
         summary_text = achievement_summaries.get(name,
-                                                  "Consistently demonstrated exceptional commitment, cross-departmental collaboration, and leadership excellence during Phase 1.")
+                                                 "Consistently demonstrated exceptional commitment, cross-departmental collaboration, and leadership excellence during Phase 1.")
 
         infocards_html += f"""
         <div class="infocard">
@@ -852,7 +856,7 @@ def generate_phase1_html_report(raw_df, achievement_summaries=None):
                     <span class="score-lbl">Avg Point</span>
                 </div>
             </div>
-            
+
             <div class="votes-banner">
                 <i class="fas fa-vote-yea"></i> Total Nominations: <strong>{votes} votes</strong>
             </div>
@@ -1232,6 +1236,7 @@ def generate_phase1_html_report(raw_df, achievement_summaries=None):
     return html_template
 
 
+# Header display banner
 header_title_text = t['p2_title'] if PHASE_2_ACTIVE else t['title']
 st.markdown(f"""
     <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
@@ -1321,7 +1326,7 @@ else:
                 </div>
             """, unsafe_allow_html=True)
 
-            # 4 Criteria Sliders for Phase 2 (without evidence text fields)
+            # 4 Criteria Sliders for Phase 2
             with st.form(key="p2_scoring_form"):
                 st.markdown(f"### {t['collab_title']}")
                 st.caption(t["collab_desc"])
@@ -1435,8 +1440,8 @@ else:
                 if available_names:
                     try:
                         default_name_index = available_names.index(st.session_state["nominee_name"]) if \
-                        st.session_state[
-                            "nominee_name"] in available_names else 0
+                            st.session_state[
+                                "nominee_name"] in available_names else 0
                     except ValueError:
                         default_name_index = 0
 
@@ -1690,7 +1695,6 @@ with st.expander(t["admin_sec"]):
                     df_existing = pd.read_csv(DATA_FILE, on_bad_lines='skip') if os.path.exists(
                         DATA_FILE) else pd.DataFrame(columns=df_imported.columns)
 
-                    # Combine and drop exact duplicate rows (100% match)
                     combined_df = pd.concat([df_existing, df_imported]).drop_duplicates(keep='first')
                     new_records_count = len(combined_df) - len(df_existing)
 
@@ -1708,7 +1712,6 @@ with st.expander(t["admin_sec"]):
                     df_existing_p2 = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip') if os.path.exists(
                         DATA_FILE_P2) else pd.DataFrame(columns=df_imported_p2.columns)
 
-                    # Combine and drop exact duplicate rows (100% match)
                     combined_df_p2 = pd.concat([df_existing_p2, df_imported_p2]).drop_duplicates(keep='first')
                     new_records_p2_count = len(combined_df_p2) - len(df_existing_p2)
 
@@ -1731,7 +1734,6 @@ with st.expander(t["admin_sec"]):
                     ).reset_index()
                     summary_p2["Điểm_Trung_Bình"] = summary_p2["Điểm_Trung_Bình"].round(2)
 
-                    # 1. Pie Chart showing vote allocation between the 10 finalists
                     st.markdown("#### Vote Allocation Percentage (Top 10 Finalists)")
                     total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
                     summary_p2["Phần_Trăm"] = (summary_p2[
@@ -1745,23 +1747,19 @@ with st.expander(t["admin_sec"]):
                     ).properties(width=400, height=350)
                     st.altair_chart(pie_chart_p2, use_container_width=True)
 
-                    # 2. Bar Chart showing top 3 finalists with the most votes
                     st.markdown("#### Top 3 Finalists with Most Votes")
                     top3_votes = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(3)
                     st.bar_chart(top3_votes.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
 
-                    # 3. Bar Chart showing top 3 finalists with the most average score
                     st.markdown("#### Top 3 Finalists with Highest Average Scores")
                     top3_scores = summary_p2.sort_values(by="Điểm_Trung_Bình", ascending=False).head(3)
                     st.bar_chart(top3_scores.set_index("Tên Ứng Viên")["Điểm_Trung_Bình"])
 
-                    # 4. Bar Chart showing top 3 finalists with both most votes and highest average score combined ranking
                     st.markdown("#### Top 3 Finalists (Most Votes & Highest Average Score Combined)")
                     top3_combined = summary_p2.sort_values(by=["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"],
                                                            ascending=[False, False]).head(3)
                     st.bar_chart(top3_combined.set_index("Tên Ứng Viên")[["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"]])
 
-                    # 5. Raw Nomination Data Table for Phase 2
                     st.markdown("#### Phase 2 Raw Nomination Data")
                     st.dataframe(df_p2_raw, use_container_width=True)
 
@@ -1780,6 +1778,9 @@ with st.expander(t["admin_sec"]):
             try:
                 df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
                 st.markdown(f"### Phase 1 Nominations Summary (Total: {len(df_raw)})")
+
+                summary_df = pd.DataFrame()
+                leaderboard_df = pd.DataFrame()
 
                 if not df_raw.empty and "Tên Người Được Đề Cử" in df_raw.columns and "Điểm Trung Bình" in df_raw.columns:
                     summary_df = df_raw.groupby("Tên Người Được Đề Cử").agg(
