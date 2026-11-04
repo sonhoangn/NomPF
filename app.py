@@ -87,7 +87,7 @@ TRANSLATIONS = {
 
         "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
         "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
-        "p2_welcome_desc": "Hãy xem qua hình ảnh và hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết, sau đó chọn ứng viên bạn muốn bình chọn.",
+        "p2_welcome_desc": "Hãy nhấn vào danh sách 10 ứng viên vào vòng chung kết, xem qua hình ảnh và hồ sơ của các ứng viên xuất sắc nhất, sau đó chọn ứng viên bạn muốn bình chọn.",
         "p2_start_btn": "Bắt Đầu Bình Chọn",
         "p2_select_label": "Chọn ứng viên chung kết để bình chọn *",
         "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
@@ -166,7 +166,7 @@ TRANSLATIONS = {
 
         "p2_title": "Finals Voting Portal (Phase 2)",
         "p2_welcome_heading": "Welcome to the Top 10 Finals Voting",
-        "p2_welcome_desc": "Explore the photos and profiles of our top 10 finalists, then select your candidate to cast your final vote.",
+        "p2_welcome_desc": "Press the drop-down list to explore the photos and profiles of our top 10 finalists, then select your candidate to cast your final vote.",
         "p2_start_btn": "Start Voting",
         "p2_select_label": "Select Finalist Nominee to Vote *",
         "p2_submit_btn": "Confirm & Submit Vote",
