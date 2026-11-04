@@ -87,12 +87,12 @@ TRANSLATIONS = {
 
         "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
         "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
-        "p2_welcome_desc": "Hãy xem qua hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết và lựa chọn ứng viên xứng đáng nhất cùng với điểm số đánh giá.",
+        "p2_welcome_desc": "Hãy xem qua hình ảnh và hồ sơ của các ứng viên xuất sắc nhất lọt vào vòng chung kết, sau đó chọn ứng viên bạn muốn bình chọn.",
         "p2_start_btn": "Bắt Đầu Bình Chọn",
-        "p2_select_label": "Chọn ứng viên chung kết *",
+        "p2_select_label": "Chọn ứng viên chung kết để bình chọn *",
         "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
         "p2_thank_you_title": "Cảm Ơn Bạn Đã Bình Chọn!",
-        "p2_thank_you_msg": "Lựa chọn và điểm số của bạn cho vòng chung kết đã được ghi nhận thành công.",
+        "p2_thank_you_msg": "Lựa chọn của bạn cho vòng chung kết đã được ghi nhận thành công.",
         "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
         "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
 
@@ -166,12 +166,12 @@ TRANSLATIONS = {
 
         "p2_title": "Finals Voting Portal (Phase 2)",
         "p2_welcome_heading": "Welcome to the Top 10 Finals Voting",
-        "p2_welcome_desc": "Explore the profiles of our top 10 finalists and cast your final vote and scores to celebrate excellence.",
+        "p2_welcome_desc": "Explore the photos and profiles of our top 10 finalists, then select your candidate to cast your final vote.",
         "p2_start_btn": "Start Voting",
-        "p2_select_label": "Select Finalist Nominee *",
+        "p2_select_label": "Select Finalist Nominee to Vote *",
         "p2_submit_btn": "Confirm & Submit Vote",
         "p2_thank_you_title": "Thank You for Voting!",
-        "p2_thank_you_msg": "Your final vote and scoring have been successfully recorded.",
+        "p2_thank_you_msg": "Your final vote has been successfully recorded.",
         "p2_locked_title": "Vote Already Submitted",
         "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
 
@@ -245,12 +245,12 @@ TRANSLATIONS = {
 
         "p2_title": "Finalabstimmungsportal (Phase 2)",
         "p2_welcome_heading": "Willkommen zur Top-10-Finalabstimmung",
-        "p2_welcome_desc": "Entdecken Sie die Profile unserer Top-10-Finalisten und geben Sie Ihre Stimme und Bewertung ab.",
+        "p2_welcome_desc": "Entdecken Sie die Fotos und Profile unserer Top-10-Finalisten und wählen Sie Ihren Favoriten für die Stimmabgabe aus.",
         "p2_start_btn": "Abstimmung Starten",
-        "p2_select_label": "Finalisten auswählen *",
+        "p2_select_label": "Finalisten zur Abstimmung auswählen *",
         "p2_submit_btn": "Stimme Bestätigen & Absenden",
         "p2_thank_you_title": "Vielen Dank für Ihre Stimme!",
-        "p2_thank_you_msg": "Ihre Finalstimme und Bewertung wurden erfolgreich erfasst.",
+        "p2_thank_you_msg": "Ihre Finalstimme wurde erfolgreich erfasst.",
         "p2_locked_title": "Stimme Bereits Abgeschlossen",
         "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
 
@@ -264,7 +264,7 @@ TRANSLATIONS = {
         "nominee_placeholder": "Namen aus der Liste auswählen...",
 
         "collab_title": "1. Zusammenarbeit (Collaboration)",
-        "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den địnhierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
+        "collab_desc": "Beschreibung: Einen Teamgeist zeigen, der über den definierten Arbeitsbereich hinausgeht; effektive Koordination mit anderen durch Wissensaustausch, Unterstützung von Teamkollegen, proaktives Feedback und konstruktive Konfliktlösung.",
         "collab_slider": "Bewertung der Zusammenarbeit",
         "collab_evidence": "Nachweis / Konkretes Beispiel für das Kriterium Zusammenarbeit *",
         "collab_ph": "Beschreiben Sie das erfolgreiche Kooperationsszenario oder Projekt...",
@@ -461,15 +461,6 @@ if "step" not in st.session_state:
 
 if "p2_step" not in st.session_state:
     st.session_state["p2_step"] = 0
-
-if "p2_score_collab" not in st.session_state:
-    st.session_state["p2_score_collab"] = 5
-if "p2_score_innov" not in st.session_state:
-    st.session_state["p2_score_innov"] = 5
-if "p2_score_culture" not in st.session_state:
-    st.session_state["p2_score_culture"] = 5
-if "p2_score_acc" not in st.session_state:
-    st.session_state["p2_score_acc"] = 5
 
 # Check device submission lock based on active phase
 if PHASE_2_ACTIVE:
@@ -700,11 +691,6 @@ def init_data_files():
         "Thời Gian",
         "Tên Ứng Viên",
         "Phòng Ban",
-        "Điểm Trung Bình",
-        "Điểm Hợp Tác",
-        "Điểm Đổi Mới",
-        "Điểm Văn Hóa & Giá Trị",
-        "Điểm Trách Nhiệm",
         "Device_ID"
     ]
     if not os.path.exists(DATA_FILE_P2):
@@ -1290,32 +1276,39 @@ else:
         elif st.session_state["p2_step"] == 1:
             st.subheader(t["p2_title"])
 
-            finalist_names = [f["name"] for f in TOP_10_FINALISTS]
+            # Build options with descriptive captions showing Name and Department
+            finalist_options = {f"{f['name']} ({f['department']})": f for f in TOP_10_FINALISTS}
+            option_keys = list(finalist_options.keys())
 
 
             def update_p2_selection():
-                st.session_state["p2_selected_nominee"] = st.session_state["p2_selectbox"]
+                selected_key = st.session_state["p2_selectbox"]
+                st.session_state["p2_selected_nominee"] = finalist_options[selected_key]["name"]
 
 
-            selected_finalist_name = st.selectbox(
+            # Set current index safely
+            current_selected_name = st.session_state.get("p2_selected_nominee", TOP_10_FINALISTS[0]["name"])
+            current_option_key = next((k for k, v in finalist_options.items() if v["name"] == current_selected_name),
+                                      option_keys[0])
+
+            selected_key = st.selectbox(
                 t["p2_select_label"],
-                options=finalist_names,
-                index=finalist_names.index(st.session_state["p2_selected_nominee"]) if st.session_state[
-                                                                                           "p2_selected_nominee"] in finalist_names else 0,
+                options=option_keys,
+                index=option_keys.index(current_option_key) if current_option_key in option_keys else 0,
                 key="p2_selectbox",
                 on_change=update_p2_selection
             )
 
-            current_finalist = next(
-                (f for f in TOP_10_FINALISTS if f["name"] == st.session_state["p2_selected_nominee"]),
-                TOP_10_FINALISTS[0])
+            current_finalist = finalist_options[st.session_state["p2_selectbox"]]
 
-            # Render Info Card (Portrait 4:5 Aspect Ratio Profile Picture & Biography)
+            # Render Info Card (Portrait 4:5 Aspect Ratio Profile Picture & Associated Biography) side-by-side or stacked cleanly
             st.markdown(f"""
                 <div style="background: rgba(42, 35, 15, 0.7); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem;">
                     <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
                         <div style="flex: 0 0 160px; text-align: center;">
                             <img src="{current_finalist['image']}" alt="Nominee Photo" style="width: 160px; height: 200px; aspect-ratio: 4 / 5; border-radius: 8px; object-fit: cover; border: 2px solid #F59E0B; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" />
+                            <div style="margin-top: 0.5rem; font-weight: bold; color: #FDE047; font-size: 0.95rem;">{current_finalist['name']}</div>
+                            <div style="color: #F7C657; font-size: 0.85rem; font-style: italic;">{current_finalist['department']}</div>
                         </div>
                         <div style="flex: 1; min-width: 200px;">
                             <h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.5rem;">{current_finalist['name']}</h3>
@@ -1326,50 +1319,16 @@ else:
                 </div>
             """, unsafe_allow_html=True)
 
-            # 4 Criteria Sliders for Phase 2
-            with st.form(key="p2_scoring_form"):
-                st.markdown(f"### {t['collab_title']}")
-                st.caption(t["collab_desc"])
-                p2_score_collab = st.slider(t["collab_slider"], min_value=0, max_value=5,
-                                            value=st.session_state["p2_score_collab"])
-                st.markdown(get_slider_glow_style(p2_score_collab), unsafe_allow_html=True)
-
-                st.markdown("---")
-                st.markdown(f"### {t['innov_title']}")
-                st.caption(t["innov_desc"])
-                p2_score_innov = st.slider(t["innov_slider"], min_value=0, max_value=5,
-                                           value=st.session_state["p2_score_innov"])
-                st.markdown(get_slider_glow_style(p2_score_innov), unsafe_allow_html=True)
-
-                st.markdown("---")
-                st.markdown(f"### {t['culture_title']}")
-                st.caption(t["culture_desc"])
-                p2_score_culture = st.slider(t["culture_slider"], min_value=0, max_value=5,
-                                             value=st.session_state["p2_score_culture"])
-                st.markdown(get_slider_glow_style(p2_score_culture), unsafe_allow_html=True)
-
-                st.markdown("---")
-                st.markdown(f"### {t['acc_title']}")
-                st.caption(t["acc_desc"])
-                p2_score_acc = st.slider(t["acc_slider"], min_value=0, max_value=5,
-                                         value=st.session_state["p2_score_acc"])
-                st.markdown(get_slider_glow_style(p2_score_acc), unsafe_allow_html=True)
-
+            # Simple Submit Vote Form
+            with st.form(key="p2_voting_form"):
                 st.write("")
                 p2_submit_clicked = st.form_submit_button(t["p2_submit_btn"], use_container_width=True, type="primary")
 
             if p2_submit_clicked:
-                avg_score_p2 = round((p2_score_collab + p2_score_innov + p2_score_culture + p2_score_acc) / 4.0, 2)
-
                 selected_record = {
                     "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     "Tên Ứng Viên": current_finalist['name'],
                     "Phòng Ban": current_finalist['department'],
-                    "Điểm Trung Bình": avg_score_p2,
-                    "Điểm Hợp Tác": p2_score_collab,
-                    "Điểm Đổi Mới": p2_score_innov,
-                    "Điểm Văn Hóa & Giá Trị": p2_score_culture,
-                    "Điểm Trách Nhiệm": p2_score_acc,
                     "Device_ID": DEVICE_ID
                 }
                 df_p2_new = pd.DataFrame([selected_record])
@@ -1729,10 +1688,8 @@ with st.expander(t["admin_sec"]):
 
                 if not df_p2_raw.empty and "Tên Ứng Viên" in df_p2_raw.columns:
                     summary_p2 = df_p2_raw.groupby("Tên Ứng Viên").agg(
-                        Số_Lượt_Bình_Chọn=("Phòng Ban", "count"),
-                        Điểm_Trung_Bình=("Điểm Trung Bình", "mean")
+                        Số_Lượt_Bình_Chọn=("Phòng Ban", "count")
                     ).reset_index()
-                    summary_p2["Điểm_Trung_Bình"] = summary_p2["Điểm_Trung_Bình"].round(2)
 
                     st.markdown("#### Vote Allocation Percentage (Top 10 Finalists)")
                     total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
@@ -1747,18 +1704,9 @@ with st.expander(t["admin_sec"]):
                     ).properties(width=400, height=350)
                     st.altair_chart(pie_chart_p2, use_container_width=True)
 
-                    st.markdown("#### Top 3 Finalists with Most Votes")
-                    top3_votes = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(3)
-                    st.bar_chart(top3_votes.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
-
-                    st.markdown("#### Top 3 Finalists with Highest Average Scores")
-                    top3_scores = summary_p2.sort_values(by="Điểm_Trung_Bình", ascending=False).head(3)
-                    st.bar_chart(top3_scores.set_index("Tên Ứng Viên")["Điểm_Trung_Bình"])
-
-                    st.markdown("#### Top 3 Finalists (Most Votes & Highest Average Score Combined)")
-                    top3_combined = summary_p2.sort_values(by=["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"],
-                                                           ascending=[False, False]).head(3)
-                    st.bar_chart(top3_combined.set_index("Tên Ứng Viên")[["Số_Lượt_Bình_Chọn", "Điểm_Trung_Bình"]])
+                    st.markdown("#### Top Finalists with Most Votes")
+                    top_votes_p2 = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(10)
+                    st.bar_chart(top_votes_p2.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
 
                     st.markdown("#### Phase 2 Raw Nomination Data")
                     st.dataframe(df_p2_raw, use_container_width=True)
