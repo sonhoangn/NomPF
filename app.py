@@ -1312,7 +1312,7 @@ else:
 
             # Instruction banner guiding the user to scroll down and select 3 finalists
             st.markdown(f"""
-                <div style="background: rgba(245, 158, 11, 0.5); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                <div style="background: rgba(60, 45, 15, 0.85); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
                     <p style="color: #FDE047; font-size: 1.1rem; margin: 0; font-weight: bold;">{t['p2_instruction_banner']}</p>
                 </div>
             """, unsafe_allow_html=True)
