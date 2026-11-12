@@ -1336,25 +1336,31 @@ else:
                 card_border = "2px solid #FDE047" if is_selected else "1px solid rgba(245, 158, 11, 0.4)"
                 card_shadow = "0 0 25px rgba(245, 158, 11, 0.7)" if is_selected else "0 4px 12px rgba(0, 0, 0, 0.3)"
 
-                medal_html = f'<img src="{IMG_MEDAL}" style="position: absolute; top: 15px; right: 15px; width: 45px; height: 45px; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.9)); z-index: 10;" />' if is_selected else ''
+                medal_html = (
+                    f'<img src="{IMG_MEDAL}" style="position: absolute; top: 15px; right: 15px; width: 45px; height: 45px; '
+                    f'filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.9)); z-index: 10;" />'
+                    if is_selected else ""
+                )
 
-                # Use textwrap.dedent to strip leading spaces so Markdown doesn't treat it as a code block
-                card_html = textwrap.dedent(f"""
-                                <div style="position: relative; background: {card_bg}; border: {card_border}; border-radius: 14px; padding: 1.5rem; margin-bottom: 1.2rem; box-shadow: {card_shadow}; transition: all 0.3s ease;">
-                                    {medal_html}
-                                    <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
-                                        <div style="flex: 0 0 160px; text-align: center;">
-                                            <img src="{img}" alt="Nominee Photo" style="width: 160px; height: 200px; aspect-ratio: 4 / 5; border-radius: 8px; object-fit: cover; border: 2px solid #F59E0B; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" />
-                                        </div>
-                                        <div style="flex: 1; min-width: 220px;">
-                                            <h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.5rem;">{name}</h3>
-                                            <p style="color: #F7C657; font-size: 1rem; font-style: italic; margin-bottom: 0.8rem;">{dept}</p>
-                                            <h4 style="color: #FDE047; font-size: 1.15rem; margin-bottom: 0.4rem; border-bottom: 1px solid rgba(245, 158, 11, 0.3); padding-bottom: 0.2rem;">{t['highlights_title']}</h4>
-                                            <p style="color: #FFF; font-size: 1.05rem; line-height: 1.6;">{bio}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            """)
+                # Flatten HTML tags onto unindented lines so Markdown never treats them as code blocks
+                card_html = (
+                    f'<div style="position: relative; background: {card_bg}; border: {card_border}; border-radius: 14px; padding: 1.5rem; margin-bottom: 1.2rem; box-shadow: {card_shadow}; transition: all 0.3s ease;">'
+                    f'{medal_html}'
+                    f'<div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">'
+                    f'<div style="flex: 0 0 160px; text-align: center;">'
+                    f'<img src="{img}" alt="Nominee Photo" style="width: 160px; height: 200px; aspect-ratio: 4 / 5; border-radius: 8px; object-fit: cover; border: 2px solid #F59E0B; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" />'
+                    f'<div style="margin-top: 0.5rem; font-weight: bold; color: #FDE047; font-size: 0.95rem;">{name}</div>'
+                    f'<div style="color: #F7C657; font-size: 0.85rem; font-style: italic;">{dept}</div>'
+                    f'</div>'
+                    f'<div style="flex: 1; min-width: 220px;">'
+                    f'<h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.5rem;">{name}</h3>'
+                    f'<p style="color: #F7C657; font-size: 1rem; font-style: italic; margin-bottom: 0.8rem;">{dept}</p>'
+                    f'<h4 style="color: #FDE047; font-size: 1.15rem; margin-bottom: 0.4rem; border-bottom: 1px solid rgba(245, 158, 11, 0.3); padding-bottom: 0.2rem;">{t["highlights_title"]}</h4>'
+                    f'<p style="color: #FFF; font-size: 1.05rem; line-height: 1.6;">{bio}</p>'
+                    f'</div>'
+                    f'</div>'
+                    f'</div>'
+                )
 
                 st.markdown(card_html, unsafe_allow_html=True)
 
