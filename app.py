@@ -89,7 +89,7 @@ TRANSLATIONS = {
         "start_btn": "Bắt Đầu Đề Cử",
 
         "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
-        "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
+        "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 3",
         "p2_welcome_desc": "Hãy nhấn vào danh sách ứng viên vào vòng chung kết, xem qua hình ảnh và hồ sơ của các ứng viên xuất sắc nhất, sau đó chọn ứng viên bạn muốn bình chọn.",
         "p2_start_btn": "Bắt Đầu Bình Chọn",
         "p2_select_label": "Chọn ứng viên chung kết để bình chọn *",
