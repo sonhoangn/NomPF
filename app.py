@@ -103,6 +103,7 @@ TRANSLATIONS = {
         "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
         "p2_selection": "Chọn ứng viên này",
         "p2_selected": "Ứng viên đã được chọn!",
+        "p2_confirm_nomination": "Bạn đã bình chọn các ứng viên sau",
         "highlights_title": "Những điểm sáng",
 
         "portal_closed_title": "Cổng Đề Cử Hiện Đang Tạm Đóng",
@@ -186,6 +187,7 @@ TRANSLATIONS = {
         "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
         "p2_selection": "Select this candidate",
         "p2_selected": "This candidate has been selected!",
+        "p2_confirm_nomination": "You have selected the following candidates",
         "highlights_title": "Highlights",
 
         "portal_closed_title": "Nomination Portal Temporarily Closed",
@@ -269,6 +271,7 @@ TRANSLATIONS = {
         "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
         "p2_selection": "Diesen Kandidaten auswählen?",
         "p2_selected": "Dieser/-e Kandidat/-in wurde ausgewählt!",
+        "p2_confirm_nomination": "Sie haben diese Kandidaten ausgewählt",
         "highlights_title": "Höhepunkte",
 
         "portal_closed_title": "Nominierungsportal Vorübergehend Geschlossen",
@@ -1386,7 +1389,7 @@ else:
             if len(st.session_state["p2_selected_nominees"]) == 3:
                 st.markdown("---")
                 with st.form(key="p2_voting_form"):
-                    st.success(f"You have selected 3 finalists: {', '.join(st.session_state['p2_selected_nominees'])}")
+                    st.success(f"{t['p2_confirm_nomination']}: {', '.join(st.session_state['p2_selected_nominees'])}")
                     p2_submit_clicked = st.form_submit_button(t["p2_submit_btn"], use_container_width=True, type="primary")
 
                 if p2_submit_clicked:
