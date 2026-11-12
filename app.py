@@ -7,6 +7,7 @@ from PIL import Image
 import io
 import uuid
 import altair as alt
+import textwrap
 
 # --- REPORTLAB PDF GENERATION IMPORTS ---
 from reportlab.lib.pagesizes import letter
