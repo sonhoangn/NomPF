@@ -1337,7 +1337,7 @@ else:
                 card_shadow = "0 0 25px rgba(245, 158, 11, 0.7)" if is_selected else "0 4px 12px rgba(0, 0, 0, 0.3)"
 
                 medal_html = (
-                    f'<img src="{IMG_MEDAL}" style="position: absolute; top: 15px; right: 15px; width: 45px; height: 45px; '
+                    f'<img src="{IMG_MEDAL}" style="position: absolute; top: 15px; right: 15px; width: 100px; height: 100px; '
                     f'filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.9)); z-index: 10;" />'
                     if is_selected else ""
                 )
