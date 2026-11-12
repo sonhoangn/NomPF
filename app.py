@@ -93,7 +93,7 @@ TRANSLATIONS = {
         "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
         "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 3",
         "p2_welcome_desc": "Hãy cuộn xuống bên dưới để xem thông tin chi tiết và lựa chọn đúng **3 ứng viên** xuất sắc nhất mà bạn muốn bình chọn.",
-        "p2_instruction_banner": "**Vui lòng cuộn xuống để xem hồ sơ các ứng viên và chọn đúng 3 ứng viên bạn muốn bình chọn.**",
+        "p2_instruction_banner": "Vui lòng cuộn xuống để xem hồ sơ các ứng viên và chọn đúng 3 ứng viên bạn muốn bình chọn.",
         "p2_start_btn": "Bắt Đầu Bình Chọn",
         "p2_selected_count": "Đã chọn: {} / 3 ứng viên",
         "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn (3 Ứng Viên)",
@@ -101,6 +101,8 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Lựa chọn của bạn cho vòng chung kết đã được ghi nhận thành công.",
         "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
         "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
+        "p2_selection": "Chọn ứng viên này",
+        "p2_selected": "Ứng viên đã được chọn!",
         "highlights_title": "Những điểm sáng",
 
         "portal_closed_title": "Cổng Đề Cử Hiện Đang Tạm Đóng",
@@ -174,7 +176,7 @@ TRANSLATIONS = {
         "p2_title": "Finals Voting Portal (Phase 2)",
         "p2_welcome_heading": "Welcome to the Finals Voting",
         "p2_welcome_desc": "Please scroll down the page to explore the profiles and select exactly **3 finalists** you wish to nominate.",
-        "p2_instruction_banner": "**Please scroll down to review finalist profiles and select exactly 3 candidates for your final vote.**",
+        "p2_instruction_banner": "Please scroll down to review finalist profiles and select exactly 3 candidates for your final vote.",
         "p2_start_btn": "Start Voting",
         "p2_selected_count": "Selected: {} / 3 candidates",
         "p2_submit_btn": "Confirm & Submit Vote (3 Candidates)",
@@ -182,6 +184,8 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Your final vote has been successfully recorded.",
         "p2_locked_title": "Vote Already Submitted",
         "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
+        "p2_selection": "Select this candidate",
+        "p2_selected": "This candidate has been selected!",
         "highlights_title": "Highlights",
 
         "portal_closed_title": "Nomination Portal Temporarily Closed",
@@ -255,7 +259,7 @@ TRANSLATIONS = {
         "p2_title": "Finalabstimmungsportal (Phase 2)",
         "p2_welcome_heading": "Willkommen zur Finalabstimmung",
         "p2_welcome_desc": "Bitte scrollen Sie nach unten, um die Profile zu erkunden und genau **3 Finalisten** für Ihre Stimme auszuwählen.",
-        "p2_instruction_banner": "**Bitte scrollen Sie nach unten, um die Finalisten-Profile zu überprüfen und genau 3 Kandidaten auszuwählen.**",
+        "p2_instruction_banner": "Bitte scrollen Sie nach unten, um die Finalisten-Profile zu überprüfen und genau 3 Kandidaten auszuwählen.",
         "p2_start_btn": "Abstimmung Starten",
         "p2_selected_count": "Ausgewählt: {} / 3 Kandidaten",
         "p2_submit_btn": "Stimme Bestätigen & Absenden (3 Kandidaten)",
@@ -263,6 +267,8 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Ihre Finalstimme wurde erfolgreich erfasst.",
         "p2_locked_title": "Stimme Bereits Abgeschlossen",
         "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
+        "p2_selection": "Diesen Kandidaten auswählen?",
+        "p2_selected": "Dieser/-e Kandidat/-in wurde ausgewählt!",
         "highlights_title": "Höhepunkte",
 
         "portal_closed_title": "Nominierungsportal Vorübergehend Geschlossen",
@@ -1365,7 +1371,7 @@ else:
                 st.markdown(card_html, unsafe_allow_html=True)
 
                 # Selection button below each card
-                btn_label = f"✅ Selected: {name}" if is_selected else f"⭐ Select {name}"
+                btn_label = f"✅ {t['p2_selected']}" if is_selected else f"⭐ {t['p2_selection']}"
                 if st.button(btn_label, key=f"select_btn_{idx}", use_container_width=True):
                     if is_selected:
                         st.session_state["p2_selected_nominees"].remove(name)
