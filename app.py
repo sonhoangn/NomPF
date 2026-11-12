@@ -24,6 +24,7 @@ IMG_COLLAB = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/
 IMG_INNOV = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/in1.png"
 IMG_CULTURE = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/cv1.png"
 IMG_ACC = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/ac1.png"
+IMG_MEDAL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/md.png"
 IMG_F1 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f1.png"
 IMG_F2 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f2.png"
 IMG_F3 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f3.png"
@@ -90,10 +91,11 @@ TRANSLATIONS = {
 
         "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
         "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 3",
-        "p2_welcome_desc": "Hãy nhấn vào danh sách ứng viên vào vòng chung kết, xem qua hình ảnh và hồ sơ của các ứng viên xuất sắc nhất, sau đó chọn ứng viên bạn muốn bình chọn.",
+        "p2_welcome_desc": "Hãy cuộn xuống bên dưới để xem thông tin chi tiết và lựa chọn đúng **3 ứng viên** xuất sắc nhất mà bạn muốn bình chọn.",
+        "p2_instruction_banner": "**Vui lòng cuộn xuống để xem hồ sơ các ứng viên và chọn đúng 3 ứng viên bạn muốn bình chọn.**",
         "p2_start_btn": "Bắt Đầu Bình Chọn",
-        "p2_select_label": "Chọn ứng viên chung kết để bình chọn *",
-        "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
+        "p2_selected_count": "Đã chọn: {} / 3 ứng viên",
+        "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn (3 Ứng Viên)",
         "p2_thank_you_title": "Cảm Ơn Bạn Đã Bình Chọn!",
         "p2_thank_you_msg": "Lựa chọn của bạn cho vòng chung kết đã được ghi nhận thành công.",
         "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
@@ -170,10 +172,11 @@ TRANSLATIONS = {
 
         "p2_title": "Finals Voting Portal (Phase 2)",
         "p2_welcome_heading": "Welcome to the Finals Voting",
-        "p2_welcome_desc": "Press the drop-down list to explore the photos and profiles of our finalists, then select your candidate to cast your final vote.",
+        "p2_welcome_desc": "Please scroll down the page to explore the profiles and select exactly **3 finalists** you wish to nominate.",
+        "p2_instruction_banner": "**Please scroll down to review finalist profiles and select exactly 3 candidates for your final vote.**",
         "p2_start_btn": "Start Voting",
-        "p2_select_label": "Select Finalist Nominee to Vote *",
-        "p2_submit_btn": "Confirm & Submit Vote",
+        "p2_selected_count": "Selected: {} / 3 candidates",
+        "p2_submit_btn": "Confirm & Submit Vote (3 Candidates)",
         "p2_thank_you_title": "Thank You for Voting!",
         "p2_thank_you_msg": "Your final vote has been successfully recorded.",
         "p2_locked_title": "Vote Already Submitted",
@@ -250,10 +253,11 @@ TRANSLATIONS = {
 
         "p2_title": "Finalabstimmungsportal (Phase 2)",
         "p2_welcome_heading": "Willkommen zur Finalabstimmung",
-        "p2_welcome_desc": "Entdecken Sie die Fotos und Profile unserer Finalisten und wählen Sie Ihren Favoriten für die Stimmabgabe aus.",
+        "p2_welcome_desc": "Bitte scrollen Sie nach unten, um die Profile zu erkunden und genau **3 Finalisten** für Ihre Stimme auszuwählen.",
+        "p2_instruction_banner": "**Bitte scrollen Sie nach unten, um die Finalisten-Profile zu überprüfen und genau 3 Kandidaten auszuwählen.**",
         "p2_start_btn": "Abstimmung Starten",
-        "p2_select_label": "Finalisten zur Abstimmung auswählen *",
-        "p2_submit_btn": "Stimme Bestätigen & Absenden",
+        "p2_selected_count": "Ausgewählt: {} / 3 Kandidaten",
+        "p2_submit_btn": "Stimme Bestätigen & Absenden (3 Kandidaten)",
         "p2_thank_you_title": "Vielen Dank für Ihre Stimme!",
         "p2_thank_you_msg": "Ihre Finalstimme wurde erfolgreich erfasst.",
         "p2_locked_title": "Stimme Bereits Abgeschlossen",
@@ -418,6 +422,9 @@ TOP_10_FINALISTS = [
     }
 ]
 
+# Filter out unconfigured finalists
+TOP_10_FINALISTS = [f for f in TOP_10_FINALISTS if f["name"]]
+
 # --- DEVICE TRACKING & PERSISTENCE FILES ---
 DATA_FILE = "danh_sach_de_cu.csv"
 DEVICE_REGISTRY_FILE = "device_registry.json"
@@ -486,6 +493,9 @@ if "step" not in st.session_state:
 if "p2_step" not in st.session_state:
     st.session_state["p2_step"] = 0
 
+if "p2_selected_nominees" not in st.session_state:
+    st.session_state["p2_selected_nominees"] = []
+
 # Check device submission lock based on active phase
 if PHASE_2_ACTIVE:
     registered_devices_p2 = load_device_registry(DEVICE_REGISTRY_FILE_P2)
@@ -507,8 +517,7 @@ default_keys = {
     "score_culture": 5,
     "evidence_culture": "",
     "score_acc": 5,
-    "evidence_acc": "",
-    "p2_selected_nominee": TOP_10_FINALISTS[0]["name"]
+    "evidence_acc": ""
 }
 for key, default_val in default_keys.items():
     if key not in st.session_state:
@@ -1300,72 +1309,88 @@ else:
         elif st.session_state["p2_step"] == 1:
             st.subheader(t["p2_title"])
 
-            # Build options with descriptive captions showing Name and Department
-            finalist_options = {f"{f['name']} ({f['department']})": f for f in TOP_10_FINALISTS}
-            option_keys = list(finalist_options.keys())
-
-
-            def update_p2_selection():
-                selected_key = st.session_state["p2_selectbox"]
-                st.session_state["p2_selected_nominee"] = finalist_options[selected_key]["name"]
-
-
-            # Set current index safely
-            current_selected_name = st.session_state.get("p2_selected_nominee", TOP_10_FINALISTS[0]["name"])
-            current_option_key = next((k for k, v in finalist_options.items() if v["name"] == current_selected_name),
-                                      option_keys[0])
-
-            selected_key = st.selectbox(
-                t["p2_select_label"],
-                options=option_keys,
-                index=option_keys.index(current_option_key) if current_option_key in option_keys else 0,
-                key="p2_selectbox",
-                on_change=update_p2_selection
-            )
-
-            current_finalist = finalist_options[st.session_state["p2_selectbox"]]
-
-            # Render Info Card (Portrait 4:5 Aspect Ratio Profile Picture & Associated Biography with Highlights Title) side-by-side or stacked cleanly
+            # Instruction banner guiding the user to scroll down and select 3 finalists
             st.markdown(f"""
-                <div style="background: rgba(42, 35, 15, 0.7); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem;">
-                    <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
-                        <div style="flex: 0 0 160px; text-align: center;">
-                            <img src="{current_finalist['image']}" alt="Nominee Photo" style="width: 160px; height: 200px; aspect-ratio: 4 / 5; border-radius: 8px; object-fit: cover; border: 2px solid #F59E0B; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" />
-                            <div style="margin-top: 0.5rem; font-weight: bold; color: #FDE047; font-size: 0.95rem;">{current_finalist['name']}</div>
-                            <div style="color: #F7C657; font-size: 0.85rem; font-style: italic;">{current_finalist['department']}</div>
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.5rem;">{current_finalist['name']}</h3>
-                            <p style="color: #F7C657; font-size: 1rem; font-style: italic; margin-bottom: 0.8rem;">{current_finalist['department']}</p>
-                            <h4 style="color: #FDE047; font-size: 1.15rem; margin-bottom: 0.4rem; border-bottom: 1px solid rgba(245, 158, 11, 0.3); padding-bottom: 0.2rem;">{t['highlights_title']}</h4>
-                            <p style="color: #FFF; font-size: 1.05rem; line-height: 1.6;">{current_finalist['bio']}</p>
-                        </div>
-                    </div>
+                <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                    <p style="color: #FDE047; font-size: 1.1rem; margin: 0; font-weight: bold;">{t['p2_instruction_banner']}</p>
                 </div>
             """, unsafe_allow_html=True)
 
-            # Simple Submit Vote Form
-            with st.form(key="p2_voting_form"):
-                st.write("")
-                p2_submit_clicked = st.form_submit_button(t["p2_submit_btn"], use_container_width=True, type="primary")
+            selected_list = st.session_state["p2_selected_nominees"]
 
-            if p2_submit_clicked:
-                selected_record = {
-                    "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "Tên Ứng Viên": current_finalist['name'],
-                    "Phòng Ban": current_finalist['department'],
-                    "Device_ID": DEVICE_ID
-                }
-                df_p2_new = pd.DataFrame([selected_record])
-                df_p2_new.to_csv(DATA_FILE_P2, mode='a', header=False, index=False, encoding='utf-8-sig')
+            # Display counter status
+            st.markdown(f"### {t['p2_selected_count'].format(len(selected_list))}")
 
-                current_reg_p2 = load_device_registry(DEVICE_REGISTRY_FILE_P2)
-                if DEVICE_ID not in current_reg_p2:
-                    current_reg_p2.append(DEVICE_ID)
-                    save_device_registry(DEVICE_REGISTRY_FILE_P2, current_reg_p2)
+            # Display all finalist infocards
+            for idx, finalist in enumerate(TOP_10_FINALISTS):
+                name = finalist["name"]
+                dept = finalist["department"]
+                bio = finalist["bio"]
+                img = finalist["image"]
 
-                st.session_state["p2_step"] = 2
-                st.rerun()
+                is_selected = name in selected_list
+
+                # Dynamic styling for golden glow when selected
+                card_bg = "rgba(60, 45, 15, 0.85)" if is_selected else "rgba(42, 35, 15, 0.7)"
+                card_border = "2px solid #FDE047" if is_selected else "1px solid rgba(245, 158, 11, 0.4)"
+                card_shadow = "0 0 25px rgba(245, 158, 11, 0.7)" if is_selected else "0 4px 12px rgba(0, 0, 0, 0.3)"
+
+                medal_html = f'<img src="{IMG_MEDAL}" style="position: absolute; top: 15px; right: 15px; width: 45px; height: 45px; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.9)); z-index: 10;" />' if is_selected else ''
+
+                st.markdown(f"""
+                    <div style="position: relative; background: {card_bg}; border: {card_border}; border-radius: 14px; padding: 1.5rem; margin-bottom: 1.2rem; box-shadow: {card_shadow}; transition: all 0.3s ease;">
+                        {medal_html}
+                        <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
+                            <div style="flex: 0 0 160px; text-align: center;">
+                                <img src="{img}" alt="Nominee Photo" style="width: 160px; height: 200px; aspect-ratio: 4 / 5; border-radius: 8px; object-fit: cover; border: 2px solid #F59E0B; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" />
+                            </div>
+                            <div style="flex: 1; min-width: 220px;">
+                                <h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.5rem;">{name}</h3>
+                                <p style="color: #F7C657; font-size: 1rem; font-style: italic; margin-bottom: 0.8rem;">{dept}</p>
+                                <h4 style="color: #FDE047; font-size: 1.15rem; margin-bottom: 0.4rem; border-bottom: 1px solid rgba(245, 158, 11, 0.3); padding-bottom: 0.2rem;">{t['highlights_title']}</h4>
+                                <p style="color: #FFF; font-size: 1.05rem; line-height: 1.6;">{bio}</p>
+                            </div>
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
+
+                # Selection button below each card
+                btn_label = f"✅ Selected: {name}" if is_selected else f"⭐ Select {name}"
+                if st.button(btn_label, key=f"select_btn_{idx}", use_container_width=True):
+                    if is_selected:
+                        st.session_state["p2_selected_nominees"].remove(name)
+                    else:
+                        if len(st.session_state["p2_selected_nominees"]) < 3:
+                            st.session_state["p2_selected_nominees"].append(name)
+                        else:
+                            st.warning("You can only select a maximum of 3 finalists! Please deselect one first.")
+                    st.rerun()
+
+            # Show submission button ONLY when exactly 3 finalists are selected
+            if len(st.session_state["p2_selected_nominees"]) == 3:
+                st.markdown("---")
+                with st.form(key="p2_voting_form"):
+                    st.success(f"🎉 You have selected 3 finalists: {', '.join(st.session_state['p2_selected_nominees'])}")
+                    p2_submit_clicked = st.form_submit_button(t["p2_submit_btn"], use_container_width=True, type="primary")
+
+                if p2_submit_clicked:
+                    for nom in st.session_state["p2_selected_nominees"]:
+                        selected_record = {
+                            "Thời Gian": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "Tên Ứng Viên": nom,
+                            "Phòng Ban": next((f["department"] for f in TOP_10_FINALISTS if f["name"] == nom), ""),
+                            "Device_ID": DEVICE_ID
+                        }
+                        df_p2_new = pd.DataFrame([selected_record])
+                        df_p2_new.to_csv(DATA_FILE_P2, mode='a', header=False, index=False, encoding='utf-8-sig')
+
+                    current_reg_p2 = load_device_registry(DEVICE_REGISTRY_FILE_P2)
+                    if DEVICE_ID not in current_reg_p2:
+                        current_reg_p2.append(DEVICE_ID)
+                        save_device_registry(DEVICE_REGISTRY_FILE_P2, current_reg_p2)
+
+                    st.session_state["p2_step"] = 2
+                    st.rerun()
 
         elif st.session_state["p2_step"] == 2:
             if IMG_THANKYOU:
@@ -1716,7 +1741,7 @@ with st.expander(t["admin_sec"]):
                         Số_Lượt_Bình_Chọn=("Phòng Ban", "count")
                     ).reset_index()
 
-                    st.markdown("#### Vote Allocation Percentage (Top 10 Finalists)")
+                    st.markdown("#### Vote Allocation Percentage (Top Finalists)")
                     total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
                     summary_p2["Phần_Trăm"] = (summary_p2[
                                                    "Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
