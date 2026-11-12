@@ -98,7 +98,7 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Lựa chọn của bạn cho vòng chung kết đã được ghi nhận thành công.",
         "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
         "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
-        "highlights_title": "✨ Những điểm sáng",
+        "highlights_title": "Những điểm sáng",
 
         "portal_closed_title": "Cổng Đề Cử Hiện Đang Tạm Đóng",
         "portal_closed_msg": "Cổng tiếp nhận đề cử và bình chọn hiện đang tạm thời đóng bởi Quản trị viên. Vui lòng quay lại sau!",
@@ -178,7 +178,7 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Your final vote has been successfully recorded.",
         "p2_locked_title": "Vote Already Submitted",
         "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
-        "highlights_title": "✨ Highlights",
+        "highlights_title": "Highlights",
 
         "portal_closed_title": "Nomination Portal Temporarily Closed",
         "portal_closed_msg": "The nomination and voting portal is currently closed by the administrator. Please check back later!",
@@ -258,7 +258,7 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Ihre Finalstimme wurde erfolgreich erfasst.",
         "p2_locked_title": "Stimme Bereits Abgeschlossen",
         "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
-        "highlights_title": "✨ Höhepunkte",
+        "highlights_title": "Höhepunkte",
 
         "portal_closed_title": "Nominierungsportal Vorübergehend Geschlossen",
         "portal_closed_msg": "Das Nominierungs- und Abstimmungsportal wurde vom Administrator vorübergehend geschlossen. Bitte versuchen Sie es später noch einmal!",
