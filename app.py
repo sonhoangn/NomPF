@@ -1312,7 +1312,7 @@ else:
 
             # Instruction banner guiding the user to scroll down and select 3 finalists
             st.markdown(f"""
-                <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
+                <div style="background: rgba(245, 158, 11, 0.5); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;">
                     <p style="color: #FDE047; font-size: 1.1rem; margin: 0; font-weight: bold;">{t['p2_instruction_banner']}</p>
                 </div>
             """, unsafe_allow_html=True)
@@ -1380,7 +1380,7 @@ else:
             if len(st.session_state["p2_selected_nominees"]) == 3:
                 st.markdown("---")
                 with st.form(key="p2_voting_form"):
-                    st.success(f"🎉 You have selected 3 finalists: {', '.join(st.session_state['p2_selected_nominees'])}")
+                    st.success(f"You have selected 3 finalists: {', '.join(st.session_state['p2_selected_nominees'])}")
                     p2_submit_clicked = st.form_submit_button(t["p2_submit_btn"], use_container_width=True, type="primary")
 
                 if p2_submit_clicked:
