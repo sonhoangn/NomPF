@@ -34,6 +34,9 @@ IMG_F7 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f7.p
 IMG_F8 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f8.png"
 IMG_F9 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f9.png"
 IMG_F10 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f10.png"
+IMG_F11 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f11.png"
+IMG_F12 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f12.png"
+IMG_F13 = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f13.png"
 
 # Configure page settings
 st.set_page_config(
@@ -390,6 +393,24 @@ TOP_10_FINALISTS = [
         "name": st.secrets.get("P2_NAME_10"),
         "department": st.secrets.get("P2_DEPT_10"),
         "bio": st.secrets.get(f"P2_BIO_10{bio_suffix}", st.secrets.get("P2_BIO_10", "")),
+        "image": IMG_F10
+    },
+    {
+        "name": st.secrets.get("P2_NAME_11"),
+        "department": st.secrets.get("P2_DEPT_11"),
+        "bio": st.secrets.get(f"P2_BIO_11{bio_suffix}", st.secrets.get("P2_BIO_11", "")),
+        "image": IMG_F10
+    },
+    {
+        "name": st.secrets.get("P2_NAME_12"),
+        "department": st.secrets.get("P2_DEPT_12"),
+        "bio": st.secrets.get(f"P2_BIO_12{bio_suffix}", st.secrets.get("P2_BIO_12", "")),
+        "image": IMG_F10
+    },
+    {
+        "name": st.secrets.get("P2_NAME_13"),
+        "department": st.secrets.get("P2_DEPT_13"),
+        "bio": st.secrets.get(f"P2_BIO_13{bio_suffix}", st.secrets.get("P2_BIO_13", "")),
         "image": IMG_F10
     }
 ]
