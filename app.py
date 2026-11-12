@@ -90,7 +90,7 @@ TRANSLATIONS = {
 
         "p2_title": "Vòng Bình Chọn Chung Kết (Phase 2)",
         "p2_welcome_heading": "Chào Mừng Đến Vòng Bình Chọn Top 10",
-        "p2_welcome_desc": "Hãy nhấn vào danh sách 10 ứng viên vào vòng chung kết, xem qua hình ảnh và hồ sơ của các ứng viên xuất sắc nhất, sau đó chọn ứng viên bạn muốn bình chọn.",
+        "p2_welcome_desc": "Hãy nhấn vào danh sách ứng viên vào vòng chung kết, xem qua hình ảnh và hồ sơ của các ứng viên xuất sắc nhất, sau đó chọn ứng viên bạn muốn bình chọn.",
         "p2_start_btn": "Bắt Đầu Bình Chọn",
         "p2_select_label": "Chọn ứng viên chung kết để bình chọn *",
         "p2_submit_btn": "Xác Nhận & Gửi Bình Chọn",
@@ -98,6 +98,7 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Lựa chọn của bạn cho vòng chung kết đã được ghi nhận thành công.",
         "p2_locked_title": "Bạn Đã Hoàn Thành Bình Chọn",
         "p2_locked_msg": "Thiết bị này đã tham gia bình chọn vòng chung kết trước đó. Xin cảm ơn sự tham gia của bạn!",
+        "highlights_title": "✨ Những điểm sáng",
 
         "portal_closed_title": "Cổng Đề Cử Hiện Đang Tạm Đóng",
         "portal_closed_msg": "Cổng tiếp nhận đề cử và bình chọn hiện đang tạm thời đóng bởi Quản trị viên. Vui lòng quay lại sau!",
@@ -164,12 +165,12 @@ TRANSLATIONS = {
     "English": {
         "title": "Synergy Star \nNomination Portal",
         "welcome_heading": "Welcome to the Award Nomination Portal",
-        "welcome_desc": "Recognizing top 3 teammates,\nwho connect our synergies,\nthat bring beyond the regular working objectives across organizations",
+        "welcome_desc": "Recognizing top teammates,\nwho connect our synergies,\nthat bring beyond the regular working objectives across organizations",
         "start_btn": "Start Nomination",
 
         "p2_title": "Finals Voting Portal (Phase 2)",
-        "p2_welcome_heading": "Welcome to the Top 10 Finals Voting",
-        "p2_welcome_desc": "Press the drop-down list to explore the photos and profiles of our top 10 finalists, then select your candidate to cast your final vote.",
+        "p2_welcome_heading": "Welcome to the Finals Voting",
+        "p2_welcome_desc": "Press the drop-down list to explore the photos and profiles of our finalists, then select your candidate to cast your final vote.",
         "p2_start_btn": "Start Voting",
         "p2_select_label": "Select Finalist Nominee to Vote *",
         "p2_submit_btn": "Confirm & Submit Vote",
@@ -177,6 +178,7 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Your final vote has been successfully recorded.",
         "p2_locked_title": "Vote Already Submitted",
         "p2_locked_msg": "A vote has already been submitted from this device for Phase 2. Thank you for your participation!",
+        "highlights_title": "✨ Highlights",
 
         "portal_closed_title": "Nomination Portal Temporarily Closed",
         "portal_closed_msg": "The nomination and voting portal is currently closed by the administrator. Please check back later!",
@@ -234,10 +236,10 @@ TRANSLATIONS = {
         "download_html_btn": "Download Phase 1 HTML Comprehensive Report",
         "summary_table_title": "Summary Table of Total Votes & Average Scores:",
         "raw_table_title": "Raw Nominations Table:",
-        "chart_votes_title": "Top 10 Most Voted Nominees",
-        "chart_scores_title": "Top 10 Highest Average Scores",
+        "chart_votes_title": "Most Voted Nominees",
+        "chart_scores_title": "Highest Average Scores",
         "chart_pie_title": "Vote Allocation Percentage (Pie Chart)",
-        "leaderboard_title": "Leaderboard (Top 10 Nominees)",
+        "leaderboard_title": "Leaderboard (Nominees)",
         "err_pass": "Incorrect password!"
     },
     "Deutsch (German)": {
@@ -247,8 +249,8 @@ TRANSLATIONS = {
         "start_btn": "Nominierung Starten",
 
         "p2_title": "Finalabstimmungsportal (Phase 2)",
-        "p2_welcome_heading": "Willkommen zur Top-10-Finalabstimmung",
-        "p2_welcome_desc": "Entdecken Sie die Fotos und Profile unserer Top-10-Finalisten und wählen Sie Ihren Favoriten für die Stimmabgabe aus.",
+        "p2_welcome_heading": "Willkommen zur Finalabstimmung",
+        "p2_welcome_desc": "Entdecken Sie die Fotos und Profile unserer Finalisten und wählen Sie Ihren Favoriten für die Stimmabgabe aus.",
         "p2_start_btn": "Abstimmung Starten",
         "p2_select_label": "Finalisten zur Abstimmung auswählen *",
         "p2_submit_btn": "Stimme Bestätigen & Absenden",
@@ -256,6 +258,7 @@ TRANSLATIONS = {
         "p2_thank_you_msg": "Ihre Finalstimme wurde erfolgreich erfasst.",
         "p2_locked_title": "Stimme Bereits Abgeschlossen",
         "p2_locked_msg": "Von diesem Gerät wurde bereits eine Stimme für Phase 2 abgegeben.",
+        "highlights_title": "✨ Höhepunkte",
 
         "portal_closed_title": "Nominierungsportal Vorübergehend Geschlossen",
         "portal_closed_msg": "Das Nominierungs- und Abstimmungsportal wurde vom Administrator vorübergehend geschlossen. Bitte versuchen Sie es später noch einmal!",
@@ -313,10 +316,10 @@ TRANSLATIONS = {
         "download_html_btn": "Phase 1 HTML-Bericht herunterladen",
         "summary_table_title": "Zusammenfassung der Stimmen & Durchschnittswerte:",
         "raw_table_title": "Rohdaten-Tabelle der Nominierungen:",
-        "chart_votes_title": "Top 10 Nominierte nach Stimmen",
-        "chart_scores_title": "Top 10 Höchste Durchschnittswerte",
+        "chart_votes_title": "Nominierte nach Stimmen",
+        "chart_scores_title": "Höchste Durchschnittswerte",
         "chart_pie_title": "Stimmverteilung (Prozentdiagramm)",
-        "leaderboard_title": "Bestenliste (Top 10 Nominierte)",
+        "leaderboard_title": "Bestenliste",
         "err_pass": "Falsches Passwort!"
     }
 }
@@ -333,7 +336,7 @@ elif selected_lang_key == "Deutsch (German)":
 else:
     bio_suffix = "_E"
 
-# --- PHASE 2 TOP 10 FINALISTS CONFIGURATION WITH MULTI-LANGUAGE BIOS ---
+# --- PHASE 2 FINALISTS CONFIGURATION WITH MULTI-LANGUAGE BIOS ---
 TOP_10_FINALISTS = [
     {
         "name": st.secrets.get("P2_NAME_1"),
@@ -1184,7 +1187,7 @@ def generate_phase1_html_report(raw_df, achievement_summaries=None):
         </section>
 
         <section>
-            <h2 class="section-title"><i class="fas fa-trophy"></i> Top 10 Nominees (Most Votes & Highest Points)</h2>
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Nominees (Most Votes & Highest Points)</h2>
             <div class="grid-cards">
                 {infocards_html}
             </div>
@@ -1322,7 +1325,7 @@ else:
 
             current_finalist = finalist_options[st.session_state["p2_selectbox"]]
 
-            # Render Info Card (Portrait 4:5 Aspect Ratio Profile Picture & Associated Biography) side-by-side or stacked cleanly
+            # Render Info Card (Portrait 4:5 Aspect Ratio Profile Picture & Associated Biography with Highlights Title) side-by-side or stacked cleanly
             st.markdown(f"""
                 <div style="background: rgba(42, 35, 15, 0.7); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; margin-bottom: 1.5rem;">
                     <div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">
@@ -1334,6 +1337,7 @@ else:
                         <div style="flex: 1; min-width: 200px;">
                             <h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.5rem;">{current_finalist['name']}</h3>
                             <p style="color: #F7C657; font-size: 1rem; font-style: italic; margin-bottom: 0.8rem;">{current_finalist['department']}</p>
+                            <h4 style="color: #FDE047; font-size: 1.15rem; margin-bottom: 0.4rem; border-bottom: 1px solid rgba(245, 158, 11, 0.3); padding-bottom: 0.2rem;">{t['highlights_title']}</h4>
                             <p style="color: #FFF; font-size: 1.05rem; line-height: 1.6;">{current_finalist['bio']}</p>
                         </div>
                     </div>
