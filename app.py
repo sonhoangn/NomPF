@@ -399,19 +399,19 @@ TOP_10_FINALISTS = [
         "name": st.secrets.get("P2_NAME_11"),
         "department": st.secrets.get("P2_DEPT_11"),
         "bio": st.secrets.get(f"P2_BIO_11{bio_suffix}", st.secrets.get("P2_BIO_11", "")),
-        "image": IMG_F10
+        "image": IMG_F11
     },
     {
         "name": st.secrets.get("P2_NAME_12"),
         "department": st.secrets.get("P2_DEPT_12"),
         "bio": st.secrets.get(f"P2_BIO_12{bio_suffix}", st.secrets.get("P2_BIO_12", "")),
-        "image": IMG_F10
+        "image": IMG_F12
     },
     {
         "name": st.secrets.get("P2_NAME_13"),
         "department": st.secrets.get("P2_DEPT_13"),
         "bio": st.secrets.get(f"P2_BIO_13{bio_suffix}", st.secrets.get("P2_BIO_13", "")),
-        "image": IMG_F10
+        "image": IMG_F13
     }
 ]
 
