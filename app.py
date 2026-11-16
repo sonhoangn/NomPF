@@ -30,7 +30,7 @@ st.set_page_config(
 )
 
 # --- LOAD ADMIN PASSWORD ---
-AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
+# AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
 
 # --- MULTI-LANGUAGE DICTIONARY ---
 TRANSLATIONS = {
@@ -95,56 +95,56 @@ TOP_3_WINNERS = [
 ]
 
 # --- DEVICE TRACKING & PERSISTENCE FILES ---
-DATA_FILE = "danh_sach_de_cu.csv"
-DATA_FILE_P2 = "danh_sach_de_cu_phase2.csv"
-PORTAL_STATE_FILE = "portal_state.json"
+# DATA_FILE = "danh_sach_de_cu.csv"
+# DATA_FILE_P2 = "danh_sach_de_cu_phase2.csv"
+# PORTAL_STATE_FILE = "portal_state.json"
+#
+#
+# def load_json_state(filename, default_val):
+#     if os.path.exists(filename):
+#         try:
+#             with open(filename, "r", encoding="utf-8") as f:
+#                 return json.load(f)
+#         except Exception:
+#             return default_val
+#     return default_val
+#
+#
+# def save_json_state(filename, data):
+#     with open(filename, "w", encoding="utf-8") as f:
+#         json.dump(data, f, ensure_ascii=False, indent=4)
+#
+#
+# portal_data = load_json_state(PORTAL_STATE_FILE, {"portal_closed": False})
+# PORTAL_CLOSED = portal_data.get("portal_closed", False)
 
 
-def load_json_state(filename, default_val):
-    if os.path.exists(filename):
-        try:
-            with open(filename, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            return default_val
-    return default_val
+# def load_device_registry(registry_file):
+#     if os.path.exists(registry_file):
+#         try:
+#             with open(registry_file, "r", encoding="utf-8") as f:
+#                 return json.load(f)
+#         except Exception:
+#             return []
+#     return []
 
 
-def save_json_state(filename, data):
-    with open(filename, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-
-
-portal_data = load_json_state(PORTAL_STATE_FILE, {"portal_closed": False})
-PORTAL_CLOSED = portal_data.get("portal_closed", False)
-
-
-def load_device_registry(registry_file):
-    if os.path.exists(registry_file):
-        try:
-            with open(registry_file, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            return []
-    return []
-
-
-def save_device_registry(registry_file, registry_list):
-    with open(registry_file, "w", encoding="utf-8") as f:
-        json.dump(registry_list, f, ensure_ascii=False, indent=4)
+# def save_device_registry(registry_file, registry_list):
+#     with open(registry_file, "w", encoding="utf-8") as f:
+#         json.dump(registry_list, f, ensure_ascii=False, indent=4)
 
 
 # Assign or retrieve unique device token via URL query params & session state
-if "device_token" not in st.session_state:
-    query_params = st.query_params
-    if "did" in query_params:
-        st.session_state["device_token"] = query_params["did"]
-    else:
-        new_token = str(uuid.uuid4())
-        st.session_state["device_token"] = new_token
-        st.query_params["did"] = new_token
-
-DEVICE_ID = st.session_state["device_token"]
+# if "device_token" not in st.session_state:
+#     query_params = st.query_params
+#     if "did" in query_params:
+#         st.session_state["device_token"] = query_params["did"]
+#     else:
+#         new_token = str(uuid.uuid4())
+#         st.session_state["device_token"] = new_token
+#         st.query_params["did"] = new_token
+#
+# DEVICE_ID = st.session_state["device_token"]
 
 
 # --- GLASSMORPHISM & SOLID BACKGROUND STYLING ---
@@ -259,88 +259,88 @@ if BG_IMAGE_URL:
         """, unsafe_allow_html=True)
 
 
-def generate_pdf_report(summary_df, leaderboard_df, raw_df):
-    buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=25, leftMargin=25, topMargin=30, bottomMargin=30)
-    story = []
-
-    styles = getSampleStyleSheet()
-    title_style = ParagraphStyle(
-        'ReportTitle',
-        parent=styles['Heading1'],
-        fontSize=16,
-        textColor=colors.HexColor('#B45309'),
-        alignment=1,
-        spaceAfter=10
-    )
-    heading_style = ParagraphStyle(
-        'ReportHeading',
-        parent=styles['Heading2'],
-        fontSize=11,
-        textColor=colors.HexColor('#92400E'),
-        spaceBefore=10,
-        spaceAfter=4
-    )
-    normal_style = ParagraphStyle(
-        'ReportNormal',
-        parent=styles['Normal'],
-        fontSize=8,
-        textColor=colors.HexColor('#1F2937')
-    )
-    cell_style = ParagraphStyle(
-        'ReportCell',
-        parent=styles['Normal'],
-        fontSize=7,
-        leading=9,
-        textColor=colors.HexColor('#1F2937')
-    )
-    header_cell_style = ParagraphStyle(
-        'ReportHeaderCell',
-        parent=styles['Normal'],
-        fontSize=7,
-        leading=9,
-        fontName='Helvetica-Bold',
-        textColor=colors.whitesmoke
-    )
-
-    story.append(Paragraph("Synergy Star 2026 - Admin Dashboard Report", title_style))
-    story.append(
-        Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Total Submissions: {len(raw_df)}",
-                  normal_style))
-    story.append(Spacer(1, 8))
-
-    def create_wrapped_table(df_subset, col_widths=None):
-        headers = list(df_subset.columns)
-        table_data = [[Paragraph(str(h), header_cell_style) for h in headers]]
-
-        for _, row in df_subset.iterrows():
-            row_cells = [Paragraph(str(val), cell_style) for val in row.values]
-            table_data.append(row_cells)
-
-        t = Table(table_data, colWidths=col_widths, hAlign='LEFT')
-        t.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F59E0B')),
-            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-            ('TOPPADDING', (0, 0), (-1, -1), 4),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#FEF3C7')),
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#D97706'))
-        ]))
-        return t
-
-    story.append(Paragraph("Top 10 Leaderboard (Votes & Average Scores)", heading_style))
-    lb_pdf = leaderboard_df.rename(columns={
-        "Tên Người Được Đề Cử": "Nominee Name",
-        "Số_Lượt_Đề_Cử": "Total Votes",
-        "Điểm_Trung_Bình_Tổng_Thể": "Overall Avg Score"
-    }).copy()
-    story.append(create_wrapped_table(lb_pdf, col_widths=[250, 150, 160]))
-    story.append(Spacer(1, 8))
-
-    doc.build(story)
-    buffer.seek(0)
-    return buffer.getvalue()
+# def generate_pdf_report(summary_df, leaderboard_df, raw_df):
+#     buffer = io.BytesIO()
+#     doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=25, leftMargin=25, topMargin=30, bottomMargin=30)
+#     story = []
+#
+#     styles = getSampleStyleSheet()
+#     title_style = ParagraphStyle(
+#         'ReportTitle',
+#         parent=styles['Heading1'],
+#         fontSize=16,
+#         textColor=colors.HexColor('#B45309'),
+#         alignment=1,
+#         spaceAfter=10
+#     )
+#     heading_style = ParagraphStyle(
+#         'ReportHeading',
+#         parent=styles['Heading2'],
+#         fontSize=11,
+#         textColor=colors.HexColor('#92400E'),
+#         spaceBefore=10,
+#         spaceAfter=4
+#     )
+#     normal_style = ParagraphStyle(
+#         'ReportNormal',
+#         parent=styles['Normal'],
+#         fontSize=8,
+#         textColor=colors.HexColor('#1F2937')
+#     )
+#     cell_style = ParagraphStyle(
+#         'ReportCell',
+#         parent=styles['Normal'],
+#         fontSize=7,
+#         leading=9,
+#         textColor=colors.HexColor('#1F2937')
+#     )
+#     header_cell_style = ParagraphStyle(
+#         'ReportHeaderCell',
+#         parent=styles['Normal'],
+#         fontSize=7,
+#         leading=9,
+#         fontName='Helvetica-Bold',
+#         textColor=colors.whitesmoke
+#     )
+#
+#     story.append(Paragraph("Synergy Star 2026 - Admin Dashboard Report", title_style))
+#     story.append(
+#         Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Total Submissions: {len(raw_df)}",
+#                   normal_style))
+#     story.append(Spacer(1, 8))
+#
+#     def create_wrapped_table(df_subset, col_widths=None):
+#         headers = list(df_subset.columns)
+#         table_data = [[Paragraph(str(h), header_cell_style) for h in headers]]
+#
+#         for _, row in df_subset.iterrows():
+#             row_cells = [Paragraph(str(val), cell_style) for val in row.values]
+#             table_data.append(row_cells)
+#
+#         t = Table(table_data, colWidths=col_widths, hAlign='LEFT')
+#         t.setStyle(TableStyle([
+#             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F59E0B')),
+#             ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+#             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+#             ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+#             ('TOPPADDING', (0, 0), (-1, -1), 4),
+#             ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#FEF3C7')),
+#             ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#D97706'))
+#         ]))
+#         return t
+#
+#     story.append(Paragraph("Top 10 Leaderboard (Votes & Average Scores)", heading_style))
+#     lb_pdf = leaderboard_df.rename(columns={
+#         "Tên Người Được Đề Cử": "Nominee Name",
+#         "Số_Lượt_Đề_Cử": "Total Votes",
+#         "Điểm_Trung_Bình_Tổng_Thể": "Overall Avg Score"
+#     }).copy()
+#     story.append(create_wrapped_table(lb_pdf, col_widths=[250, 150, 160]))
+#     story.append(Spacer(1, 8))
+#
+#     doc.build(story)
+#     buffer.seek(0)
+#     return buffer.getvalue()
 
 
 # Header display banner (Winners Celebration Title)
@@ -386,72 +386,3 @@ for idx, winner in enumerate(TOP_3_WINNERS):
     )
 
     st.markdown(winner_card_html, unsafe_allow_html=True)
-
-# ==========================================
-# ANCHORED ADMINISTRATOR LOGIN PANEL
-# ==========================================
-# st.divider()
-# with st.expander(t["admin_sec"]):
-#     admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
-#     if admin_password == AD_PASS:
-#         st.success(t["admin_success"])
-#
-#         # --- PORTAL & DEVICE MANAGEMENT CONTROLS ---
-#         st.markdown("---")
-#         st.subheader("Portal Management Control")
-#
-#         new_portal_closed_toggle = st.toggle("🛑 Close Portal (Pause Access)", value=PORTAL_CLOSED)
-#         if new_portal_closed_toggle != PORTAL_CLOSED:
-#             save_json_state(PORTAL_STATE_FILE, {"portal_closed": new_portal_closed_toggle})
-#             st.success(f"Portal Closed Status updated to: {new_portal_closed_toggle}. Reloading...")
-#             st.rerun()
-#
-#         # --- PHASE 2 ADMIN DASHBOARD SECTION ---
-#         if os.path.exists(DATA_FILE_P2):
-#             try:
-#                 df_p2_raw = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip')
-#                 st.markdown(f"### Phase 2 Finals Dashboard (Total Votes: {len(df_p2_raw)})")
-#
-#                 if not df_p2_raw.empty and "Tên Ứng Viên" in df_p2_raw.columns:
-#                     summary_p2 = df_p2_raw.groupby("Tên Ứng Viên").agg(
-#                         Số_Lượt_Bình_Chọn=("Phòng Ban", "count")
-#                     ).reset_index()
-#
-#                     st.markdown("#### Vote Allocation Percentage (Top Finalists)")
-#                     total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
-#                     summary_p2["Phần_Trăm"] = (summary_p2["Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
-#
-#                     pie_chart_p2 = alt.Chart(summary_p2).mark_arc(innerRadius=50).encode(
-#                         theta=alt.Theta(field="Số_Lượt_Bình_Chọn", type="quantitative"),
-#                         color=alt.Color(field="Tên Ứng Viên", type="nominal", legend=alt.Legend(title="Finalist")),
-#                         tooltip=["Tên Ứng Viên", "Số_Lượt_Bình_Chọn", alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
-#                     ).properties(width=400, height=350)
-#                     st.altair_chart(pie_chart_p2, use_container_width=True)
-#
-#                     st.markdown("#### Top Finalists with Most Votes")
-#                     top_votes_p2 = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(10)
-#                     st.bar_chart(top_votes_p2.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
-#
-#                     st.markdown("#### Phase 2 Raw Nomination Data")
-#                     st.dataframe(df_p2_raw, use_container_width=True)
-#
-#                     csv_p2_data = df_p2_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
-#                     st.download_button(
-#                         label="Download Phase 2 CSV Data",
-#                         data=csv_p2_data,
-#                         file_name=f"phase2_data_{datetime.now().strftime('%Y%m%d')}.csv",
-#                         mime="text/csv"
-#                     )
-#             except Exception as e:
-#                 st.info(f"Phase 2 data log empty or unreadable: {e}")
-#
-#         # --- PHASE 1 ARCHIVE DATA SECTION ---
-#         if os.path.exists(DATA_FILE):
-#             try:
-#                 df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
-#                 st.markdown(f"### Phase 1 Nominations Archive (Total: {len(df_raw)})")
-#                 st.dataframe(df_raw, use_container_width=True)
-#             except Exception:
-#                 pass
-#     elif admin_password != "":
-#         st.error(t["err_pass"])
