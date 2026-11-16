@@ -1,18 +1,4 @@
-import os
-import json
-import pandas as pd
 import streamlit as st
-from datetime import datetime
-from PIL import Image
-import io
-import uuid
-import altair as alt
-
-# --- REPORTLAB PDF GENERATION IMPORTS ---
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib import colors
 
 # --- CONFIGURABLE MEDIA ASSETS ---
 LOGO_URL = "https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/icon.png"
@@ -28,9 +14,6 @@ st.set_page_config(
     page_icon=P_ICON,
     layout="centered"
 )
-
-# --- LOAD ADMIN PASSWORD ---
-# AD_PASS = st.secrets.get("AD_PASS", "MO-LQN")
 
 # --- MULTI-LANGUAGE DICTIONARY ---
 TRANSLATIONS = {
@@ -93,59 +76,6 @@ TOP_3_WINNERS = [
         "bio": st.secrets.get(f"P2_BIO_10{bio_suffix}")
     }
 ]
-
-# --- DEVICE TRACKING & PERSISTENCE FILES ---
-# DATA_FILE = "danh_sach_de_cu.csv"
-# DATA_FILE_P2 = "danh_sach_de_cu_phase2.csv"
-# PORTAL_STATE_FILE = "portal_state.json"
-#
-#
-# def load_json_state(filename, default_val):
-#     if os.path.exists(filename):
-#         try:
-#             with open(filename, "r", encoding="utf-8") as f:
-#                 return json.load(f)
-#         except Exception:
-#             return default_val
-#     return default_val
-#
-#
-# def save_json_state(filename, data):
-#     with open(filename, "w", encoding="utf-8") as f:
-#         json.dump(data, f, ensure_ascii=False, indent=4)
-#
-#
-# portal_data = load_json_state(PORTAL_STATE_FILE, {"portal_closed": False})
-# PORTAL_CLOSED = portal_data.get("portal_closed", False)
-
-
-# def load_device_registry(registry_file):
-#     if os.path.exists(registry_file):
-#         try:
-#             with open(registry_file, "r", encoding="utf-8") as f:
-#                 return json.load(f)
-#         except Exception:
-#             return []
-#     return []
-
-
-# def save_device_registry(registry_file, registry_list):
-#     with open(registry_file, "w", encoding="utf-8") as f:
-#         json.dump(registry_list, f, ensure_ascii=False, indent=4)
-
-
-# Assign or retrieve unique device token via URL query params & session state
-# if "device_token" not in st.session_state:
-#     query_params = st.query_params
-#     if "did" in query_params:
-#         st.session_state["device_token"] = query_params["did"]
-#     else:
-#         new_token = str(uuid.uuid4())
-#         st.session_state["device_token"] = new_token
-#         st.query_params["did"] = new_token
-#
-# DEVICE_ID = st.session_state["device_token"]
-
 
 # --- GLASSMORPHISM & SOLID BACKGROUND STYLING ---
 if BG_IMAGE_URL:
@@ -257,91 +187,6 @@ if BG_IMAGE_URL:
         }}
         </style>
         """, unsafe_allow_html=True)
-
-
-# def generate_pdf_report(summary_df, leaderboard_df, raw_df):
-#     buffer = io.BytesIO()
-#     doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=25, leftMargin=25, topMargin=30, bottomMargin=30)
-#     story = []
-#
-#     styles = getSampleStyleSheet()
-#     title_style = ParagraphStyle(
-#         'ReportTitle',
-#         parent=styles['Heading1'],
-#         fontSize=16,
-#         textColor=colors.HexColor('#B45309'),
-#         alignment=1,
-#         spaceAfter=10
-#     )
-#     heading_style = ParagraphStyle(
-#         'ReportHeading',
-#         parent=styles['Heading2'],
-#         fontSize=11,
-#         textColor=colors.HexColor('#92400E'),
-#         spaceBefore=10,
-#         spaceAfter=4
-#     )
-#     normal_style = ParagraphStyle(
-#         'ReportNormal',
-#         parent=styles['Normal'],
-#         fontSize=8,
-#         textColor=colors.HexColor('#1F2937')
-#     )
-#     cell_style = ParagraphStyle(
-#         'ReportCell',
-#         parent=styles['Normal'],
-#         fontSize=7,
-#         leading=9,
-#         textColor=colors.HexColor('#1F2937')
-#     )
-#     header_cell_style = ParagraphStyle(
-#         'ReportHeaderCell',
-#         parent=styles['Normal'],
-#         fontSize=7,
-#         leading=9,
-#         fontName='Helvetica-Bold',
-#         textColor=colors.whitesmoke
-#     )
-#
-#     story.append(Paragraph("Synergy Star 2026 - Admin Dashboard Report", title_style))
-#     story.append(
-#         Paragraph(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Total Submissions: {len(raw_df)}",
-#                   normal_style))
-#     story.append(Spacer(1, 8))
-#
-#     def create_wrapped_table(df_subset, col_widths=None):
-#         headers = list(df_subset.columns)
-#         table_data = [[Paragraph(str(h), header_cell_style) for h in headers]]
-#
-#         for _, row in df_subset.iterrows():
-#             row_cells = [Paragraph(str(val), cell_style) for val in row.values]
-#             table_data.append(row_cells)
-#
-#         t = Table(table_data, colWidths=col_widths, hAlign='LEFT')
-#         t.setStyle(TableStyle([
-#             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F59E0B')),
-#             ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-#             ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-#             ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-#             ('TOPPADDING', (0, 0), (-1, -1), 4),
-#             ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#FEF3C7')),
-#             ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#D97706'))
-#         ]))
-#         return t
-#
-#     story.append(Paragraph("Top 10 Leaderboard (Votes & Average Scores)", heading_style))
-#     lb_pdf = leaderboard_df.rename(columns={
-#         "Tên Người Được Đề Cử": "Nominee Name",
-#         "Số_Lượt_Đề_Cử": "Total Votes",
-#         "Điểm_Trung_Bình_Tổng_Thể": "Overall Avg Score"
-#     }).copy()
-#     story.append(create_wrapped_table(lb_pdf, col_widths=[250, 150, 160]))
-#     story.append(Spacer(1, 8))
-#
-#     doc.build(story)
-#     buffer.seek(0)
-#     return buffer.getvalue()
-
 
 # Header display banner (Winners Celebration Title)
 header_title_text = t['congrats_title']
