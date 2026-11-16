@@ -78,19 +78,19 @@ TOP_3_WINNERS = [
         "name": st.secrets.get("P2_NAME_1"),
         "department": st.secrets.get("P2_DEPT_1"),
         "image": st.secrets.get("https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f1.png"),
-        "bio": st.secrets.get(f"WINNER_BIO_1{bio_suffix}")
+        "bio": st.secrets.get(f"P2_BIO_1{bio_suffix}")
     },
     {
         "name": st.secrets.get("P2_NAME_6"),
         "department": st.secrets.get("P2_DEPT_6"),
         "image": st.secrets.get("https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f6.png"),
-        "bio": st.secrets.get(f"WINNER_BIO_6{bio_suffix}")
+        "bio": st.secrets.get(f"P2_BIO_6{bio_suffix}")
     },
     {
         "name": st.secrets.get("P2_NAME_10"),
         "department": st.secrets.get("P2_DEPT_10"),
         "image": st.secrets.get("https://raw.githubusercontent.com/sonhoangn/NomPF/refs/heads/main/f10.png"),
-        "bio": st.secrets.get(f"WINNER_BIO_10{bio_suffix}")
+        "bio": st.secrets.get(f"P2_BIO_10{bio_suffix}")
     }
 ]
 
