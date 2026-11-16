@@ -346,15 +346,6 @@ def generate_pdf_report(summary_df, leaderboard_df, raw_df):
 # Header display banner (Winners Celebration Title)
 header_title_text = t['congrats_title']
 st.markdown(f"""
-    <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
-        <img src="{LOGO_URL}" alt="Logo" style="
-            max-height: 200px; 
-            width: auto; 
-            display: block; 
-            background: transparent !important; 
-            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.9)) drop-shadow(0 0 22px rgba(217, 119, 6, 0.7));
-        " />
-    </div>
     <div class="golden-title-card">
         <h1 class="golden-glow-text" style="font-family: 'TitleCondOfcVI' !important; width: 100%; text-align: center; margin: 0 auto; white-space: pre-line;">{header_title_text}</h1>
         <p style="color: #F7C657; font-size: 1.15rem; margin-top: 0.5rem; text-align: center;">{t['congrats_subtitle']}</p>
