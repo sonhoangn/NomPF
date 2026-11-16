@@ -362,7 +362,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# CONGRATULATIONS PAGE FOR TOP 3 WINNERS
+# CONGRATULATIONS PAGE FOR Synergy Star WinnerS
 # ==========================================
 for idx, winner in enumerate(TOP_3_WINNERS):
     name = winner["name"]
@@ -382,7 +382,7 @@ for idx, winner in enumerate(TOP_3_WINNERS):
         f'<div style="display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;">'
         f'<div style="flex: 0 0 160px; text-align: center;">'
         f'<img src="{img}" alt="Winner Photo" style="width: 160px; height: 200px; aspect-ratio: 4 / 5; border-radius: 8px; object-fit: cover; border: 2px solid #F59E0B; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);" />'
-        f'<div style="margin-top: 0.5rem; font-weight: bold; color: #FDE047; font-size: 1rem;">Top 3 Winner #{idx + 1}</div>'
+        f'<div style="margin-top: 0.5rem; font-weight: bold; color: #FDE047; font-size: 1rem;">Synergy Star #{idx + 1}</div>'
         f'</div>'
         f'<div style="flex: 1; min-width: 220px;">'
         f'<h3 style="color: #FDE047; margin-bottom: 0.2rem; font-size: 1.6rem;">{name}</h3>'
@@ -399,68 +399,68 @@ for idx, winner in enumerate(TOP_3_WINNERS):
 # ==========================================
 # ANCHORED ADMINISTRATOR LOGIN PANEL
 # ==========================================
-st.divider()
-with st.expander(t["admin_sec"]):
-    admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
-    if admin_password == AD_PASS:
-        st.success(t["admin_success"])
-
-        # --- PORTAL & DEVICE MANAGEMENT CONTROLS ---
-        st.markdown("---")
-        st.subheader("Portal Management Control")
-
-        new_portal_closed_toggle = st.toggle("🛑 Close Portal (Pause Access)", value=PORTAL_CLOSED)
-        if new_portal_closed_toggle != PORTAL_CLOSED:
-            save_json_state(PORTAL_STATE_FILE, {"portal_closed": new_portal_closed_toggle})
-            st.success(f"Portal Closed Status updated to: {new_portal_closed_toggle}. Reloading...")
-            st.rerun()
-
-        # --- PHASE 2 ADMIN DASHBOARD SECTION ---
-        if os.path.exists(DATA_FILE_P2):
-            try:
-                df_p2_raw = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip')
-                st.markdown(f"### Phase 2 Finals Dashboard (Total Votes: {len(df_p2_raw)})")
-
-                if not df_p2_raw.empty and "Tên Ứng Viên" in df_p2_raw.columns:
-                    summary_p2 = df_p2_raw.groupby("Tên Ứng Viên").agg(
-                        Số_Lượt_Bình_Chọn=("Phòng Ban", "count")
-                    ).reset_index()
-
-                    st.markdown("#### Vote Allocation Percentage (Top Finalists)")
-                    total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
-                    summary_p2["Phần_Trăm"] = (summary_p2["Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
-
-                    pie_chart_p2 = alt.Chart(summary_p2).mark_arc(innerRadius=50).encode(
-                        theta=alt.Theta(field="Số_Lượt_Bình_Chọn", type="quantitative"),
-                        color=alt.Color(field="Tên Ứng Viên", type="nominal", legend=alt.Legend(title="Finalist")),
-                        tooltip=["Tên Ứng Viên", "Số_Lượt_Bình_Chọn", alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
-                    ).properties(width=400, height=350)
-                    st.altair_chart(pie_chart_p2, use_container_width=True)
-
-                    st.markdown("#### Top Finalists with Most Votes")
-                    top_votes_p2 = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(10)
-                    st.bar_chart(top_votes_p2.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
-
-                    st.markdown("#### Phase 2 Raw Nomination Data")
-                    st.dataframe(df_p2_raw, use_container_width=True)
-
-                    csv_p2_data = df_p2_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
-                    st.download_button(
-                        label="Download Phase 2 CSV Data",
-                        data=csv_p2_data,
-                        file_name=f"phase2_data_{datetime.now().strftime('%Y%m%d')}.csv",
-                        mime="text/csv"
-                    )
-            except Exception as e:
-                st.info(f"Phase 2 data log empty or unreadable: {e}")
-
-        # --- PHASE 1 ARCHIVE DATA SECTION ---
-        if os.path.exists(DATA_FILE):
-            try:
-                df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
-                st.markdown(f"### Phase 1 Nominations Archive (Total: {len(df_raw)})")
-                st.dataframe(df_raw, use_container_width=True)
-            except Exception:
-                pass
-    elif admin_password != "":
-        st.error(t["err_pass"])
+# st.divider()
+# with st.expander(t["admin_sec"]):
+#     admin_password = st.text_input(t["admin_pass_label"], type="password", key="admin_pass_input")
+#     if admin_password == AD_PASS:
+#         st.success(t["admin_success"])
+#
+#         # --- PORTAL & DEVICE MANAGEMENT CONTROLS ---
+#         st.markdown("---")
+#         st.subheader("Portal Management Control")
+#
+#         new_portal_closed_toggle = st.toggle("🛑 Close Portal (Pause Access)", value=PORTAL_CLOSED)
+#         if new_portal_closed_toggle != PORTAL_CLOSED:
+#             save_json_state(PORTAL_STATE_FILE, {"portal_closed": new_portal_closed_toggle})
+#             st.success(f"Portal Closed Status updated to: {new_portal_closed_toggle}. Reloading...")
+#             st.rerun()
+#
+#         # --- PHASE 2 ADMIN DASHBOARD SECTION ---
+#         if os.path.exists(DATA_FILE_P2):
+#             try:
+#                 df_p2_raw = pd.read_csv(DATA_FILE_P2, on_bad_lines='skip')
+#                 st.markdown(f"### Phase 2 Finals Dashboard (Total Votes: {len(df_p2_raw)})")
+#
+#                 if not df_p2_raw.empty and "Tên Ứng Viên" in df_p2_raw.columns:
+#                     summary_p2 = df_p2_raw.groupby("Tên Ứng Viên").agg(
+#                         Số_Lượt_Bình_Chọn=("Phòng Ban", "count")
+#                     ).reset_index()
+#
+#                     st.markdown("#### Vote Allocation Percentage (Top Finalists)")
+#                     total_p2_votes = summary_p2["Số_Lượt_Bình_Chọn"].sum()
+#                     summary_p2["Phần_Trăm"] = (summary_p2["Số_Lượt_Bình_Chọn"] / total_p2_votes) * 100 if total_p2_votes > 0 else 0
+#
+#                     pie_chart_p2 = alt.Chart(summary_p2).mark_arc(innerRadius=50).encode(
+#                         theta=alt.Theta(field="Số_Lượt_Bình_Chọn", type="quantitative"),
+#                         color=alt.Color(field="Tên Ứng Viên", type="nominal", legend=alt.Legend(title="Finalist")),
+#                         tooltip=["Tên Ứng Viên", "Số_Lượt_Bình_Chọn", alt.Tooltip("Phần_Trăm:Q", format=".1f", title="Percentage (%)")]
+#                     ).properties(width=400, height=350)
+#                     st.altair_chart(pie_chart_p2, use_container_width=True)
+#
+#                     st.markdown("#### Top Finalists with Most Votes")
+#                     top_votes_p2 = summary_p2.sort_values(by="Số_Lượt_Bình_Chọn", ascending=False).head(10)
+#                     st.bar_chart(top_votes_p2.set_index("Tên Ứng Viên")["Số_Lượt_Bình_Chọn"])
+#
+#                     st.markdown("#### Phase 2 Raw Nomination Data")
+#                     st.dataframe(df_p2_raw, use_container_width=True)
+#
+#                     csv_p2_data = df_p2_raw.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig')
+#                     st.download_button(
+#                         label="Download Phase 2 CSV Data",
+#                         data=csv_p2_data,
+#                         file_name=f"phase2_data_{datetime.now().strftime('%Y%m%d')}.csv",
+#                         mime="text/csv"
+#                     )
+#             except Exception as e:
+#                 st.info(f"Phase 2 data log empty or unreadable: {e}")
+#
+#         # --- PHASE 1 ARCHIVE DATA SECTION ---
+#         if os.path.exists(DATA_FILE):
+#             try:
+#                 df_raw = pd.read_csv(DATA_FILE, on_bad_lines='skip')
+#                 st.markdown(f"### Phase 1 Nominations Archive (Total: {len(df_raw)})")
+#                 st.dataframe(df_raw, use_container_width=True)
+#             except Exception:
+#                 pass
+#     elif admin_password != "":
+#         st.error(t["err_pass"])
